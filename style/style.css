@@ -5,7 +5,8 @@ body {
     margin: 0 auto;
     line-height: 30px;
     font-size: 18px;
-    padding-left: 350px;
+    padding-left: 0px;
+    /*padding-left: 350px;*/
     padding-right: 50px;
     color: #111;
 }
