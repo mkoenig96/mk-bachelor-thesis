@@ -1,4 +1,10 @@
-# Markdown (Pandoc) Template für Abschlussarbeiten
+# Markdown (Pandoc) Template für Abschlussarbeiten an der Hochschule München
+
+Die Version des hm.edu Branch kann für Abschlussarbeiten an der Hochschule München verwendet werden. 
+Die automatische Erstellung von Abbildungs- und Tabellenverzeichnissen funktioniert nur bei PDFs. 
+Hilfreich ist neben den u.g. Informationen vor allem [pandoc.org/MANUAL.html](https://pandoc.org/MANUAL.html).
+
+---
 
 Das Template basiert auf auf dem Repository [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.58490.svg)](http://dx.doi.org/10.5281/zenodo.58490) von Tom Pollard et al:
 
