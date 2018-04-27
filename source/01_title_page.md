@@ -4,6 +4,7 @@
 -->
 % Abschlussarbeit
 \newcommand{\titel}{Titel der Abschlussarbeit}
+\newcommand{\titelEN}{Title of your thesis}
 \newcommand{\datum}{01.03.2018}
 
 % Autor_in
@@ -13,6 +14,8 @@
 \newcommand{\aInstitution}{Hochschule München}
 \newcommand{\aStudiengruppe}{IF7}
 \newcommand{\aSemester}{WS 17/2018}
+\newcommand{\aMatrikelnummer}{12345678}
+
 
 \newcommand{\aName}{\aVorname\space\aNachname}
 
@@ -37,20 +40,17 @@
 
 \begin{titlepage}
     \begin{center}
-
         \includegraphics[width=1\textwidth]{style/hm-fk07_logo.jpg}
 
-        \vspace*{1.0cm}
-
-        \LARGE
-        \titel
-
-        \vspace{1.5cm}
-
         \Large
-        \aName
+        \titel
+        
+        \normalsize
+        \titelEN
 
         \vspace{0.5cm}
+        \Large
+        \aName
 
         \normalsize
         Bachelorarbeit Informatik
@@ -60,8 +60,6 @@
         \normalsize
         Prüfer:\\
         \pTitle\space\pVorname\space\pNachname,\space\pInstitution
-
-        \vspace{0.5cm}
 
         % Firmenlogo
         % \includegraphics[width=0.4\textwidth]{style/firmenlogo.png}
