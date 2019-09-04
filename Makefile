@@ -34,8 +34,8 @@ help:
 dia:
 	cd ${INPUTDIR}/figures/dia/ && dia -t png *.dia
 
-	
-convert: dia 
+
+convert: dia
 
 
 # for other csl styles look at https://github.com/citation-style-language/styles
@@ -50,11 +50,12 @@ pdf: convert
 	--highlight-style pygments \
 	-V fontsize=12pt \
 	-V papersize=a4paper \
-	-V documentclass:report \
+	-V documentclass=report \
 	-V lang:german \
 	-V mainlang:german \
 	-N \
-	--latex-engine=xelatex
+	--pdf-engine=xelatex \
+	--verbose
 
 
 tex: convert
@@ -65,7 +66,7 @@ tex: convert
 	--bibliography="${BIBFILE}" \
 	-V fontsize=12pt \
 	-V papersize=a4paper \
-	-V documentclass:report \
+	-V documentclass=report \
 	-V lang:german \
 	-V mainlang:german \
 	-N \
@@ -96,7 +97,7 @@ html: convert
 	rm -rf "${OUTPUTDIR}/source"
 	mkdir "${OUTPUTDIR}/source"
 	cp -r "${INPUTDIR}/figures" "${OUTPUTDIR}/source/figures"
-	
+
 
 epub: convert
 	pandoc "${INPUTDIR}"/*.md \
@@ -115,15 +116,15 @@ epub: convert
 	cp -r "${INPUTDIR}/figures" "${OUTPUTDIR}/source/figures"
 
 
-# copies the current version of your thesis in different file formats 
-# to your server (e.g. www.uberspace.de) 
+# copies the current version of your thesis in different file formats
+# to your server (e.g. www.uberspace.de)
 # * pdf
 # * epub
 # * html including figures using rsync
 upload: pdf epub html
 	scp "${OUTPUTDIR}/${DOCNAME}.pdf" "username@server.de:/thesis/${NOW}_${DOCNAME}.pdf"
-	scp "${OUTPUTDIR}/${DOCNAME}.epub" "username@server.de:/thesis/${NOW}_${DOCNAME}.epub"	
-	scp "${OUTPUTDIR}/${DOCNAME}.html" "username@server.de:/thesis/${NOW}_${DOCNAME}.html"	
+	scp "${OUTPUTDIR}/${DOCNAME}.epub" "username@server.de:/thesis/${NOW}_${DOCNAME}.epub"
+	scp "${OUTPUTDIR}/${DOCNAME}.html" "username@server.de:/thesis/${NOW}_${DOCNAME}.html"
 	rsync -rtvhze ssh output/source username@server.de:/thesis/
 
 .PHONY: help pdf docx html tex epub upload
