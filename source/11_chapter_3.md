@@ -28,6 +28,12 @@ Das ist der zweite Teil der Methodik. Proin tincidunt odio non sem mollis tristi
 Kommentare können so hinzugefügt werden.
 -->
 
+Alternativ können Sie auch mit LaTeX einen Codeblock erstellen, wie im folgenden Java-Beispiel gezeigt:
+\lstinputlisting[style=javaCodeStyle, caption=Main.java]{source/code/HelloWorld.java}
+
+Wenn Sie `javaCodeStyle` wie in der `preamble.tex` definiert verwenden, ist es am besten, die maximale Zeilenlänge im Quellcode auf 80 Zeichen zu begrenzen.
+
+
 ## Ergebnisse
 
 Das sind die Ergebnisse. Ut accumsan tempus aliquam. Sed massa ex, egestas non libero id, imperdiet scelerisque augue. Duis rutrum ultrices arcu et ultricies. Proin vel elit eu magna mattis vehicula. Sed ex erat, fringilla vel feugiat ut, fringilla non diam.
