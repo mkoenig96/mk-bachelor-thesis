@@ -11,7 +11,7 @@
 
 \vspace*{1.0cm}
 \noindent
-Hiermit erkläre ich, dass ich die Bachelorarbeit selbständig verfasst, noch nicht anderweitig
+Hiermit erkläre ich, dass ich die vorliegende Bachelorarbeit selbständig verfasst, noch nicht anderweitig
 für Prüfungszwecke vorgelegt, keine anderen als die angegebenen Quellen oder Hilfsmittel
 benutzt sowie wörtliche und sinngemäße Zitate als solche gekennzeichnet habe.
 

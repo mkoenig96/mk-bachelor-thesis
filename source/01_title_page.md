@@ -2,31 +2,31 @@
   Zentrale Variablen:
   Workaround bzw. Rückgriff auf LaTex-Befehle, um zentrale Werte immer wieder verwenden zu können.
 -->
-% Abschlussarbeit
-\newcommand{\titel}{Titel der Abschlussarbeit}
-\newcommand{\datum}{01.03.2018}
+<!--% Abschlussarbeit -->
+\newcommand{\titel}{Migration in eine Multi-Tenant-Anwendung am Beispiel von TeamSports2 mit dem vergleichenden Aspekt zwischen einer SQL und NoSQL Datenbank}
+\newcommand{\datum}{11.10.2020}
 
-% Autor_in
-\newcommand{\aVorname}{Max}
-\newcommand{\aNachname}{Mustermann}
-\newcommand{\aGeburtsdatum}{01.04.1998}
+<!-- % Autor_in -->
+\newcommand{\aVorname}{Matthias}
+\newcommand{\aNachname}{König}
+\newcommand{\aGeburtsdatum}{03.02.1996}
 \newcommand{\aInstitution}{Hochschule München}
-\newcommand{\aStudiengruppe}{IF7}
-\newcommand{\aSemester}{WS 17/2018}
+\newcommand{\aStudiengruppe}{IB7B}
+\newcommand{\aSemester}{WS 2020/2021}
 
 \newcommand{\aName}{\aVorname\space \aNachname}
 
-% Prüfer_in
+<!-- % Prüfer_in -->
 \newcommand{\pTitle}{Prof. Dr.}
-\newcommand{\pVorname}{}
-\newcommand{\pNachname}{}
+\newcommand{\pVorname}{Oliver}
+\newcommand{\pNachname}{Braun}
 \newcommand{\pInstitution}{Hochschule München}
 
-% Betreuer_in
-\newcommand{\bTitle}{Dr.}
-\newcommand{\bVorname}{}
-\newcommand{\bNachname}{}
-\newcommand{\bInstitution}{Firma GmbH}
+<!-- % Betreuer_in -->
+\newcommand{\bTitle}{}
+\newcommand{\bVorname}{Philipp}
+\newcommand{\bNachname}{Pickel}
+\newcommand{\bInstitution}{Horizon Alpha GmbH \&\ Co. KG}
 
 \title{\titel}
 \author{\aName}
@@ -38,7 +38,7 @@
 \begin{titlepage}
     \begin{center}
 
-        \includegraphics[width=1\textwidth]{style/hm-fk07_logo.jpg}
+        \includegraphics[width=1\textwidth]{style/hm-logo_new_cropped.jpg}
 
         \vspace*{1.0cm}
 
@@ -53,7 +53,7 @@
         \vspace{0.5cm}
 
         \normalsize
-        Bachelorarbeit Informatik
+        Bachelorarbeit Wirtschaftsinformatik
 
         \vfill
 

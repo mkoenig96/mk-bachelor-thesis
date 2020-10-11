@@ -1,6 +1,6 @@
-# Erste Untersuchung mit Code
+# Vergleich zwischen SQL und NoSQL 
 
-## Einleitung
+<!--## Einleitung
 
 Das ist die Einleitung. Nam mollis congue tortor, sit amet convallis tortor mollis eget. Fusce viverra ut magna eu sagittis. Vestibulum at ultrices sapien, at elementum urna. Nam a blandit leo, non lobortis quam. Aliquam feugiat turpis vitae tincidunt ultricies. Mauris ullamcorper pellentesque nisl, vel molestie lorem viverra at.
 
@@ -28,7 +28,7 @@ Das ist der zweite Teil der Methodik. Proin tincidunt odio non sem mollis tristi
 Kommentare können so hinzugefügt werden.
 -->
 
-## Ergebnisse
+<!--## Ergebnisse
 
 Das sind die Ergebnisse. Ut accumsan tempus aliquam. Sed massa ex, egestas non libero id, imperdiet scelerisque augue. Duis rutrum ultrices arcu et ultricies. Proin vel elit eu magna mattis vehicula. Sed ex erat, fringilla vel feugiat ut, fringilla non diam.
 
@@ -39,3 +39,9 @@ Das ist die Auseinandersetzung mit den Ergebnissen. Duis ultrices tempor sem vit
 ## Schlussfolgerung
 
 Das ist die Schlussfolgerung des Kapitels. Praesent bibendum urna orci, a venenatis tellus venenatis at. Etiam ornare, est sed lacinia elementum, lectus diam tempor leo, sit amet elementum ex elit id ex. Ut ac viverra turpis. Quisque in nisl auctor, ornare dui ac, consequat tellus.
+
+
+
+
+
+

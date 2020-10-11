@@ -1,14 +1,15 @@
-# Untersuchung mit Tabelle
+# Quantitative Analyse der aktuellen sowie neuen Architektur 
 
-## Einleitung
+## Kosten 
 
-Das ist die Einleitung. Sed vulputate tortor at nisl blandit interdum. Cras sagittis massa ex, quis eleifend purus condimentum congue. Maecenas tristique, justo vitae efficitur mollis, mi nulla varius elit, in consequat ligula nulla ut augue. Phasellus diam sapien, placerat sit amet tempor non, lobortis tempus ante.
 
-## Methode
 
-Donec imperdiet, lectus vestibulum sagittis tempus, turpis dolor euismod justo, vel tempus neque libero sit amet tortor. Nam cursus commodo tincidunt.
+## Leistung 
 
-### Unterabschnitt 1
+
+## Häufige Queries 
+
+<!--### Unterabschnitt 1
 
 Das ist der erste Teil der Methodik. Duis tempor sapien sed tellus ultrices blandit. Sed porta mauris tortor, eu vulputate arcu dapibus ac. Curabitur sodales at felis efficitur sollicitudin. Quisque at neque sollicitudin, mollis arcu vitae, faucibus tellus.
 
@@ -20,13 +21,13 @@ Das ist der zweite Teil der Methodik. Sed ut ipsum ultrices, interdum ipsum vel,
 Kommentare können so hinzugefügt werden.
 -->
 
-## Ergebnisse
+<!--## Ergebnisse
 
 Die Tabelle \ref{tabellenreferenz} zeigt uns wie man eine Tabelle hinzufügt. Integer tincidunt sed nisl eget pellentesque. Mauris eleifend, nisl non lobortis fringilla, sapien eros aliquet orci, vitae pretium massa neque eu turpis. Pellentesque tincidunt aliquet volutpat. Ut ornare dui id ex sodales laoreet.
 
 <!-- Erzwingt eine neue Seite -->
 
-\newpage
+<!--\newpage
 
 ---------------------------------------------------------------------------
 Spalte 1            Spalte 2                Spalte 3
@@ -51,3 +52,7 @@ Das ist die Auseinandersetzung mit den Ergebnissen. Etiam sit amet mi eros. Done
 ## Schlussfolgerung
 
 Das ist die Schlussfolgerung des Kapitels. Nullam porta tortor id vehicula interdum. Quisque pharetra, neque ut accumsan suscipit, orci orci commodo tortor, ac finibus est turpis eget justo. Cras sodales nibh nec mauris laoreet iaculis. Morbi volutpat orci felis, id condimentum nulla suscipit eu. Fusce in turpis quis ligula tempus scelerisque eget quis odio. Vestibulum et dolor id erat lobortis ullamcorper quis at sem.
+
+
+
+
