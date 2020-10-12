@@ -1,6 +1,6 @@
-# Abkürzungsverzeichnis {.unnumbered}
+<!--Abkürzungsverzeichnis {.unnumbered}
 
-<!--## Nicht ausgerichtet {.unnumbered}
+## Nicht ausgerichtet {.unnumbered}
 
 API: **A**pplication **P**rogramming **I**nterface
 

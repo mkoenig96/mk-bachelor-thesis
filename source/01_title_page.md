@@ -9,6 +9,7 @@
 <!-- % Autor_in -->
 \newcommand{\aVorname}{Matthias}
 \newcommand{\aNachname}{König}
+\newcommand{\aMatrikelnummer}{21143017}
 \newcommand{\aGeburtsdatum}{03.02.1996}
 \newcommand{\aInstitution}{Hochschule München}
 \newcommand{\aStudiengruppe}{IB7B}
@@ -50,12 +51,15 @@
         \Large
         \aName
 
-        \vspace{0.5cm}
+        \normalsize
+        \aMatrikelnummer
+
+        \vspace{0.15cm}
 
         \normalsize
         Bachelorarbeit Wirtschaftsinformatik
 
-        \vfill
+        \vspace{0.3cm}
 
         \normalsize
         Prüfer:\\
