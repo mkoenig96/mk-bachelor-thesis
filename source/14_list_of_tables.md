@@ -14,8 +14,3 @@ TexHack: Überschrift und richtige Seitenzahl werden durch die obige Überschrif
 \listoftables
 
 \newpage
-
-
-
-
-
