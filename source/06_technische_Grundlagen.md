@@ -34,7 +34,6 @@ kursiv und fett: ***
 
 <!--Dies ist ein kurzer Überblick darüber, was in jedem Kapitel geschrieben wurde. **Kapitel 1** gibt einen Hintergrund über duis tempus justo quis arcu consectetur sollicitudin. **Kapitel 2** diskutiert morbi sollicitudin gravida tellus in maximus. **Kapitel 3** diskutiert vestibulum eleifend turpis id turpis sollicitudin aliquet. **Kapitel 4** zeigt wie phasellus gravida non ex id aliquet. Proin faucibus nibh sit amet augue blandit varius.-->
 
-\setcounter{page}{1}
-\renewcommand{\thepage}{\arabic{page}}
+
 
 
