@@ -2,10 +2,13 @@ Abstract
 
 1 Einführung
     1.1 Aufgabenstellung 
-    1.2 Motivation 
+    1.2 Motivation
+    - wieso in Multi-Tenant?
+    - Nachteile der jetzigen Architektur 
 
 2 Technische Grundlagen
-    2.1 Multi-Tenant Architektur 
+    2.1 Multi-Tenant Architektur
+    - On Premise vs. Cloud 
     2.2 SQL
     2.3 NoSQL
 
@@ -14,6 +17,9 @@ Abstract
     3.2 Architektur
     - mit Draw.io zeichnen
     3.3 Verwendete Technologien
+    - cakePHP
+    - DeployHQ
+    - mySQL
     3.4 Datenbankmodell
     - mit Draw.io zeichnen
 
@@ -32,3 +38,4 @@ Abstract
     6.3 Häufige Queries
 
 7 Fazit und Ausblick
+- Testing
