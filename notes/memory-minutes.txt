@@ -1,0 +1,34 @@
+Abstract
+
+1 Einführung
+    1.1 Aufgabenstellung 
+    1.2 Motivation 
+
+2 Technische Grundlagen
+    2.1 Multi-Tenant Architektur 
+    2.2 SQL
+    2.3 NoSQL
+
+3 Analyse des IST-Zustands von TeamSports
+    3.1 Grundlegendes
+    3.2 Architektur
+    - mit Draw.io zeichnen
+    3.3 Verwendete Technologien
+    3.4 Datenbankmodell
+    - mit Draw.io zeichnen
+
+4 Vergleich zwischen SQL und NoSQL
+
+5 Praktische Umsetzung 5
+    5.1 Neues Datenbankmodell
+    - mit Draw.io zeichnen
+    5.2 Neue Architektur
+    - mit Draw.io zeichnen
+    5.3 Implementierung
+
+6 Quantitative Analyse der aktuellen sowie neuen Architektur
+    6.1 Kosten
+    6.2 Leistung
+    6.3 Häufige Queries
+
+7 Fazit und Ausblick
