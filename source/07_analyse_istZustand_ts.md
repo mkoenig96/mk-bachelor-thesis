@@ -1,14 +1,16 @@
 # Analyse des IST-Zustands von TeamSports 
 
-<!--
-Nach dem einführenden Kapitel ist es üblich, dass ein Kapitel folgt,
-das die Literatur begutachtet und in die Methodik einführt wird,
-die während der gesamten Arbeit verwendet wird.
--->
+
 
 ## Grundlegendes 
 
-<!--Das ist die Einleitung. Duis in neque felis. In hac habitasse platea dictumst. Cras eget rutrum elit. Pellentesque tristique venenatis pellentesque. Cras eu dignissim quam, vel sodales felis. Vestibulum efficitur justo a nibh cursus eleifend. Integer ultrices lorem at nunc efficitur lobortis.-->
+TeamSports2 ist ein Content-Management-System für Sportvereine !CMS ERKLÄREN?!. Das System wurde entwickelt um Sportvereinen den Aufbau einer leicht bedienbaren, attraktiven sowie kostengünstigen Vereinshomepage zu ermöglichen. Die Idee dafür entstand aufgrund des Bedarfs einer neuen Homepage im eigenen Handballverein. 
+Durch die eigene Vereinsarbeit war man sich um die Strukturen, welche in den Vereinen herrschen durchaus bewusst. Basierend auf diesem Wissen sollte ein System entstehen, dass zum einen keinerlei Programmierkenntnisse der Anwender erfordert und zum anderen mehrere Benutzer zulässt, die gleichzeitig am System arbeiten können.
+Diese beiden Punkte stellen jeweils ein zentrales Kriterium für die Vereine dar, wenn es um den Aufbau oder Relaunch einer Vereinshomepage geht. Die Aufbauarbeit sowie Pflege soll nicht lediglich einer Person obliegen, die den Aufwand alleine betreiben muss. Des weiteren ist auch davon auszugehen, dass es im Verein ausgebildete Programmierer oder ähnlich technikaffine Personen gibt. Zuletzt ist natürlich auch die Zeit ein wichtiger Faktor, weswegen auch hier eine unkompliziert sowie einfache Bedienung wichtig ist.
+
+Der Verein erstellt sich über die Homepage teamsports2.de eine Testseite. Dabei gibt er lediglich persönliche Daten, die anfängliche Seitenfarbe sowie den gewünschten Seitennamen an. Daraufhin wird eine Seite 
+
+!Diagramm erstellen für Ablauf!
 
 ## Architektur 
 

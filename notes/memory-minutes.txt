@@ -10,7 +10,7 @@ Abstract
     2.1 Multi-Tenant Architektur
     - On Premise vs. Cloud 
     2.2 SQL
-    2.3 NoSQL
+    2.3 NoSQL 
 
 3 Analyse des IST-Zustands von TeamSports
     3.1 Grundlegendes
