@@ -1,4 +1,4 @@
-<!--\footnotesize
+\footnotesize
 
 <!--
 Bearbeite diese Seite nicht.
