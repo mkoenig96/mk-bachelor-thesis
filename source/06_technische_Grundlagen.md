@@ -2,19 +2,51 @@
 
 ## Multi-Tenant Architektur 
 
-<!--Das ist die Einleitung. Quisque finibus aliquet cursus. Integer in pellentesque tellus. Duis eu dignissim nulla, a porttitor enim. Quisque vehicula leo non ultrices finibus. Duis vehicula quis sem sit amet sollicitudin. Integer neque est, pharetra et auctor vel, iaculis interdum lectus.-->
-
-<!--
-Um ein Zitat in den Text aufzunehmen, füge einfach den in der references.bib-Datei gezeigten Zitatschlüssel hinzu.
--->
-
-<!--Um ein Zitat in den Text aufzunehmen, füge einfach den in der references.bib-Datei gezeigten Zitatschlüssel hinzu. Der Stil des Zitats wird durch die Datei ref_format.csl bestimmt. Zum Beispiel findest Du in *The Living Sea* Bilder vom *Calypso* [@phd_thesis_markdown].
-
-In neque mauris, maximus at sapien a, iaculis dignissim justo. Aliquam erat volutpat. Praesent varius risus auctor est ultricies, sit amet consequat nisi laoreet. Suspendisse non est et mauris pharetra sagittis non porta justo. Praesent malesuada metus ut sapien sodales ornare.!-->
 
 ## SQL 
 
-SQL ist eine deskriptive Abfragesprache und steht für *Structured Query Language* [@MeierKaufmann2016 7]. Diese wird für die Abfrage von relationalen Datenbanken verwendet, welche in Tabellen organisiert sind. Somit ist es in der Praxis gebräuchlich, von einer SQL-Datenbank zu sprechen, wenn sich dahinter ein relationales Datenbankmodell verbirgt. In den  Eine SQL Datenbank liegt in einem relationen Datenbankmodell vor. Das Wesen eines relationalen Modell 
+SQL ist eine deskriptive Abfragesprache und steht für *Structured Query Language* [@MeierKaufmann2016 7]. Diese wird für die Abfrage von relationalen Datenbanksystemen verwendet, welche in Tabellen organisiert sind. Somit ist es in der Praxis gebräuchlich, von einer SQL-Datenbank zu sprechen, wenn sich dahinter ein relationales Datenbanksystem handelt.
+
+### Relationales Datenbanksystem
+[@MeierKaufmann2016 10].
+
+Ein relationales Datenbanksystem besteht aus der Datenbank an sich sowie einem Datenbankmanagementsystem. Dabei umfasst die Datenbank eine Sammlung aller Tabellen mit deren Beziehungen untereinander. Mithilfe des Datenbankmanagementsystem können dann An- und Abfragen an die Datenbank realisiert werden.
+Dabei gibt es verschiedene Datenbankmanagementsystem, welche aber bei relationalen Datenbanken allesamt SQL als Abfragesprache nutzen.
+Teilweise unterscheiden sich die in den Datenbankmanagementsystemen angewandten SQL Abfragen allerdings in der Syntax.
+Nachfolgend werden gebräuche Datenbankmanagementsysteme kurz vorgestellt, wobei gesagt sei, dass diese nur einen Ausschnitt der verfügbaren Systeme darstellen
+
+**MySQL**
+
+
+### Relationale Datenbankmodelle
+Relationale Datenbankmodelle zeichnen sich dadurch aus, dass sie vollständig in Tabellen und Spalten dargestellt werden.
+Jede Tabelle enthält einen eindeutigen Bezeichner, den Primärschlüssel. Anhand dieses Schlüssel kann jeder in der Tabelle enthaltene Datensatz eindeutig indentifiziert werden. In jeder Tabelle sind Attribute enthalten, welche die Eigenschaften einer Tabelle darstellen. An nachfolgender MySQL Angabe die eine beispielhafte Tabelle samt ihrer Attributte erstellt, wird dies verdeutlicht.
+
+
+### Beispielhafte Abfragen
+_MySQL_
+```
+CREATE TABLE teams (
+    id int,
+    name varchar(255),
+    shortname varchar(255),
+    description varchar(255),
+    departmentId int,
+    PRIMARY KEY (id)
+);
+```
+Die Attribute der Tabelle sind demnach,bei Ausführung der Angabe, „id“ (=festgelegter Primärschlüssel), „name“, „shortname“ und „description“.
+Oftmals ist es gewollt, dass ein Attribut auf eine andere Tabelle referenzieren soll. Hierfür muss dann ein Fremdschlüssel angegeben werden, wodurch die Angabe wie folgt ergänzt werden müsste.
+
+```
+FOREIGN KEY (departmentId) REFERENCES departments(departmentId)
+```
+Mit dieser Angabe wird das Attribut „departmentId“ als Fremdschlüssel deklariert und referenziert dabei auf das Attributt „departmentId“ in der “departments“ Tabelle. 
+
+Die vorangeganenen SQL Befehle sind in MySQL geschrieben. MySQL stellt dabei Es gibt aber auch andere 
+
+
+
 
 ## NoSQL 
 
