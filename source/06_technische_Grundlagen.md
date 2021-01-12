@@ -10,24 +10,38 @@ SQL ist eine deskriptive Abfragesprache und steht für *Structured Query Languag
 ### Relationales Datenbanksystem
 [@MeierKaufmann2016 10].
 
-Ein relationales Datenbanksystem besteht aus der Datenbank an sich sowie einem Datenbankmanagementsystem. Dabei umfasst die Datenbank eine Sammlung aller Tabellen mit deren Beziehungen untereinander. Mithilfe des Datenbankmanagementsystem können dann An- und Abfragen an die Datenbank realisiert werden.
+Ein relationales Datenbanksystem besteht aus der Datenbank an sich sowie einem Datenbankmanagementsystem (DBMS). Dabei umfasst die Datenbank eine Sammlung aller Tabellen mit deren Beziehungen untereinander. Mithilfe des Datenbankmanagementsystem können dann An- und Abfragen an die Datenbank realisiert werden.
 Dabei gibt es verschiedene Datenbankmanagementsystem, welche aber bei relationalen Datenbanken allesamt SQL als Abfragesprache nutzen.
 Teilweise unterscheiden sich die in den Datenbankmanagementsystemen angewandten SQL Abfragen allerdings in der Syntax.
-Nachfolgend werden gebräuche Datenbankmanagementsysteme kurz vorgestellt, wobei gesagt sei, dass diese nur einen Ausschnitt der verfügbaren Systeme darstellen
+Jedes Datenbankmanagementsystem erfüllt dabei einige Aufgaben, die jedes DBMS wiederum anderweitig realisieren kann. Die wichtigsten Anforderungen werden nachfolgend kurz vorgestellt. [@Adams2020, 5-6]
+WIE AM BESTEN ZITIEREN? (DIREKT/INDIREKT)
+„
+- Sprachinterpreter: Übersetzt die Befehle in einen ausführbaren Code.
+- Optimierer: Ermöglicht schnelle Ausführung der Befehle.
+- Datenschutz: Schreib- und Lesezugriffe an den jeweiligen Nutzer richtig vergeben.
+- Datensicherheit: Verhindern von Datenverlusten.
+- Application Programming Interface (API): Dient der Anwendung zum Zugriff auf das DBMS.
 
-**MySQL**
+“
+
+Je nach Datenbankmanagemensystem können sich die Aufgaben beziehungsweise Anforderungen an das DBMS unterscheiden. Inzwischen gibt es sehr viele DBMS, wovon die gebräuchlisten kurz aufgezählt werden. [@Adams2020, 7]
+
+- Oracle
+- MySQL
+- Microsoft SQL Server
+- MariaDB
+
+Die Wahl auf des bevorzugten DBMS hängt dabei vom Anwendungsfall sowie den Anforderungen an das System ab.
 
 
 ### Relationale Datenbankmodelle
 Relationale Datenbankmodelle zeichnen sich dadurch aus, dass sie vollständig in Tabellen und Spalten dargestellt werden.
 Jede Tabelle enthält einen eindeutigen Bezeichner, den Primärschlüssel. Anhand dieses Schlüssel kann jeder in der Tabelle enthaltene Datensatz eindeutig indentifiziert werden. In jeder Tabelle sind Attribute enthalten, welche die Eigenschaften einer Tabelle darstellen. An nachfolgender MySQL Angabe die eine beispielhafte Tabelle samt ihrer Attributte erstellt, wird dies verdeutlicht.
 
-
-### Beispielhafte Abfragen
 _MySQL_
 ```
 CREATE TABLE teams (
-    id int,
+    id int NOT NULL,
     name varchar(255),
     shortname varchar(255),
     description varchar(255),
@@ -35,15 +49,33 @@ CREATE TABLE teams (
     PRIMARY KEY (id)
 );
 ```
-Die Attribute der Tabelle sind demnach,bei Ausführung der Angabe, „id“ (=festgelegter Primärschlüssel), „name“, „shortname“ und „description“.
+Die Attribute der Tabelle sind demnach,bei Ausführung der Angabe, „id“ (=festgelegter Primärschlüssel), „name“, „shortname“ und „description“. Das  NOT NULL Statement sorgt dafür, dass das Attribut „id“ niemals NULL werden kann.
+Dies ist gerade bei Schlüsselattributen wichtig, damit dieses auch wirklich gesetzt werden und als solches agieren kann.
 Oftmals ist es gewollt, dass ein Attribut auf eine andere Tabelle referenzieren soll. Hierfür muss dann ein Fremdschlüssel angegeben werden, wodurch die Angabe wie folgt ergänzt werden müsste.
 
+_MySQL_
 ```
 FOREIGN KEY (departmentId) REFERENCES departments(departmentId)
 ```
 Mit dieser Angabe wird das Attribut „departmentId“ als Fremdschlüssel deklariert und referenziert dabei auf das Attributt „departmentId“ in der “departments“ Tabelle. 
 
-Die vorangeganenen SQL Befehle sind in MySQL geschrieben. MySQL stellt dabei Es gibt aber auch andere 
+Zum Vergleich werden die beiden SQL Anfragen jeweils in Oracle geschrieben.
+
+_Oracle_
+```
+CREATE TABLE teams (
+    id int NOT NULL PRIMARY KEY,
+    name varchar(255),
+    shortname varchar(255),
+    description varchar(255),
+    departmentId int FOREIGN KEY REFERENCES departments(departmentId),
+);
+```
+
+Selbstverständlich hätte bei MySQL der Befehl für den Fremschlüssel genau so in der ersten CREATE TABLE Anweisung stehen können.
+Dies soll hervorheben, dass zwar alle DBMS auf SQL als Abfragesprache beruhen, es allerdings durchaus unterschiedliche Syntax gibt.
+
+**Datenmodellierung**
 
 
 
