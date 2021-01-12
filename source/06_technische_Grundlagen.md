@@ -34,6 +34,16 @@ Je nach Datenbankmanagemensystem können sich die Aufgaben beziehungsweise Anfor
 Die Wahl auf des bevorzugten DBMS hängt dabei vom Anwendungsfall sowie den Anforderungen an das System ab.
 
 
+**Eigenschaften**
+
+Ein relationales Datenbanksystem ist durch ein relationales Datenbankmodell abgebildet, welches mittels SQL abgefragt und modifiziert werden kann. Dabei gewährleistet das gesamte System zusätzlich folgende Eigenschaften [@MeierKaufmann2016 10-11]:
+
+- _Datenunabhängigkeit_: Die „Daten und Anwendungsprogramme bleiben weitgehend voneinander getrennt“, was durch die Entkoppelung des Datenbankmanagementsystems zur physischen Datenbank realisiert wird. Dadurch können, abhängig von der Anwendungsarchitektur, Änderungen an der Datenbank, ohne Einfluss auf die Anwendung, vorgenommen werden.
+- _Mehrbenutzerbetrieb_: Durch diesen ist gewährleistet, dass „mehrere Benutzer gleichzeitig ein und dieselbe Datenbank abfragen oder bearbeiten“ können. Dabei stellt das System sicher, dass alle durch die Benutzer vorgenommen Aktionen korrekt verarbeitet werden
+- _Konsistenzgewährung_: Das Datenbanksystem unterstützt das Erfüllen der Datenintegrität, womit „die fehlerfreie und korrekte Speicherung der Daten“ gewährleistet ist.
+- _Datensicherheit und Datenschutz_: Mithilfe des Datenbanksystems werden „Daten vor Zerstörung, vor Verlust und vor unbefugten Zugriff“ geschützt. 
+
+
 ### Relationale Datenbankmodelle
 Relationale Datenbankmodelle zeichnen sich dadurch aus, dass sie vollständig in Tabellen und Spalten dargestellt werden.
 Jede Tabelle enthält einen eindeutigen Bezeichner, den Primärschlüssel. Anhand dieses Schlüssel kann jeder in der Tabelle enthaltene Datensatz eindeutig indentifiziert werden. In jeder Tabelle sind Attribute enthalten, welche die Eigenschaften einer Tabelle darstellen. An nachfolgender MySQL Angabe die eine beispielhafte Tabelle samt ihrer Attributte erstellt, wird dies verdeutlicht.
