@@ -120,18 +120,126 @@ Doppelt vorhandende Daten kosten unnötigen Speicherplatz welcher zum einen die 
 Mit NoSQL werden alle Datenbank bezeichnet, „die über keinen SQL-Zugang verfügen“ [@MeierKaufmann2016 222]. Des weiteren werden bei NoSQL-Datenbanken keine Tabellen zur Speicherung der Daten verwendet.
 Trotzalledem stößt man in der Praxis häufig auf „Not only SQL“, wenn von einer NoSQL Datenbank die Rede ist. Dies hat den Hintergrund, dass Anwendungen unter dem Konzept der „mehrsprachigen Persistenz“ [@MeierKaufmann2016 222] entwickelt werden, was bedeutet, dass SQL- in Verbindung NoSQL Datenbanken genutzt werden.
 
-NoSQL Architekturen stellen verteilte Datenbanksysteme dar. Die Notwendigkeit zur Nutzung von nicht relationalen Datenbanken ist aufgrund der in den letzten Jahren vorangeschrittenen Digitalisierung begründet. Mit dieser ging auch ein starkes Ansteigen der zu verarbeitenden Datenmengen, vorwiegend im Webbereich, einher. 
-Aufgrund dieses höheren Datenaufkommen mussten Datenbankalternativen ausgemacht werden um die Daten schneller sowie effektiver speichern und abfragen zu können.
+NoSQL Datenbanken zeichnen sich dadurch aus, dass sin in der Regel als verteiltes System implementiert werden. Des weiteren geben NoSQL Datenbanken keine bestimmte Datenstruktur vor, wie es bei relationalen Datenbanken der Fall ist. 
+Die Notwendigkeit zur Nutzung von nicht relationalen Datenbanken ist aufgrund der in den letzten Jahren vorangeschrittenen Digitalisierung begründet. Mit dieser ging auch ein starkes Ansteigen der zu verarbeitenden Datenmengen, vorwiegend im Webbereich, einher. Aufgrund dieses höheren Datenaufkommen mussten Datenbankalternativen ausgemacht werden um die Daten schneller sowie effektiver speichern und abfragen zu können.
+Vor allen Dingen durch das damit entstandene Themegebiet „Big Data“ gewannen NoSQL Lösungen immer mehr an Bedeutung.
+[@MeierKaufmann2016 13].
+Die Definition von Big Data beruht auf der Erfüllung der „3 V's“, welche erfüllt sein müssen damit Datensammlungen als Big Data angesehen werden.
 
+- _Volume_: Die Größe der Datenbestände wird mindestens auf den Terabytebereich beziffert.
+- _Variety_: Hierunter wird verstanden, dass die Daten sowohl geordnet, als auch ungeordnet vorliegen können.
+- _Velocity_: Die Daten müssen „in Echtzeit ausgewertet und analysiert werden können“ [@MeierKaufmann2016 13].
+
+Dabei werden NoSQL Datenbanken bestimmte Eigenschaften zugeordnet, welche erfüllt sein müssen um als solche bezeichnet werden zu können.
 
 **Eigenschaften**
 
-asdfasd
+[@MeierKaufmann2016 20]
 
-Für NoSQL gibt es unterschiedliche 
+- _Modell und Schema:_ Das Datenbankmodell ist nicht relational und folgt keinem vorgegebenen Schema.
+- _Erfüllung der drei V's:_ Die im Datenbanksystem gespeicherten Daten weisen in ihren Eigenschaften die drei V's auf. 
+- _Architektur:_ Eine horizontale Skalierbarkeit sowie verteile Webanwendungen müssen unterstützt werden.
+- _Replikation:_ Das Datenbanksystem muss die Replikation aller Daten ermöglichen.
+- _Datenkonsistenz:_ Es darf keine starke Datenkonsistenz vorliegen um eine geringe Ausfalltoleranz sowie hohe Verfügbarkeit zulassen zu können.
 
+### Arten von NoSQL-Datenbanken
+„Die Forscher und Betreiber des NoSQL-Archivs listen auf ihrer Webplattform 150 NoSQL-Datenbankprodukte“ [@MeierKaufmann2016 20]. Daraus kann geschlossen werden, dass der Bedarf von NoSQL-Technologien heutzutage stark gewachsen sowie notwendig ist. Nachfolgend werden die in der Praxis gebräuchlichsten Technologien näher erläutert
 
+#### Key/Value Stores
+[@Fasel2016 113-115].
 
+Wie der Name bereits vermuten lässt gibt es bei dieser NoSQL-Technolgoie Schlüssel- und Wertpaare. Dabei haben weder der Schlüssel, noch die zugehörigen Werte komplexe Datentypen inne. Der Schlüssel ist immer eindeutig um dem entsprechenden Wert zugeordnet werden zu können und es werden keine Indizes gebildet. Key/Value Stores ist für einfache und wenig komplexe Datensätze gedacht, mit denen keine komplexen Operationen, wie Vergleiche zwischen den Datensätzen durchgeführt werden können. Die Stärken dieser Technologie liegen im schnellen Lese- sowie Schreibzugriff auf die jeweiligen Paare. Dabei fungieren Key/Value Stores meist In-Memory und je nach Anbieter werden Daten auch auf der Festplatte gespeichert. In der Praxis trifft man häufig auf Redis Store und Memcached als Anbieter solcher Key/Value Stores. Ein näheres Eingehen auf die jeweiligen Eigenschaften würde den Rahmen an dieser Stelle überschreiten. Trotzalledem soll ein kurzes Beispiel von Redis Store gezeigt werden.
+Hiermit wird der Schlüssel „teamId“ mit dem zugehörigen Wert „name“ gesetzt.
+```
+SET teamId "name"
+```
+Durch Ausführen des Befehls
+```
+GET teamId
+```
+können die Werte des Schlüssel „teamId“ aufgerufen werden.
+Zudem können auch Listen und Sets erstellt werden, die dann mehrere Werte unter einem eindeutigen Schlüssel enthalten.
+```
+//List
+RPUSH teamId "name", "description"
 
+//Set
+SADD teamId "name" "description"
+```
+Zudem kann Redis Store festlegen wie lange ein Schlüssel bestehen soll und festgelegt werden, wie lange dieser Schlüssel bestehen bleiben soll. In diesem Fall wird der Schlüssel „teamId“ in drei Sekunden wieder gelöscht. Die Time To Live (TTL) kann dabei für jeden Schlüssel ebenso angepasst werden.
+```
+EXPIRE teamId 3
+```
 
+Key/Value Stores sind sehr gut für einfach Datenstrukturen sowie Zwischenspeicher für Webapplikationen geeignet. Somit können, aufgrund der In-Memory Speicherung, beispielsweise auf einer Webseite Daten, welche später wieder benötigt werden vorgehalten werden und müssen durch Einsatz eines Key/Value Stores nicht nochmals geladen werden. 
 
+#### Document Stores
+[@Fasel2016 115-118].
+
+Document Stores folgen ebenso der Logik von Schlüssel-/Wertepaaren. Allerdings können dabei um einiges komplexere Datenstrukturen dargestellt werden, als dies bei Key/Value Stores der Fall ist. Dies kann durch Dokumente ermöglicht werden, in denen die entsprechenden Attribute gespeichert und indexiert werden können. Des weiteren sind Beziehungen zwischen den einzelnen Dokumenten möglich.
+Der Schlüssel eines jeden Dokuments ist über die ganze Datenbank eindeutig und gilt somit nicht nur im Dokument selbst.
+Sicherlich einer der bekanntestens Vertreter der Document Stores Technologie ist mongoDB, welche „die Dokumente in JSON ähnlichen Objekten“ [@Fasel2016 115] speichert. 
+Das Anlegen eines Dokuments kann ich MongoDB wie folgt realsiert werden.
+
+```
+db.teamDocument.insert(
+    {
+        name: "Hochschule München",
+        sport: "football",
+        description: "Semi-professional team with students",
+        teammates : {
+            name: "Alice Arkansas",
+            name: "Bob Baltimore"
+        },
+        league: "UniversityBowl"
+    }
+)
+```
+Der Schlüssel für dieses Dokument wird dabei automatisch von MongoDB festgelegt.
+Möchte man nun einen weiteren Eintrag hinzufügen, kann dies analog zu obigen Beispiel getan werden.
+```
+db.teamDocument.insert(
+    {
+        name: "Hochschule Augsburg,
+        league: "UniversityBowl"
+    }
+)
+```
+Zu beachten ist hierbei, dass beide Codebeispiele unterschiedliche Datenstrukturen aufweisen, welche von mongoDB ohne Probleme aktzeptiert werden. 
+Durch die Indexierung bieten Document Store Datenbanken eine deutlich besser Abfragemöglichkeit der Daten, als es bei Key/Value Store Datenbanken der Fall ist. Lediglich komplexere Beziehungen sind mit Dokument Stores ebenso nicht allzu leicht darzustellen.
+
+#### Column Family Stores
+Colum Families „speichern Datensätze in multidimensionalen Maps ab, die relationalen Objekten ähnlich sind“ [@Fasel2016 118].
+Bekannte Anbieter hierbei sind Google Big Tables, Cassandra und HBase, was wiederum auf Big Tables passiert. Grundsätzlich verfolgen alle denselben Ansatz der Column Family Stores. Allerdings gibt es im Detail leichte Abweichungen was Datenmodellierung sowie Namenskonventionen angeht.
+Daher wird im folgenden anhand von Cassandra das Prinzip von Column Family Stores erklärt und mit passenden Codebeispielen ergänzt.
+
+Cassandra arbeitet mit sogenannten Keyspaces, in diesem können ein oder mehrere Spalten enthalten sein. Die Gesamtheit aller Spalten in einem Keyspace wird als Spaltenfamilie bezeichnet, welche einen Schlüssel besitzt.
+In jeder Spaltenfamilie gibt es wiederum Zeilen, die eine eindeutigen Schlüssel aufweisen. Jede Zeile enthält dabei Spalten, mit einem eindeutigen Wert.
+Dabei enthält die Spalte in einer Zeile der Spaltenfamilie zudem einen Zeitstempel, wodurch eine Versionierung ermöglicht wird.
+Eine Erweiterung der Spalten in einer Spaltefamilie ist die sogenannte „SuperColumn“. In dieser werden keine einzelnen Werte sondern eine Sammlung von Werten gespeichert.
+Zudem ermöglicht Cassandra eine Replikation der Daten, was auch dringend so empfohlen wird. Dabei werden die Kopien auf unterschiedlichen Knoten gespeichert. In diesem Fall werden alle Zeilen zweimal gespeichert, wobei jede Replikation der Daten auf einem gesonderten Knoten liegt.
+
+Column Family Stores bieten somit die Möglichkeit sehr komplexe Datenmodelle zu erstellen ohne dabei auf eine bestimmte Datenstruktur achten zu müssen. Durch die Anordnung in Spalten können Lese- und Schreibvorgänge schnell erfolgen.
+
+#### Graphen Datenbanken
+
+[@Fasel2016 122-124].
+
+Wie der Name bereits vermuten lässt, nutzen Graphen Datenbanken die Graphentheorie um Daten abzubilden. Dabei stellt jeder Knoten eine Entität dar und steht mit einem anderen Knoten, verknüpft über Kanten, in einer Beziehung; wobei sowohl Knoten als auch Kanten Attribute besitzen können. Des weiteren können Knoten und Kanten jederzeit, ohne größeren Aufwand hinzugefügt oder entfernt werden.
+
+Neo4j wird von Weltunternehmen wie Microsoft, IBM oder Adobe als Graphen Datenbanken genutzt. Dabei setzt Neo4j auf eine „eigene deskriptive Graphen-Abfragesprache namens Cypher“ [@Fasel2016 123].
+```
+CREATE (t:team { name:'Hochschule München', sport:'football'})
+CREATE (p:player { name:'Bob Burton'})
+
+```
+Hierdurch werden die Knoten „team“ und „player“ mit den zugehörigen Variablen „t“ und „p“ erstellt.
+Um nun eine Beziehung zwischen diesen beiden Knoten herzustellen muss folgender Code ausgeführt werden.
+```
+MATCH (t:team), (p:player)
+WHERE t.name = 'Hochschule München' AND p.name = 'Bob Burton'
+CREATE (p)-[r:plays_in]->(t)
+```
+Somit kann nun ausgedrückt werden, dass der Spieler „Bob Burton“ im Team der Hochschule München spielt.
+
+Graphen Datenbanken eignen sich besonders gut um Graphen-ähnliche Strukturen darzustellen. „Ein typischer Graph ist beispielsweise ein Social Graph, wie ihn Facebook oder LinkedIn nutzt“ [@Fasel2016 122].

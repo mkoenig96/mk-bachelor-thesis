@@ -30,6 +30,7 @@ Abstract
 - Teure Integrität
 - Nach-/Vorteile SQL bzw. NoSQL
 - Modellierung
+- Datentypen bei SQL notwendig, bei NoSQL nicht
 
 5 Praktische Umsetzung 5
     5.1 Neues Datenbankmodell
