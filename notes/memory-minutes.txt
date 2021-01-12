@@ -25,6 +25,11 @@ Abstract
     - mit Draw.io zeichnen
 
 4 Vergleich zwischen SQL und NoSQL
+- ACID vs. BASE
+- Verarbeitungslogik SQL
+- Teure Integrität
+- Nach-/Vorteile SQL bzw. NoSQL
+- Modellierung
 
 5 Praktische Umsetzung 5
     5.1 Neues Datenbankmodell
