@@ -76,7 +76,7 @@ CREATE TABLE teams (
 Selbstverständlich hätte bei MySQL der Befehl für den Fremschlüssel genau so in der ersten CREATE TABLE Anweisung stehen können.
 Dies soll hervorheben, dass zwar alle DBMS auf SQL als Abfragesprache beruhen, es allerdings, abhängig vom DBMS, unterschiedliche Syntax gibt.
 
-###Datenmodellierung###
+### Datenmodellierung
 
 Bevor ein relationes Datenbanksystem aufgesetzt wird, muss ein Datenmodell entworfen werden um redudante Daten zu verhindern sowie Abhängkeiten zwischen den Tabellen inklusive aller notwendigen Attributen und Datentypen zu berücksichtigen.
 „Ein Merkmal einer Tabelle ist redundant, wenn einzelne Werte dieses Merkmals innerhalb der Tabelle ohne Informationsverlust weggelassen werden können.“ [@MeierKaufmann2016 36]
@@ -105,6 +105,8 @@ Doppelt vorhandende Daten kosten unnötigen Speicherplatz welcher zum einen die 
 
 
 ## NoSQL 
+
+
 
 
 
