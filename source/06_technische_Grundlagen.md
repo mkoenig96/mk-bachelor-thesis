@@ -49,9 +49,10 @@ CREATE TABLE teams (
     PRIMARY KEY (id)
 );
 ```
-Die Attribute der Tabelle sind demnach,bei Ausführung der Angabe, „id“ (=festgelegter Primärschlüssel), „name“, „shortname“ und „description“. Das  NOT NULL Statement sorgt dafür, dass das Attribut „id“ niemals NULL werden kann.
+Die Attribute der Tabelle sind demnach,bei Ausführung der Angabe, „id“ (= festgelegter Primärschlüssel), „name“, „shortname“ und „description“. Das  NOT NULL Statement sorgt dafür, dass das Attribut „id“ niemals NULL werden kann.
 Dies ist gerade bei Schlüsselattributen wichtig, damit dieses auch wirklich gesetzt werden und als solches agieren kann.
-Oftmals ist es gewollt, dass ein Attribut auf eine andere Tabelle referenzieren soll. Hierfür muss dann ein Fremdschlüssel angegeben werden, wodurch die Angabe wie folgt ergänzt werden müsste.
+Zudem ist es in relationalen Datenbankmodellen notwendig, dass Fremdschlüsselbeziehungen gesetzt werden. Dadurch werden Tabellenbeziehungen über Attribute hergestellt. Diese sind in mehreren Tabellen als Fremdschlüsselattribute gesetzt und referenzieren dabei von einer Tabelle zu einer anderen. 
+Die Angabe des Fremdschüssel mit der zugehörigen Referenz muss dann auch in der SQL Ausführung angegeben beziehungsweise ergänzt werden.
 
 _MySQL_
 ```
@@ -73,26 +74,39 @@ CREATE TABLE teams (
 ```
 
 Selbstverständlich hätte bei MySQL der Befehl für den Fremschlüssel genau so in der ersten CREATE TABLE Anweisung stehen können.
-Dies soll hervorheben, dass zwar alle DBMS auf SQL als Abfragesprache beruhen, es allerdings durchaus unterschiedliche Syntax gibt.
+Dies soll hervorheben, dass zwar alle DBMS auf SQL als Abfragesprache beruhen, es allerdings, abhängig vom DBMS, unterschiedliche Syntax gibt.
 
-**Datenmodellierung**
+###Datenmodellierung###
 
+Bevor ein relationes Datenbanksystem aufgesetzt wird, muss ein Datenmodell entworfen werden um redudante Daten zu verhindern sowie Abhängkeiten zwischen den Tabellen inklusive aller notwendigen Attributen und Datentypen zu berücksichtigen.
+„Ein Merkmal einer Tabelle ist redundant, wenn einzelne Werte dieses Merkmals innerhalb der Tabelle ohne Informationsverlust weggelassen werden können.“ [@MeierKaufmann2016 36]
+Um solche Redundanzen und Datenanomalien zu vermeiden werden Datenmodelle auf Basis der Normalformen erstellt. In der Praxis finden dabei am häufigsten die erste bis dritte Normalform Anwendung. Auf die Normalformen vier und fünf wird nicht eingegangen, da damit einhergehende „[...] Mehrwert- oder Verbundabhängigkeiten kaum in in Erscheinung treten [...]“ [@MeierKaufmann2016 38].
 
+**Erste Normalform (1. NF)**
+
+[@MeierKaufmann2016 39].
+Die erste Normalfrom ist erfüllt, wenn alle Tabellenfelder atomare Werte vorweisen. Bedeutet in jedem Tabellenfeld darf exakt ein Wert vorkommen; „Mengen, Aufzählungen oder Wiederholungsgruppen“ [@MeierKaufmann2016 39] sind nicht zulässig.
+
+**Zweite Normalform (2. NF)**
+
+[@MeierKaufmann2016 39].
+Voraussetzung für die zweite Normalform ist, dass die 1. NF bereits erfüllt ist. Zudemm muss „jedes Nichtschlüsselmerkmal von jedem Schlüssel voll funktional abhängig“ [@MeierKaufmann2016 39] sein. Dies bedeutet, dass ein Wert einen anderen Wert exakt bestimmt.
+Wird ein Nichtschlüsselattribut von einem zusammengesetzten Schlüssel bestimmt, so darf nur allein der zusammengesetzte Schlüssel das Nichtschlüsselattribut bestimmen.
+
+**Dritte Normalform (3. NF)**
+
+[@MeierKaufmann2016 42-43]
+Wiederum die erste Bedingung für die dritte Normalform ist die Erfüllung der 2. NF. Des weiteren muss gewährleistet sein, dass „kein Nichtschlüsselmerkmal von irgendeinem Schlüssel transitiv abhängig ist“ [@MeierKaufmann2016 42].
+Eine transitive Abhängigkeit liegt dann vor wenn Nichtschlüsselattribute voneinander „[...] über Umwege funktional abhängig [sind]" [@MeierKaufmann2016 42].
+
+Die Vermeidung von Redundanzen und Anomalien ist daher wichtig um eine performante Datenbank zu implementieren. 
+[@Adams2020 39].
+Doppelt vorhandende Daten kosten unnötigen Speicherplatz welcher zum einen die Arbeitsgeschwindigkeit des Datenbanksystems negativ beeinträchtigen kann und zum anderen mehr Speicherplatz in Anspruch nimmt, was sich wiederum auf die monetären Kosten einer Datenbank auswirkt. Des weiteren sind bei redudant vorhandenen Daten „teuer, da diese in vielen Zeilen durchgeführt werden müssen“ [@Adams2020 39].
 
 
 ## NoSQL 
 
-<!--Das ist ein Unterabschnitt des Mittelteils. Quisque sit amet tempus arcu, ac suscipit ante. Cras massa elit, pellentesque eget nisl ut, malesuada rutrum risus. Nunc in venenatis mi. Curabitur sit amet suscipit eros, non tincidunt nibh. Phasellus lorem lectus, iaculis non luctus eget, tempus non risus. Suspendisse ut felis mi.
 
-## Zusammenfassung der Kapitel
-
-<!--
-kursiv: * auf beiden Seiten des Textes
-fett: **
-kursiv und fett: ***
--->
-
-<!--Dies ist ein kurzer Überblick darüber, was in jedem Kapitel geschrieben wurde. **Kapitel 1** gibt einen Hintergrund über duis tempus justo quis arcu consectetur sollicitudin. **Kapitel 2** diskutiert morbi sollicitudin gravida tellus in maximus. **Kapitel 3** diskutiert vestibulum eleifend turpis id turpis sollicitudin aliquet. **Kapitel 4** zeigt wie phasellus gravida non ex id aliquet. Proin faucibus nibh sit amet augue blandit varius.-->
 
 
 
