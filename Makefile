@@ -39,6 +39,7 @@ pdf:
 	-V documentclass:report \
 	-V lang:de-DE \
 	-V mainlang:german \
+	-V geometry:left=2.5cm,right=2.5cm,top=3.0cm,bottom=3.0cm \
 	-N \
 	--pdf-engine=xelatex
 

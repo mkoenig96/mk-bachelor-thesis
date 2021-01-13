@@ -4,14 +4,15 @@
 
 Multi-Tenant ist ein Architekturkonzept in der Softwareentwicklung. Dieses sieht vor, dass die Anwendung nicht für jeden Nutzer in einer eigenen Instanz ausgespielt wird, sondern alle Nutzer auf der gleichen Plattform arbeiten können.
 
-Das Konzept besteht bereits seit den späten 90er Jahren und fand in den letzten Jahren im Zusammenhang mit der immer mehr voranschreitenden Digitalisierung wieder deutlich mehr Aufmerksamkeit. Dies ist zum einen darin begründet, dass die Anzahl an Software- sowie Webanwendungen massiv zugenommen hat und zum anderen durch den Fortschritt der Cloud Computing Technologie neue Möglichkeiten für dieses Architekturkonzept entstanden.
+Das Konzept besteht bereits seit den späten 90er Jahren und fand in den letzten Jahren im Zusammenhang mit der immer mehr voranschreitenden Digitalisierung wieder deutlich mehr Aufmerksamkeit. Dies ist zum einen darin begründet, dass die Anzahl an Software- sowie Webanwendungen massiv zugenommen hat und zum anderen, durch den Fortschritt der Cloud Computing Technologie, neue Möglichkeiten für dieses Architekturkonzept entstanden.
 Dabei gibt es im Cloud Computing drei verschiedene Arten:
 
 - _Infrastructure as a Service (IaaS):_ Bereitstellung der notwendigen Ressourcen wie beispielsweise Serverkapazitäten, Datenspeicher etc. die Entwickler, abgestimmt auf ihre Bedürfnisse, nutzen können. Die Ressourcen müssen selbständig verwaltet werden.
 - _Platform as a Service (PaaS):_ Hierbei kümmert sich der Cloudanbieter um die Verwaltung sowie Bereitstellung der Ressourcen. Die Entwickler müssen sich lediglich um die Anwendungsprogrammierung kümmern.
 - _Software as a Service (SaaS):_ Dieser Service ist in der Regel für den Endnutzer gedacht. Es wird lediglich die fertig Anwendung für den Nutzer bereitgestellt, welcher sich weder um die Ressourcen, noch um die Entwicklung der Anwendung kümmern muss.
 
-Hier geht es jetzt weiter
+Letztgenannte Form findet man in Verbindung mit Multi-Tenant Architekturen recht häufig, da SaaS von Multi-Tenancy sehr starkt profitieren kann. 
+Nachfolgende Grafik zeigt eine 
 
 ![Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur \label{Krass}](source/figures/SingleVsMulti-Tenant.png) { width=50% }
 Abbildung 1
@@ -259,3 +260,4 @@ CREATE (p)-[r:plays_in]->(t)
 Somit kann nun ausgedrückt werden, dass der Spieler „Bob Burton“ im Team der Hochschule München spielt.
 
 Graphen Datenbanken eignen sich besonders gut um Graphen-ähnliche Strukturen darzustellen. „Ein typischer Graph ist beispielsweise ein Social Graph, wie ihn Facebook oder LinkedIn nutzt“ [@Fasel2016 122].
+
