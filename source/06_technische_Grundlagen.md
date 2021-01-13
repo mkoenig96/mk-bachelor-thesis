@@ -11,13 +11,32 @@ Dabei gibt es im Cloud Computing drei verschiedene Arten:
 - _Platform as a Service (PaaS):_ Hierbei kümmert sich der Cloudanbieter um die Verwaltung sowie Bereitstellung der Ressourcen. Die Entwickler müssen sich lediglich um die Anwendungsprogrammierung kümmern.
 - _Software as a Service (SaaS):_ Dieser Service ist in der Regel für den Endnutzer gedacht. Es wird lediglich die fertig Anwendung für den Nutzer bereitgestellt, welcher sich weder um die Ressourcen, noch um die Entwicklung der Anwendung kümmern muss.
 
-Letztgenannte Form findet man in Verbindung mit Multi-Tenant Architekturen recht häufig, da SaaS von Multi-Tenancy sehr starkt profitieren kann. 
-Nachfolgende Grafik zeigt eine 
+Letztgenannte Form findet man in Verbindung mit Multi-Tenant Architekturen recht häufig, da SaaS Proukte in der Praxis sehr gerne als Multi-Tenant Anwendungen gebaut werden. Dabei liegt der große Vorteil nicht nur in der Architektur an sich, sondern auch in Verbindung mit der Cloud Computing Technologie.
+
+### Multi-Tenant Konzepte
+
+Nachfolgende Grafik zeigt die Gegenüberstellung einer Single- und Multi-Tenant Architektur.
 
 ![Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur \label{Krass}](source/figures/SingleVsMulti-Tenant.png) { width=50% }
 Abbildung 1
 
-Und immer weiter.
+Der Begriff „Tenant“ ist hierbei mit dem User gleichzusetzen.. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
+
+[@MicrosoftDocs2019]
+
+**Single-Tenant**
+Jeder Nutzer beziehungsweise Tenant greift auf seine eigene Instanz mit eigener Datenbank zu. 
+
+**Multi-Tenant mit einer Datenbank pro Tenant**
+
+
+**Multi-Tenant mit geteilter Datenbank**
+
+Auf IaaS, PaaS und Horizontal/Vertikal Skalieren eingehen!
+
+### Praxisbeispiel: Atlassian
+
+### Microservices
 
 
 ## SQL 
