@@ -1,7 +1,5 @@
 # Analyse des IST-Zustands von TeamSports 
 
-
-
 ## Grundlegendes 
 
 TeamSports2 ist ein Content-Management-System für Sportvereine !CMS ERKLÄREN?!. Das System wurde entwickelt um Sportvereinen den Aufbau einer leicht bedienbaren, attraktiven sowie kostengünstigen Vereinshomepage zu ermöglichen. Die Idee dafür entstand aufgrund des Bedarfs einer neuen Homepage im eigenen Handballverein. 
