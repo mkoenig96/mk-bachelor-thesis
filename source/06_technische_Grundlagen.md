@@ -79,11 +79,15 @@ Mittels AWS hat Atlassian verschiedene geographische Regionen eingerichtet, wodu
 
 **Uber**
 
-Der bekannte Personenbeförderungsdienst aus den USA setzt ebenso auf eine Multi-Tenant Architektur in Verbindung mit Microservices [@Gud2020].
+Der bekannte Personenbeförderungsdienst aus den USA setzt ebenso auf eine Multi-Tenant Architektur. Allerdings in Verbindung mit Microservices [@Gud2020].
 
-Microservices stellen ebenso eine Architekturvariante dar, bei der eine Anwendung nicht aus der klassischen View-, Business Logik- und Datenhaltungsschicht besteht, sondern viele Komponenten zusammen die Anwendung darstellen. Dabei kommunizieren die Komponenten untereinander mittels Application Programming Interfaces (APIs). Der Vorteil dieser Archtiekturvariante liegt darin, dass die Komponenten unabhängig voneinander agieren. Dadurch können diese schnell ausgetauscht, erweitert oder repariert werden, wodurch andere Komponenten nicht betroffen sind [@Indrasidri2018].
+Microservices stellt ebenso eine Architekturvariante dar, bei der eine Anwendung nicht aus der klassischen View-, Business Logik- und Datenhaltungsschicht besteht, sondern viele Komponenten zusammen die Anwendung darstellen. Dabei kommunizieren die Komponenten untereinander mittels Application Programming Interfaces (APIs). Der Vorteil dieser Archtiekturvariante liegt darin, dass die Komponenten unabhängig voneinander agieren. Dadurch können diese schnell ausgetauscht, erweitert oder repariert werden, wodurch andere Komponenten nicht betroffen sind [@Indrasidri2018 7-8].
 
+[@Gud2020].
+Uber führt dabei mehrere Gründe auf, weshalb sich für eine Multi-Tenant Architektur in Verbindung mit Microservices entschieden wurde. Einer dieser Gründe ist das Testing beziehungsweise deployen von neu entwickelten Code 
 
+![Abbildung 3: Ubers Multi-Tenancy Testing](source/figures/UberMultiTenancy.png) { width=50% }
+Abbildung 2 [@Gud2020]
 
 
 
