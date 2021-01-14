@@ -54,6 +54,9 @@ Einer der kritischsten Anforderungen bei einer Multi-Tenant Architektur ist die 
 In der Praxis wird eine eigene Datenbank pro Tenant oftmals dezidiert von den Kunden verlangt. Auch wenn für eine strenge Datenisolation bei einer von mehreren Tenants genutzten Datenbank gesorgt ist, kann dies beispielsweise nicht mit den Unternehmensregularien vereinbart werden. 
 Unabhängig davon ist eine Separierung der jeweiligen Daten schon aus Sicht der Individualisierung eines jeden Tenants notwendig, da logischerweise nicht jeder Nutzer exakt dieselben Anforderungen an seinen Tenant hat.
 
+**Entwicklung**
+
+
 Durch den vorangengangen verstärkten Fokus auf das CloudComputing mag der Eindruck entstehen, dass sich Multi-Tenant Architekturen lediglich in Verbindung mit einer Cloud Archtitektur implementieren lassen. Dem ist aber nicht so. CloudComputing stellt nicht das „Nonplusultra“, da die richtigen Ressourcen individuell von der jeweiligen Anwendung abgewogen werden müssen. Auch mit  herkömmlichen stationären Servern lassen sich Multi-Tenant Architekturen umsetzen und die genannten Vorteile nutzen. CloudComputing bietet lediglich, vorallendingen für SaaS Produkte, ein sehr breites Spektrum um die Vorteile dieser Architektur in Verbindung mit den heutigen Vorteilen effizient nutzen zu können.
 
 ### Praxisbeispiele: Atlassian und Uber
@@ -75,6 +78,11 @@ Umgekehrt wird dann ein Request abgewickelt, wenn der Nutzer nach erfolgreichen 
 Mittels AWS hat Atlassian verschiedene geographische Regionen eingerichtet, wodurch Nutzer bei Anfragen, abhängig von ihrem eigenen Standort, in die nächstgelegene Region geleitet wird. Dies erlaubt Atlassian zum einen bei hohen Anfrageaufkommen in den Regionen entsprechend zu skalieren und zum anderen die Ausfallzeit bei Updates, nach eigener Aussage, auf unter fünf Minuten zu bringen. Letzteres beruht darauf, dass die Updates nicht in allen Regionen gleichzeitig sondern abhängig von der Zeit und geringen Nutzeranfrange, wie beispielsweise Nachts, eingespielt werden können. Zudem können durch Caching-Mechanismen oft angefragte Inhalte in den Regionen für den jeweiligen Nutzer bereitgehalten und bei Bedarf schnell wieder aufgerufen werden.
 
 **Uber**
+
+Der bekannte Personenbeförderungsdienst aus den USA setzt ebenso auf eine Multi-Tenant Architektur in Verbindung mit Microservices [@Gud2020].
+
+Microservices stellen ebenso eine Architekturvariante dar, bei der eine Anwendung nicht aus der klassischen View-, Business Logik- und Datenhaltungsschicht besteht, sondern viele Komponenten zusammen die Anwendung darstellen. Dabei kommunizieren die Komponenten untereinander mittels Application Programming Interfaces (APIs). Der Vorteil dieser Archtiekturvariante liegt darin, dass die Komponenten unabhängig voneinander agieren. Dadurch können diese schnell ausgetauscht, erweitert oder repariert werden, wodurch andere Komponenten nicht betroffen sind [@Indrasidri2018].
+
 
 
 
