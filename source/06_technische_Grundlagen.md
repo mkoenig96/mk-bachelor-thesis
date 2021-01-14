@@ -13,30 +13,49 @@ Dabei gibt es im Cloud Computing drei verschiedene Arten:
 
 Letztgenannte Form findet man in Verbindung mit Multi-Tenant Architekturen recht häufig, da SaaS Proukte in der Praxis sehr gerne als Multi-Tenant Anwendungen gebaut werden. Dabei liegt der große Vorteil nicht nur in der Architektur an sich, sondern auch in Verbindung mit der Cloud Computing Technologie.
 
+CloudComputing Anbieter wie Amazon Web Services (AWS), Microsoft Azure oder Google Cloud stellen, je nach den verwendeten Ressourcen, IaaS beziehungsweise PaaS bereit. 
+Es können sowohl Services, die Ressourcen wie Serverkapazitäten bereitstellen (zum Beispiel AWS EC2) oder bereits vollständig verwaltet sind (zum Beispiel AWS Lambda) genutzt werden. Daher ergibt sich eine Kombination aus IaaS und PaaS.
+
 ### Multi-Tenant Konzepte
+
+Durch die eingangs erwähnte Digitalisierung ist der Nutzerandrang auf Web- und Softwareanwendungenen stark angestiegen. Dabei wird auch eine hohe Verfügbarkeit sowie schnelle Antwortzeiten erwartet, auch wenn viele Nutzer zur gleichen Zeit auf die Anwendung zugreifen. Des weiteren sind auch die Kosten, sowohl für den Anwender, als auch den Bereitsteller der Anwendung kein zu vernachlässigender Faktor.
 
 Nachfolgende Grafik zeigt die Gegenüberstellung einer Single- und Multi-Tenant Architektur.
 
 ![Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur \label{Krass}](source/figures/SingleVsMulti-Tenant.png) { width=50% }
 Abbildung 1
 
-Der Begriff „Tenant“ ist hierbei mit dem User gleichzusetzen.. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
+Der Begriff „Tenant“ ist hierbei mit dem User gleichzusetzen. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
 
-[@MicrosoftDocs2019]
+- _Multi-Tenant mit einer Datenbank pro Tenant:_ Alle Nutzer greifen zwar auf dieselbe Instanz zu, wobei pro Tenant eine eigene Datenbank bereitgestellt wird [@MicrosoftDocs2019].
 
-**Single-Tenant**
-Jeder Nutzer beziehungsweise Tenant greift auf seine eigene Instanz mit eigener Datenbank zu. 
+- _Multi-Tenant mit geteilter Datenbank:_ Auch hierbei greifen alle Nutzer auf eine Instanz zu und zudem liegen, voneiander separiert, in einer oder mehreren Datenbank jeweils mehrere Tenants [@MicrosoftDocs2019].
 
-**Multi-Tenant mit einer Datenbank pro Tenant**
+- _Multi-Tenant Kombination mit eigenständigen und geteilten Datenbanken:_ Hierbei werden die beiden erstgenannten Ansätze gemeinsam verwendet. Es sind also sowohl Datenbanken vorhanden, auf welchen die Daten mehrerer Tenants liegen, als auch Datenbanken die nur für einen Tenant bestimmt sind [@MicrosoftDocs2019].
+
+**Skalierbarkeit**
+
+Durch die bereits erläuterten hohen Anforderugnen an die Anwendungen liegt der Vorteil der Multi-Tenant Architektur an der Bündelung der Ressourcen. Sowohl die Anwendung an sich, als auch die Datenbanken können mittels Cloudumgebungen problemlos horizontal sowie vertikal skaliert werden. 
+Das horizontale Skalieren zeichnet sich dadurch aus, dass zusätzliche Ressourcen, wie zusätzliche Datenbanken, zur Verfügung gestellt werden, während beim vertikalen Skalieren die bestehenden Ressourcen in ihrem Leistungsumfang erweitert werden, wie das Erhöhen der Rechenleistung der Datenbank. Somit kann bei einem hohen Anfrageaufkommen sowohl die Anwendung, als auch die Datenbanken nach den Anforderungen skaliert werden.
+Eine derartige Skalierung wäre bei einer Single-Tenant Anwendung nur bedingt möglich, da sowohl auf die Datenbank, als auch Anwendung separiert zugegriffen wird. Allerdings muss beachtet werden, dass je nach oben genannter Konzeption der Multi-Tenant Archtitektur es auch hier Grenzen in der Effienz der Skalierbarkeit gibt. Zudem ist ein entscheidender Faktor das Betreiben der Ressourcen in der Cloud an sich.
+
+**Kosten**
+
+Multi-Tenancy ermöglicht zudem 
+
+**Wartung**
 
 
-**Multi-Tenant mit geteilter Datenbank**
 
-Auf IaaS, PaaS und Horizontal/Vertikal Skalieren eingehen!
+
+
+
+### Microservices
+
 
 ### Praxisbeispiel: Atlassian
 
-### Microservices
+
 
 
 ## SQL 
