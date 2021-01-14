@@ -41,19 +41,40 @@ Eine derartige Skalierung wäre bei einer Single-Tenant Anwendung nur bedingt m�
 
 **Kosten**
 
-Multi-Tenancy ermöglicht zudem 
+Multi-Tenancy ermöglicht zudem Ressourcen effizienter zu nutzen. Nicht jeder Tenant benötigt in der Praxis genau denselben Speicherplatz auf seiner ihm zugeweisenen Datenbank. Wird dem Nutzer eine beispielsweise 20 GB große Datenbank zur Verfügung gestellt, dieser aber effektiv nur 15 GB benötigt, bleiben 5GB ungebraucht. Werden nun mehrere Tenants auf eine Datenbank gelegt kann der maximal verfügbare Speicherplatz genutzt werden indem jeden Nutzer genau der benötigte Speicherplatz zugewiesen wird.
+Gleiches gilt für die Anwendung an sich, die bei einer höheren Anfragelast entsprechend skaliert werden kann um eine Nichterreichbarkeit oder langsame Antwortzeiten zu verhindern. Dies muss dann nicht für jede einzelne Instanz gemacht werden, sondern kann aufgrund der Multi-Tenancy über eine Instanz geschehen. Nach abflauen der Anfragen, wie beispielsweise Nachts oder nach gewissen Spitzenzeiten, können dann Ressourcen sowie Kosten gespart werden.
 
 **Wartung**
 
+Da die Anwendung lediglich über eine einzige Instanz aufgerufen wird, erleichtert sich auch die Wartung sowie das Einspielen von Updates. Zeit und Kosten können gespart werden, da nicht für jede vom Nutzer verwendete Instanz ein Update oder eventuelle Fehlerbehebungen eingespielt werden müssen. Selbiges gilt auch für die Datenbanken, da diese im Idealfall nicht alle einzeln angesprochen werden müssen.
 
+**Datenseparierung**
 
+Einer der kritischsten Anforderungen bei einer Multi-Tenant Architektur ist die Datenseparierung. Ausgehend von der Konzeption, dass in einer Datenbank mehrere Tenants liegen, müssen die Daten selbstredend sauber voneinander getrennt werden. Dabei muss zwingend verhindert weden, dass die Daten eins Tenants fälschlicherweise von einem anderen Tenant eingesehen werden können. Diese fällt bei einer Single- oder Multi-Tenant Konzepiton wobei jeder Tenant eine eigene Datenbank besitzt deutlich leichter. 
+In der Praxis wird eine eigene Datenbank pro Tenant oftmals dezidiert von den Kunden verlangt. Auch wenn für eine strenge Datenisolation bei einer von mehreren Tenants genutzten Datenbank gesorgt ist, kann dies beispielsweise nicht mit den Unternehmensregularien vereinbart werden. 
+Unabhängig davon ist eine Separierung der jeweiligen Daten schon aus Sicht der Individualisierung eines jeden Tenants notwendig, da logischerweise nicht jeder Nutzer exakt dieselben Anforderungen an seinen Tenant hat.
 
+Durch den vorangengangen verstärkten Fokus auf das CloudComputing mag der Eindruck entstehen, dass sich Multi-Tenant Architekturen lediglich in Verbindung mit einer Cloud Archtitektur implementieren lassen. Dem ist aber nicht so. CloudComputing stellt nicht das „Nonplusultra“, da die richtigen Ressourcen individuell von der jeweiligen Anwendung abgewogen werden müssen. Auch mit  herkömmlichen stationären Servern lassen sich Multi-Tenant Architekturen umsetzen und die genannten Vorteile nutzen. CloudComputing bietet lediglich, vorallendingen für SaaS Produkte, ein sehr breites Spektrum um die Vorteile dieser Architektur in Verbindung mit den heutigen Vorteilen effizient nutzen zu können.
 
+### Praxisbeispiele: Atlassian und Uber
 
-### Microservices
+In der Praxis nutzen bereits viele bekannt Anwendungen Multi-Tenant Architekturen. Um mögliche Umsetzungen der Architektur beleuchten zu können, werden als Beispiele Atlassian und Uber herangeführt.
 
+**Atlassian**
 
-### Praxisbeispiel: Atlassian
+[@Atlassian2020].
+
+Atlassian bietet bekannte Programme, wie Jira, Trello oder Confluence, für Softwareentwickler an. Dabei kann jedem Nutzer über einen einzigen Account Zugang zu den jeweiligen Diensten gewährt werden.
+Die gesamte Architektur beruht dabei auf Multi-Tenancy. Alle Nutzer loggen sich über eine Instanz ein und deren Daten liegen separiert voneinander in einer Datenbank.
+Folgende von Atlassian kreierte Abbildung zeigt den Ablauf bei einem Request auf.
+![Abbildung 2: Multi-Tenant Archtitektur von Atlassian](source/figures/AtlassianArchitecture.png) { width=50% }
+Abbildung 2 [@Atlassian2020]
+
+Atlassian nutzt dabei verschiedene sogenannte Edges, welche die jeweilige Anwendung umgeben. Wenn sich der Nutzer einloggen möchte gelangt er über ein virtuelles Gate innerhalb dieser Edges.
+Umgekehrt wird dann ein Request abgewickelt, wenn der Nutzer nach erfolgreichen Login beispielsweise eine Confluence-Seite aufrufen möchte. Der Request wird an das nächstgelegene Gate innerhalb der Edges zum Verlassen weitergeleitet und lokalisiert über die Tenant Config wo die zugehörigen Daten liegen sowie welche Daten zurückgeschickt werden müssen.
+Mittels AWS hat Atlassian verschiedene geographische Regionen eingerichtet, wodurch Nutzer bei Anfragen, abhängig von ihrem eigenen Standort, in die nächstgelegene Region geleitet wird. Dies erlaubt Atlassian zum einen bei hohen Anfrageaufkommen in den Regionen entsprechend zu skalieren und zum anderen die Ausfallzeit bei Updates, nach eigener Aussage, auf unter fünf Minuten zu bringen. Letzteres beruht darauf, dass die Updates nicht in allen Regionen gleichzeitig sondern abhängig von der Zeit und geringen Nutzeranfrange, wie beispielsweise Nachts, eingespielt werden können. Zudem können durch Caching-Mechanismen oft angefragte Inhalte in den Regionen für den jeweiligen Nutzer bereitgehalten und bei Bedarf schnell wieder aufgerufen werden.
+
+**Uber**
 
 
 
