@@ -54,14 +54,16 @@ Einer der kritischsten Anforderungen bei einer Multi-Tenant Architektur ist die 
 In der Praxis wird eine eigene Datenbank pro Tenant oftmals dezidiert von den Kunden verlangt. Auch wenn für eine strenge Datenisolation bei einer von mehreren Tenants genutzten Datenbank gesorgt ist, kann dies beispielsweise nicht mit den Unternehmensregularien vereinbart werden. 
 Unabhängig davon ist eine Separierung der jeweiligen Daten schon aus Sicht der Individualisierung eines jeden Tenants notwendig, da logischerweise nicht jeder Nutzer exakt dieselben Anforderungen an seinen Tenant hat.
 
-**Entwicklung**
+**Codestruktur**
+
+Sieht man sich nun Anwendungen an, bei der jeder Nutzer eine eigene Instanz zugeteilt bekommt fällt auf, dass somit auch auf jeder Instanz, bis auf Individualisierungen für den Nutzer, derselbe Code liegt. Da bei Multi-Tenancy der Hauptcode auf einer Instanz liegt, alle Nutzer darauf zugreifen und die nach Nutzerbedürfnissen erforderlichen Codeteil an die Hauptinstanz angehängt werden, können Speicherplatz verringert und die Wartung erleichtert werden. 
 
 
 Durch den vorangengangen verstärkten Fokus auf das CloudComputing mag der Eindruck entstehen, dass sich Multi-Tenant Architekturen lediglich in Verbindung mit einer Cloud Archtitektur implementieren lassen. Dem ist aber nicht so. CloudComputing stellt nicht das „Nonplusultra“, da die richtigen Ressourcen individuell von der jeweiligen Anwendung abgewogen werden müssen. Auch mit  herkömmlichen stationären Servern lassen sich Multi-Tenant Architekturen umsetzen und die genannten Vorteile nutzen. CloudComputing bietet lediglich, vorallendingen für SaaS Produkte, ein sehr breites Spektrum um die Vorteile dieser Architektur in Verbindung mit den heutigen Vorteilen effizient nutzen zu können.
 
 ### Praxisbeispiele: Atlassian und Uber
 
-In der Praxis nutzen bereits viele bekannt Anwendungen Multi-Tenant Architekturen. Um mögliche Umsetzungen der Architektur beleuchten zu können, werden als Beispiele Atlassian und Uber herangeführt.
+In der Praxis nutzen bereits viele Unternehmen und bekannte Anwendungen Multi-Tenant Architekturen. Um mögliche Umsetzungen der Architektur beleuchten zu können, werden als Beispiele Atlassian und Uber herangeführt.
 
 **Atlassian**
 
@@ -84,11 +86,17 @@ Der bekannte Personenbeförderungsdienst aus den USA setzt ebenso auf eine Multi
 Microservices stellt ebenso eine Architekturvariante dar, bei der eine Anwendung nicht aus der klassischen View-, Business Logik- und Datenhaltungsschicht besteht, sondern viele Komponenten zusammen die Anwendung darstellen. Dabei kommunizieren die Komponenten untereinander mittels Application Programming Interfaces (APIs). Der Vorteil dieser Archtiekturvariante liegt darin, dass die Komponenten unabhängig voneinander agieren. Dadurch können diese schnell ausgetauscht, erweitert oder repariert werden, wodurch andere Komponenten nicht betroffen sind [@Indrasidri2018 7-8].
 
 [@Gud2020].
-Uber führt dabei mehrere Gründe auf, weshalb sich für eine Multi-Tenant Architektur in Verbindung mit Microservices entschieden wurde. Einer dieser Gründe ist das Testing beziehungsweise deployen von neu entwickelten Code 
+Uber führt dabei mehrere Gründe auf, weshalb sich für eine Multi-Tenant Architektur in Verbindung mit Microservices entschieden wurde. Im folgenden soll allerdings nur auf das Deployen und Testen von Uber eingegangen werden.
+Die Änderungen oder Neuentwicklungen eines Services sollen nicht direk in der Produktionsumgebung, sondern zuvor in einer Testumgebung eingespielt werden. Diese Testumgebung ind dann wiederum ein eigener Tenant, wobei die Datenströme weiterhin zwischen dem geänderten und den bestehenden Services bestehen können. Nachfolgendes Schaubild zeigt, wie Uber dies bei sich umgesetzt hat. Die Rechtecke mit den Buchstaben A-D stellen dabei jeweils einen eigenen Service dar. Somit kann die Testumgebung in einem eigenen Tenant parallel zur Produktionsumgebung laufen.
 
 ![Abbildung 3: Ubers Multi-Tenancy Testing](source/figures/UberMultiTenancy.png) { width=50% }
 Abbildung 2 [@Gud2020]
 
+Des weiteren nutzt Uber für das Einführen von Änderungen oder Neuerungen der Services in die Produktionsumgebung das sogenannte Canary Deployment. Bei dieser Art des Deployments gibt es zwei System: Das aktuell sowie das mit den Änderungen. Dabei wird nur ein kleiner Teil der Datenströme auf das neue System geleitet und der Rest läuft noch auf das aktuelle System. Wenn alles funktioniert, können die Datenströme auf das neue System sukzessive erhöht werden.
+Auch hierfür bietet sich neben der aktuellen Produktionsumgebung ein weiterer Tenant an, den Uber nutzt, um darauf das neue System einzuspielen. Zudem nutzt Uber auch Multi-Tenancy um für die soeben genannten Fälle das Routing auf die entsprechenden Tenants beliebig umstellen zu können.
+
+Die beiden Beispiele zeigen auf, dass Multi-Tenant Architekturen nicht nur Kosten beim Unternehmen und Kunden einsparen sowie die Systemeffizienz steigern können. Sie sind auch sehr gut für eine effektive Entwicklerinfrastruktur geeignet.
+Nichtdestrotz ist die Entscheidung für die Anwendungsarchitektur zuletzt immer von den Anforderungen der jeweiligen Nutzer sowie Unternehmenen abhängig und darf nicht leichtfertig auf Basis von aktuellen Trends und Technologien getroffen werden.
 
 
 ## SQL 
