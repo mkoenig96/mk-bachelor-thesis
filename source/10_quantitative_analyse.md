@@ -1,10 +1,13 @@
 # Quantitative Analyse der aktuellen sowie neuen Architektur 
 
+
+Hier sollen die Kosten der aktuellen und möglichen neuen Architektur ggü. stellen. Bei häufigen Queries soll analysiert werden wie diese durch MultiTenant verbesser bzw. performanter gestaltet werden können.
+
+Ein Gedanke (hattest du ja auch schon angebracht) war noch ein weiteres Kapitel miteiner Qualitativen Analyse zu machen. Hier möchte ich analysieren welche Verbesserungsmöglichkeiten es beim aktuellen System gibt und wie diese durch MultiTenant realisiert werden können. Aber auch ob es evtl. Nachteile gibt TS2 auf Multi Tenant umzustellen. 
+
 ## Kosten 
 
 
-
-## Leistung 
 
 
 ## Häufige Queries 

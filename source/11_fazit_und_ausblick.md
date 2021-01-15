@@ -1,3 +1,0 @@
-# Fazit und Ausblick 
-
-

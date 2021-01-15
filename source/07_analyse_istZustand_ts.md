@@ -51,6 +51,9 @@ Beim Deployen werden nur Dateien an die Kundeninstanzen übertragen, welche nich
 
 ## Architektur 
 
+Insbesondere soll hier das MVC Prinzip mit cakePHP erklärt werden und wie dieses in TeamSports umgesetzt wurde. Die Zusammenhänge sollen auch in er Abbildung dargestellt werden.
+
 
 ## Datenbankmodell 
 
+Ursprünglicher Plan war, das gesamte Datenbankmodell von TeamSports abzubilden. Mit allen Beziehungen, Tabellen etc. Da dies aber m.E. zu umfangreich ist, soll auf die wichtigsten Tabellen (temas, departments etc.) und deren Struktur sowie Beziehungen eingegangen werden. Auch hierfür ist eine Abbildung vsl sinnvoll.
