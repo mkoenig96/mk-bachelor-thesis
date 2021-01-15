@@ -238,10 +238,9 @@ Dabei werden NoSQL Datenbanken bestimmte Eigenschaften zugeordnet, welche erfül
 - _Replikation:_ Das Datenbanksystem muss die Replikation aller Daten ermöglichen.
 - _Datenkonsistenz:_ Es darf keine starke Datenkonsistenz vorliegen um eine geringe Ausfalltoleranz sowie hohe Verfügbarkeit zulassen zu können.
 
-### Arten von NoSQL-Datenbanken
 „Die Forscher und Betreiber des NoSQL-Archivs listen auf ihrer Webplattform 150 NoSQL-Datenbankprodukte“ [@MeierKaufmann2016 20]. Daraus kann geschlossen werden, dass der Bedarf von NoSQL-Technologien heutzutage stark gewachsen sowie notwendig ist. Nachfolgend werden die in der Praxis gebräuchlichsten Technologien näher erläutert
 
-#### Key/Value Stores
+### Key/Value Stores
 [@Fasel2016 113-115].
 
 Wie der Name bereits vermuten lässt gibt es bei dieser NoSQL-Technolgoie Schlüssel- und Wertpaare. Dabei haben weder der Schlüssel, noch die zugehörigen Werte komplexe Datentypen inne. Der Schlüssel ist immer eindeutig um dem entsprechenden Wert zugeordnet werden zu können und es werden keine Indizes gebildet. Key/Value Stores ist für einfache und wenig komplexe Datensätze gedacht, mit denen keine komplexen Operationen, wie Vergleiche zwischen den Datensätzen durchgeführt werden können. Die Stärken dieser Technologie liegen im schnellen Lese- sowie Schreibzugriff auf die jeweiligen Paare. Dabei fungieren Key/Value Stores meist In-Memory und je nach Anbieter werden Daten auch auf der Festplatte gespeichert. In der Praxis trifft man häufig auf Redis Store und Memcached als Anbieter solcher Key/Value Stores. Ein näheres Eingehen auf die jeweiligen Eigenschaften würde den Rahmen an dieser Stelle überschreiten. Trotzalledem soll ein kurzes Beispiel von Redis Store gezeigt werden.
@@ -269,7 +268,7 @@ EXPIRE teamId 3
 
 Key/Value Stores sind sehr gut für einfach Datenstrukturen sowie Zwischenspeicher für Webapplikationen geeignet. Somit können, aufgrund der In-Memory Speicherung, beispielsweise auf einer Webseite Daten, welche später wieder benötigt werden vorgehalten werden und müssen durch Einsatz eines Key/Value Stores nicht nochmals geladen werden. 
 
-#### Document Stores
+### Document Stores
 [@Fasel2016 115-118].
 
 Document Stores folgen ebenso der Logik von Schlüssel-/Wertepaaren. Allerdings können dabei um einiges komplexere Datenstrukturen dargestellt werden, als dies bei Key/Value Stores der Fall ist. Dies kann durch Dokumente ermöglicht werden, in denen die entsprechenden Attribute gespeichert und indexiert werden können. Des weiteren sind Beziehungen zwischen den einzelnen Dokumenten möglich.
@@ -304,7 +303,7 @@ db.teamDocument.insert(
 Zu beachten ist hierbei, dass beide Codebeispiele unterschiedliche Datenstrukturen aufweisen, welche von mongoDB ohne Probleme aktzeptiert werden. 
 Durch die Indexierung bieten Document Store Datenbanken eine deutlich besser Abfragemöglichkeit der Daten, als es bei Key/Value Store Datenbanken der Fall ist. Lediglich komplexere Beziehungen sind mit Dokument Stores ebenso nicht allzu leicht darzustellen.
 
-#### Column Family Stores
+### Column Family Stores
 Colum Families „speichern Datensätze in multidimensionalen Maps ab, die relationalen Objekten ähnlich sind“ [@Fasel2016 118].
 Bekannte Anbieter hierbei sind Google Big Tables, Cassandra und HBase, was wiederum auf Big Tables passiert. Grundsätzlich verfolgen alle denselben Ansatz der Column Family Stores. Allerdings gibt es im Detail leichte Abweichungen was Datenmodellierung sowie Namenskonventionen angeht.
 Daher wird im folgenden anhand von Cassandra das Prinzip von Column Family Stores erklärt und mit passenden Codebeispielen ergänzt.
@@ -317,7 +316,7 @@ Zudem ermöglicht Cassandra eine Replikation der Daten, was auch dringend so emp
 
 Column Family Stores bieten somit die Möglichkeit sehr komplexe Datenmodelle zu erstellen ohne dabei auf eine bestimmte Datenstruktur achten zu müssen. Durch die Anordnung in Spalten können Lese- und Schreibvorgänge schnell erfolgen.
 
-#### Graphen Datenbanken
+### Graphen Datenbanken
 
 [@Fasel2016 122-124].
 
