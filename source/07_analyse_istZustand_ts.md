@@ -11,7 +11,7 @@ Der Verein erstellt sich über die Homepage teamsports2.de eine Testseite. Dabei
 ![Abbildung 4: Ansicht TeamSports2 Frontend](source/figures/TeamSports2_Frontend.png) { width=50% }
 Abbildung 4
 
-Der Server, worauf sich die Testseite des Vereins unter einer Subdomain, wie testseite.teamsports2.de befindet ist ein Apache-Server mit Ubuntu-Betriebssystem. Über die Subdomain sowie die mit dem generieren der Seite erstellten Zugangsdaten kann der Nutzer die Seite nach seinen Wünschen bearbeiten. Der Aufbau des Backends ist in Abbildung fünf aufgezeigt.
+Der Testseite befindet sich dann unter einer Subdomain, wie hm.teamsports2.de, mit einer eigenen Datenbank auf einem Apache-Server. Über die Subdomain sowie die mit dem generieren der Seite erstellten Zugangsdaten kann der Nutzer die Seite nach seinen Wünschen bearbeiten. Der Aufbau des Backends ist in Abbildung fünf aufgezeigt.
 
 ![Abbildung 5: Ansicht TeamSports2 Backend](source/figures/TeamSports2_Backend.png) { width=50% }
 Abbildung 5
@@ -32,13 +32,22 @@ Der Nutzer hat bei der Gestaltung seiner Seite sehr viele Optionen, welche vom a
 
 Während der 90 tägigen Testphase kann der Nutzer diese und viele weitere Funktionen kostenlos testen. Dabei gibt, wie sonst oft üblich, keine Einschränkungen bei der Testversion. Sollte sich der Nutzer vor oder nach Ablauf der 90 Tage für den Kauf seiner Testseite entscheiden wird die Instanz vom vom sogenannten Generatorserver, wo die Instanz für den Testzeitraum liegt, auf einen Liveserver umgezogen.
 Hierbei wird eine exakte Kopie der Instanz erstellt und mittels eines Skripts auf den Liveserver übertragen. Der Nutzer kann dann auch seine Domain über TeamSports2 registrieren lassen, welche dann wiederum mit der Instanz auf dem Liveserver per DNS verknüpft wird. Die Instanz auf dem Testserver wird nach erfolgten Umzug gelöscht.
-Auch auf dem Liveserver erhält jeder Nutzer eine eigene Instanz mit einer eigenen Datenbank.
 
-## Verwendete Technologien und Tools
+## Deployment-Prozess
+
+Aktuell umfasst TeamSports2 über 150 Live-Instanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubunutbetriebssystem verteilt, welche von einem externen Hostinganbieter gehostet werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist.
+
+Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt.
 
 ![Abbildung 6: Deployment-Prozess TeamSports2](source/figures/TeamSports2_Deployment.png) { width=50% }
-Abbildung 5
+Abbildung 6
 
+In mehreren GitHub-Repositories liegt der Code der Produktionsumgebung. Dabei gibt es einen Entwicklungs(Dev)- sowie Masterbranch, welche immer die gleichen Stände aufweisen. Zum Entwickeln von Code wird ein eingenständiger Entwicklungsserver bereitgestellt, worunter zur Produktonsumgebung adäquate Testseiten erstellt werden können. Dadurch muss nicht auf Liveservern, welche die Kundeninstanzen betreffen würde, getestet werden. Soll neuer Code entwickelt werden kann sich vom Entwicklungs- oder Masterbranch der aktuell Code geholt und ein Featurebranch erstellt werden.
+Mithilfe des Webservices  „DeployHQ“ wurde eine Build- und Deployment Pipeline aufgebaut. DeployHQ ist mit GitHub verbunden, wodurch auch alle mit dem Repository verbundenen Featurebranches auf die gewünschte Testinstanz deployed werden können.
+Ist der Entwickler mit dem Code fertig wird ein PullRequest gestellt. Sobald dieser geprüft und der PullRequest genehmigt wurde, erfolgt ein Merge in den Entwicklungsbranch. Hier werden bei größeren Releases mehrere Features oder Anpassungen gesammelt um diese dann gemeinsam in den Masterbranch zu mergen.
+
+Sobald der für den Release relevante Code vollständig im Masterbranch liegt kann die Deployment-Pipeline angestoßen werden. Dabei wird vom Masterbranch der aktuelle Code synchronisiert und dann durch das Secure Shell (SSH) Protokoll an die Server übertragen. Jede Instanz hat in DeployHQ eine eigene Konfiguration, wodurch festgelegt werden kann auf welchen Pfad auf dem jeweilgen Server deployed werden soll.
+Beim Deployen werden nur Dateien an die Kundeninstanzen übertragen, welche nicht durch eine Individualisierung, wie die Datei für das Favicon, auf der Instanz betroffen sein können. Bedeutet es werden die Controller, Models und die View deployed, wobei Controller und Model jeweils separat von der View deployed werden. 
 
 ## Architektur 
 
