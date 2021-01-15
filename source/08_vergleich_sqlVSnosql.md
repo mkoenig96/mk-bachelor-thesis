@@ -40,15 +40,36 @@ Da NoSQL Datenbanken sehr häufig in massiv verteilten Systemen angewendet werde
 
 [@MeierKaufmann2016 148-155].
 
-
-
-
+NoSQL Datenbanken verfolgen, aufgrund des CAP-Theorems und der Tatsache, dass zumeinst die hohe Verfügbarkeit sowie Ausfalltoleranz anstreben den BASE Ansatz. BASE steht für **B**ascially **A**vailable, **S**oft State und **E**ventually Consistency. „Ein einzelner Knoten im Rechnernetz ist meistens verfügbar (Basically Available) und manchmal noch nicht kosistent nachgeführt (Eventually Consistent), d.h. erkann sich in einem weichen Zustand (Soft State) befinden“ [@MeierKaufmann2016 154]. NoSQL Datenbanken gehen daher, nicht wie relationale Datenbank, einer schwachen Datenkonsistenz nach (weak consistency) wodurch es passieren kann, dass bei einem Knoten bereits Änderungen enstanden sind, aber diese noch nicht von anderen Knoten registriert wurden. 
 
 ## Pessimistische und Optimistische Verfahren
 
-## Datenmodellierung
+Zuvor wurde stark auf die Einhaltung von Datenkonsistenz und Integrität eingegangen. Dabei lag der Fokus auf den grundsätzlichen Eigenschaften, die die jeweiligen Datenbanken erfüllen müssen, um den Anforderungen gerecht zu werden. Im weiteren wird darauf eingegangen wie die Umsetzung von ACID und BASE erfolgt.
 
-## Praxisorientierung
+Hierbei gibt es zwei verschiedene Verfahren nach denen in einer Datenbank Transaktionen abgearbeitet und Objekte verändert werden.
+
+**Pessimistisch**
+
+[@MeierKaufmann2016 141-144].
+
+Pessimistische Verfahren sperren Objekt, sobald diese verändert werden sollen. Dies gilt sowohl für Lese- als auch Schreibzugriffe. Andere Transaktionen werden während der gesamten Sperrzeit nicht zugelassen. Hierfür wurde das Zweiphasensperrprotokoll entwickelt. Dabei gibt es zwei Phasen in denen zuerst Sperren aufgebaut und danach wieder nacheinander abgebaut werden. Dies dauert, im Vergleich zu optimistischen Verfahren, zwar länger, garantiert dafür aber jederzeit Integrität sowie Konsistenz der Daten.
+Neben dem Zweiphasensperrprotokoll gibt es auch das Verfahren, die Transaktionen mit Zeitstempeln zu versehen und diese dadurch chronologisch abzuarbeiten.
+
+**Optimistisch**
+
+[@MeierKaufmann2016 144-146].
+
+Bei optimistischen Verfahren werden keine Sperren gesetzt, da man davon ausgeht, „dass Konflikte konkurrierender Transaktionen selten vorkommen“ [[@MeierKaufmann2016 144]. Stattdessen wird die Transaktionen in drei verschiedene Phasen eingeteilt: Lese-, Validierungs- und Schreibphase. 
+In der Lesephase werden alle Objekte gelesen, welche mit einer Transaktion bearbeitet werden sollen. Danach wird in der Validierungsphase festgestellt ob  zwischen den zu bearbeitenden Objekten Konflikte entstehen können. Ist dies nicht der Fall werden in der Schreibphase die Änderungen in die Datenbank überführt. Sollte es zu Überschneidungen kommen hat immer das Objekt vorrang, welches sich bereits in der Schreibphase befindet. Die Abarbeitung in der Validierungsphase erfolgt chronologisch. Dieses Verfahren hat den Vorteil, dass schnellere sowie gleichzeitge Lesezugriffe möglich sind da, nicht wie beim Zweiphasensperrprotokoll, bereits in der Lesephase gesperrt wird. 
+
+Aufgrund der jederzeitigen Einhaltung der Datenkonsistenz sowie Integriät verwenden SQL Datenbank pessimistische Verfahren. NoSQL Datenbanken hingegen nutzen optimistische Verfahren, da diese einen schnelleren Abruf der Daten gewährleisten.
+
+## Einsatz in der Praxis
+
+NoSQL Datenbanken profitieren davon, dass sich im vorhinein keine komplexeren Gedanken darüber gemacht werden muss welches Datenmodell notwendig ist. Des weiteren müssen auch keine Datentypen von Anfang an definiert werden. Dies spart Zeit bei der Implementierung und lässt zu, dass sehr viele und unstrukturierte Daten, wie es im Big Data Bereich der Fall ist mühelos gesammelt werden können
+
+
+Die Frage, ob eine SQL oder NoSQL Datenbank nun „besser“ ist, kann und wir nicht beantwortet werden können. Die Anforderungen stellen hier das entscheidende Kriterium dar. Dass eine Bank eine NoSQL Datenbank verwendet scheint zum jetzigen Zeitpunkt mehr als unwahrscheinlich. Man stelle sich vor, dass aufgrund des BASE Verfahrens einer NoSQL Datenbank ein Kunde Geld abheben kann, obwohl sein Kontostand bereits null ist und dieser Zustand aaufgrund einer noch nicht registrierten Abbuchung aufgetreten ist. Umgekehrt könnte ein SocialGraph, wie ihn Facebook verwendet, auch nicht mit einer relationalen Datenbank konstruiert werden. Letztendlich geht es auch in diesem Fall darum zu wissen welche Eigenschaften die jeweilige Technologie mit sich bringt und danach die passende Auswahl zu treffen.
 
 
 

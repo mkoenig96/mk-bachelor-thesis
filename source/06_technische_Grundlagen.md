@@ -109,16 +109,17 @@ SQL ist eine deskriptive Abfragesprache und steht für *Structured Query Languag
 Ein relationales Datenbanksystem besteht aus der Datenbank an sich sowie einem Datenbankmanagementsystem (DBMS). Dabei umfasst die Datenbank eine Sammlung aller Tabellen mit deren Beziehungen untereinander. Mithilfe des Datenbankmanagementsystem können dann An- und Abfragen an die Datenbank realisiert werden.
 Dabei gibt es verschiedene Datenbankmanagementsystem, welche aber bei relationalen Datenbanken allesamt SQL als Abfragesprache nutzen.
 Teilweise unterscheiden sich die in den Datenbankmanagementsystemen angewandten SQL Abfragen allerdings in der Syntax.
-Jedes Datenbankmanagementsystem erfüllt dabei einige Aufgaben, die jedes DBMS wiederum anderweitig realisieren kann. Die wichtigsten Anforderungen werden nachfolgend kurz vorgestellt. [@Adams2020, 5-6]
-WIE AM BESTEN ZITIEREN? (DIREKT/INDIREKT)
-„
-- Sprachinterpreter: Übersetzt die Befehle in einen ausführbaren Code.
+Jedes Datenbankmanagementsystem erfüllt dabei einige Aufgaben, die jedes DBMS wiederum anderweitig realisieren kann. Die wichtigsten Anforderungen werden nachfolgend kurz vorgestellt. 
+
+[@Adams2020 5-6].
+
+- Sprachinterpreter: „[...] Übersetzt die Befehle in einen ausführbaren Code [...]“ [@Adams2020 5].
 - Optimierer: Ermöglicht schnelle Ausführung der Befehle.
 - Datenschutz: Schreib- und Lesezugriffe an den jeweiligen Nutzer richtig vergeben.
 - Datensicherheit: Verhindern von Datenverlusten.
 - Application Programming Interface (API): Dient der Anwendung zum Zugriff auf das DBMS.
 
-“
+
 
 Je nach Datenbankmanagemensystem können sich die Aufgaben beziehungsweise Anforderungen an das DBMS unterscheiden. Inzwischen gibt es sehr viele DBMS, wovon die gebräuchlisten kurz aufgezählt werden. [@Adams2020, 7]
 
