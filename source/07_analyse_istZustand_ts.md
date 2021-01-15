@@ -33,7 +33,7 @@ Der Nutzer hat bei der Gestaltung seiner Seite sehr viele Optionen, welche vom a
 Während der 90 tägigen Testphase kann der Nutzer diese und viele weitere Funktionen kostenlos testen. Dabei gibt, wie sonst oft üblich, keine Einschränkungen bei der Testversion. Sollte sich der Nutzer vor oder nach Ablauf der 90 Tage für den Kauf seiner Testseite entscheiden wird die Instanz vom vom sogenannten Generatorserver, wo die Instanz für den Testzeitraum liegt, auf einen Liveserver umgezogen.
 Hierbei wird eine exakte Kopie der Instanz erstellt und mittels eines Skripts auf den Liveserver übertragen. Der Nutzer kann dann auch seine Domain über TeamSports2 registrieren lassen, welche dann wiederum mit der Instanz auf dem Liveserver per DNS verknüpft wird. Die Instanz auf dem Testserver wird nach erfolgten Umzug gelöscht.
 
-## Deployment-Prozess
+## Deployment-Prozess und Infrastruktur
 
 Aktuell umfasst TeamSports2 über 150 Live-Instanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubunutbetriebssystem verteilt, welche von einem externen Hostinganbieter gehostet werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist.
 
