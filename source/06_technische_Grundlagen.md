@@ -216,7 +216,7 @@ Doppelt vorhandende Daten kosten unnötigen Speicherplatz welcher zum einen die 
 Mit NoSQL werden alle Datenbank bezeichnet, „die über keinen SQL-Zugang verfügen“ [@MeierKaufmann2016 222]. Des weiteren werden bei NoSQL-Datenbanken keine Tabellen zur Speicherung der Daten verwendet.
 Trotzalledem stößt man in der Praxis häufig auf „Not only SQL“, wenn von einer NoSQL Datenbank die Rede ist. Dies hat den Hintergrund, dass Anwendungen unter dem Konzept der „mehrsprachigen Persistenz“ [@MeierKaufmann2016 222] entwickelt werden, was bedeutet, dass SQL- in Verbindung NoSQL Datenbanken genutzt werden.
 
-NoSQL Datenbanken zeichnen sich dadurch aus, dass sin in der Regel als verteiltes System implementiert werden. Des weiteren geben NoSQL Datenbanken keine bestimmte Datenstruktur vor, wie es bei relationalen Datenbanken der Fall ist. 
+NoSQL Datenbanken zeichnen sich dadurch aus, dass sie in der Regel als verteiltes System mit mehreren replizierten Knoten implementiert werden. Des weiteren geben NoSQL Datenbanken keine bestimmte Datenstruktur vor, wie es bei relationalen Datenbanken der Fall ist. 
 Die Notwendigkeit zur Nutzung von nicht relationalen Datenbanken ist aufgrund der in den letzten Jahren vorangeschrittenen Digitalisierung begründet. Mit dieser ging auch ein starkes Ansteigen der zu verarbeitenden Datenmengen, vorwiegend im Webbereich, einher. Aufgrund dieses höheren Datenaufkommen mussten Datenbankalternativen ausgemacht werden um die Daten schneller sowie effektiver speichern und abfragen zu können.
 Vor allen Dingen durch das damit entstandene Themegebiet „Big Data“ gewannen NoSQL Lösungen immer mehr an Bedeutung.
 [@MeierKaufmann2016 13].
