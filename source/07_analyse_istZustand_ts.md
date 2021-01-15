@@ -34,7 +34,10 @@ Während der 90 tägigen Testphase kann der Nutzer diese und viele weitere Funkt
 Hierbei wird eine exakte Kopie der Instanz erstellt und mittels eines Skripts auf den Liveserver übertragen. Der Nutzer kann dann auch seine Domain über TeamSports2 registrieren lassen, welche dann wiederum mit der Instanz auf dem Liveserver per DNS verknüpft wird. Die Instanz auf dem Testserver wird nach erfolgten Umzug gelöscht.
 Auch auf dem Liveserver erhält jeder Nutzer eine eigene Instanz mit einer eigenen Datenbank.
 
-## Verwendete Technologien 
+## Verwendete Technologien und Tools
+
+![Abbildung 6: Deployment-Prozess TeamSports2](source/figures/TeamSports2_Deployment.png) { width=50% }
+Abbildung 5
 
 
 ## Architektur 
