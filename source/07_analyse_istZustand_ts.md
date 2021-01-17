@@ -8,13 +8,13 @@ Diese beiden Punkte stellen jeweils ein zentrales Kriterium für die Vereine dar
 
 Der Verein erstellt sich über die Homepage teamsports2.de eine Testseite. Dabei gibt der Verein lediglich persönliche Daten, die anfängliche Seitenfarbe sowie den gewünschten Seitennamen an. Daraufhin wird eine aus diesen Daten eine Testinstanz mit eigener zugehöriger Datenbank generiert. Die Seite enthält anfangs einige Testberichte sowie rudimentären Inhalt um den Nutzer den Einstieg zu erleichtern. Ein beispielhaftes Frontend einer neue generierten Testseite ist in der nachfolgendenden Abbildung zu sehen.
 
-![Abbildung 4: Ansicht TeamSports2 Frontend](source/figures/TeamSports2_Frontend.png) { width=50% }
-Abbildung 4
+![](source/figures/TeamSports2_Frontend.png)
+Abbildung 4: Ansicht TeamSports2 Frontend
 
 Der Testseite befindet sich dann unter einer Subdomain, wie hm.teamsports2.de, mit einer eigenen Datenbank auf einem Apache-Server. Über die Subdomain sowie die mit dem generieren der Seite erstellten Zugangsdaten kann der Nutzer die Seite nach seinen Wünschen bearbeiten. Der Aufbau des Backends ist in Abbildung fünf aufgezeigt.
 
-![Abbildung 5: Ansicht TeamSports2 Backend](source/figures/TeamSports2_Backend.png) { width=50% }
-Abbildung 5
+![](source/figures/TeamSports2_Backend.png)
+Abbildung 5: Ansicht TeamSports2 Backend
 
 Der Nutzer hat bei der Gestaltung seiner Seite sehr viele Optionen, welche vom auswählen des eigenen Designs bis hin zu vereinsspezifischen Funktionalitäten reichen. Um einen Eindruck des Systems zu vermitteln werden nachfolgend einige wichtige Funktionen aufgezeigt.
 
@@ -39,8 +39,8 @@ Aktuell umfasst TeamSports2 über 150 Live-Instanzen unter einer jeweils eigenen
 
 Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt.
 
-![Abbildung 6: Deployment-Prozess TeamSports2](source/figures/TeamSports2_Deployment.png) { width=50% }
-Abbildung 6
+![](source/figures/TeamSports2_Deployment.png)
+Abbildung 6: Deployment-Prozess TeamSports2
 
 In mehreren GitHub-Repositories liegt der Code der Produktionsumgebung. Dabei gibt es einen Entwicklungs(Dev)- sowie Masterbranch, welche immer die gleichen Stände aufweisen. Zum Entwickeln von Code wird ein eingenständiger Entwicklungsserver bereitgestellt, worunter zur Produktonsumgebung adäquate Testseiten erstellt werden können. Dadurch muss nicht auf Liveservern, welche die Kundeninstanzen betreffen würde, getestet werden. Soll neuer Code entwickelt werden kann sich vom Entwicklungs- oder Masterbranch der aktuell Code geholt und ein Featurebranch erstellt werden.
 Mithilfe des Webservices  „DeployHQ“ wurde eine Build- und Deployment Pipeline aufgebaut. DeployHQ ist mit GitHub verbunden, wodurch auch alle mit dem Repository verbundenen Featurebranches auf die gewünschte Testinstanz deployed werden können.

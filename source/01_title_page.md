@@ -3,8 +3,9 @@
   Workaround bzw. Rückgriff auf LaTex-Befehle, um zentrale Werte immer wieder verwenden zu können.
 -->
 <!--% Abschlussarbeit -->
-\newcommand{\titel}{Migration in eine Multi-Tenant-Anwendung am Beispiel von TeamSports2 mit dem vergleichenden Aspekt zwischen einer SQL und NoSQL Datenbank}
-\newcommand{\datum}{11.10.2020}
+\newcommand{\titeldeutsch}{Migration in eine Multi-Tenant-Anwendung am Beispiel von TeamSports2 mit dem vergleichenden Aspekt zwischen einer SQL und NoSQL Datenbank}
+\newcommand{\titelenglisch}{Migration to a multi-tenant application using the example of TeamSports2 with the comparative aspect between a SQL and NoSQL database}
+\newcommand{\datum}{29.01.2021}
 
 <!-- % Autor_in -->
 \newcommand{\aVorname}{Matthias}
@@ -37,27 +38,44 @@
 -->
 
 \begin{titlepage}
+
+\vspace*{-3.0cm}
+
     \begin{center}
 
-        \includegraphics[width=1\textwidth]{style/hm-logo_new_cropped.jpg}
+        \LARGE
+        Hochschule für angewandte Wissenschaften München
 
-        \vspace*{1.0cm}
+
+        \large
+        Fakultät für Informatik und Mathematik
+
+        \includegraphics[width=3in]{style/hm-logo_new_cropped.jpg}
+
+        \vspace*{1.5cm}
+
+    
 
         \LARGE
-        \titel
+        Bachelorarbeit Wirtschaftsinformatik
+
+        \vspace*{0.5cm} 
+
+        \LARGE
+        \textbf{\titeldeutsch}
+
+        \Large
+        \titelenglisch
 
         \vspace{1.5cm}
 
-        \Large
-        \aName
+      
 
         \normalsize
-        \aMatrikelnummer
-
-        \vspace{0.15cm}
+        \aName 
 
         \normalsize
-        Bachelorarbeit Wirtschaftsinformatik
+        \aMatrikelnummer \space | \aStudiengruppe
 
         \vspace{0.3cm}
 
@@ -65,7 +83,7 @@
         Prüfer:\\
         \pTitle\space \pVorname\space \pNachname,\space \pInstitution
 
-        \vspace{0.5cm}
+        \vspace{0.3cm}
 
         % Firmenlogo
         % \includegraphics[width=0.4\textwidth]{style/firmenlogo.png}
@@ -73,8 +91,11 @@
         \normalsize
         Betreuer:\\
         \bTitle\space \bVorname\space \bNachname,\space \bInstitution
+        
+        \vspace {0.3 cm}
 
         % Abgabedatum
+        Abgabedatum:\\
         \datum
 
     \end{center}

@@ -22,8 +22,8 @@ Durch die eingangs erwähnte Digitalisierung ist der Nutzerandrang auf Web- und 
 
 Nachfolgende Grafik zeigt die Gegenüberstellung einer Single- und Multi-Tenant Architektur.
 
-![Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur \label{Krass}](source/figures/SingleVsMulti-Tenant.png) { width=50% }
-Abbildung 1
+![](source/figures/SingleVsMulti-Tenant.png)
+Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur
 
 Der Begriff „Tenant“ ist hierbei mit dem User gleichzusetzen. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
 
@@ -72,8 +72,9 @@ In der Praxis nutzen bereits viele Unternehmen und bekannte Anwendungen Multi-Te
 Atlassian bietet bekannte Programme, wie Jira, Trello oder Confluence, für Softwareentwickler an. Dabei kann jedem Nutzer über einen einzigen Account Zugang zu den jeweiligen Diensten gewährt werden.
 Die gesamte Architektur beruht dabei auf Multi-Tenancy. Alle Nutzer loggen sich über eine Instanz ein und deren Daten liegen separiert voneinander in einer Datenbank.
 Folgende von Atlassian kreierte Abbildung zeigt den Ablauf bei einem Request auf.
-![Abbildung 2: Multi-Tenant Archtitektur von Atlassian](source/figures/AtlassianArchitecture.png) { width=50% }
-Abbildung 2 [@Atlassian2020]
+
+![](source/figures/AtlassianArchitecture.png)
+Abbildung 2: Multi-Tenant Architektur von Atlassian [@Atlassian2020]
 
 Atlassian nutzt dabei verschiedene sogenannte Edges, welche die jeweilige Anwendung umgeben. Wenn sich der Nutzer einloggen möchte gelangt er über ein virtuelles Gate innerhalb dieser Edges.
 Umgekehrt wird dann ein Request abgewickelt, wenn der Nutzer nach erfolgreichen Login beispielsweise eine Confluence-Seite aufrufen möchte. Der Request wird an das nächstgelegene Gate innerhalb der Edges zum Verlassen weitergeleitet und lokalisiert über die Tenant Config wo die zugehörigen Daten liegen sowie welche Daten zurückgeschickt werden müssen.
@@ -89,8 +90,9 @@ Microservices stellt ebenso eine Architekturvariante dar, bei der eine Anwendung
 Uber führt dabei mehrere Gründe auf, weshalb sich für eine Multi-Tenant Architektur in Verbindung mit Microservices entschieden wurde. Im folgenden soll allerdings nur auf das Deployen und Testen von Uber eingegangen werden.
 Die Änderungen oder Neuentwicklungen eines Services sollen nicht direk in der Produktionsumgebung, sondern zuvor in einer Testumgebung eingespielt werden. Diese Testumgebung ind dann wiederum ein eigener Tenant, wobei die Datenströme weiterhin zwischen dem geänderten und den bestehenden Services bestehen können. Nachfolgendes Schaubild zeigt, wie Uber dies bei sich umgesetzt hat. Die Rechtecke mit den Buchstaben A-D stellen dabei jeweils einen eigenen Service dar. Somit kann die Testumgebung in einem eigenen Tenant parallel zur Produktionsumgebung laufen.
 
-![Abbildung 3: Ubers Multi-Tenancy Testing](source/figures/UberMultiTenancy.png) { width=50% }
-Abbildung 2 [@Gud2020]
+![](source/figures/UberMultiTenancy.png)
+
+Abbildung 3: Ubers' Multi-Tenancy Testing [@Gud2020]
 
 Des weiteren nutzt Uber für das Einführen von Änderungen oder Neuerungen der Services in die Produktionsumgebung das sogenannte Canary Deployment. Bei dieser Art des Deployments gibt es zwei System: Das aktuell sowie das mit den Änderungen. Dabei wird nur ein kleiner Teil der Datenströme auf das neue System geleitet und der Rest läuft noch auf das aktuelle System. Wenn alles funktioniert, können die Datenströme auf das neue System sukzessive erhöht werden.
 Auch hierfür bietet sich neben der aktuellen Produktionsumgebung ein weiterer Tenant an, den Uber nutzt, um darauf das neue System einzuspielen. Zudem nutzt Uber auch Multi-Tenancy um für die soeben genannten Fälle das Routing auf die entsprechenden Tenants beliebig umstellen zu können.
