@@ -4,21 +4,21 @@
 
 Multi-Tenant ist ein Architekturkonzept in der Softwareentwicklung. Dieses sieht vor, dass die Anwendung nicht für jeden Nutzer in einer eigenen Instanz ausgespielt wird, sondern alle Nutzer auf der gleichen Plattform arbeiten können.
 
-Das Konzept besteht bereits seit den späten 90er Jahren und fand in den letzten Jahren im Zusammenhang mit der immer mehr voranschreitenden Digitalisierung wieder deutlich mehr Aufmerksamkeit. Dies ist zum einen darin begründet, dass die Anzahl an Software- sowie Webanwendungen massiv zugenommen hat und zum anderen, durch den Fortschritt der Cloud Computing Angebote, neue Möglichkeiten für dieses Architekturkonzept entstanden.
+Das Konzept besteht bereits seit den späten 90er Jahren und fand in den letzten Jahren im Zusammenhang mit der immer mehr voranschreitenden Digitalisierung wieder deutlich mehr Aufmerksamkeit. Dies ist zum einen darin begründet, dass die Anzahl an Software- sowie Webanwendungen massiv zugenommen hat und zum anderen, durch den Fortschritt der Cloud Computing Angebote, neue Möglichkeiten für dieses Architekturkonzept entstanden sind.
 Dabei gibt es im Cloud Computing drei verschiedene Arten:
 
-- _Infrastructure as a Service (IaaS):_ Bereitstellung der notwendigen Ressourcen wie beispielsweise Serverkapazitäten, Datenspeicher etc. die Entwickler, abgestimmt auf ihre Bedürfnisse, nutzen können. Die Ressourcen müssen selbständig verwaltet werden.
-- _Platform as a Service (PaaS):_ Hierbei kümmert sich der Cloudanbieter um die Verwaltung sowie Bereitstellung der Ressourcen. Die Entwickler müssen sich lediglich um die Anwendungsprogrammierung kümmern.
-- _Software as a Service (SaaS):_ Dieser Service ist in der Regel für den Endnutzer gedacht. Es wird lediglich die fertig Anwendung für den Nutzer bereitgestellt, welcher sich weder um die Ressourcen, noch um die Entwicklung der Anwendung kümmern muss.
+- _Infrastructure as a Service (IaaS):_ Bereitstellung der notwendigen Ressourcen wie Serverkapazitäten und Datenspeicher, die Entwickler, abgestimmt auf ihre Bedürfnisse, nutzen können. Die Ressourcen müssen selbstständig verwaltet werden.
+- _Platform as a Service (PaaS):_  Der Cloudanbieter kümmert sich um die Verwaltung sowie Bereitstellung der Ressourcen. Die Entwickler müssen sich lediglich auf die Anwendungsprogrammierung konzentrieren.
+- _Software as a Service (SaaS):_ Dieser Service ist in der Regel für den Endnutzer gedacht. Es wird die fertige Anwendung für den Nutzer bereitgestellt, welcher sich weder um die Ressourcen, noch um die Entwicklung der Anwendung kümmern muss.
 
 Letztgenannte Form findet man in Verbindung mit Multi-Tenant Architekturen recht häufig. Dabei liegt der große Vorteil nicht nur in der Architektur an sich, sondern auch in Verbindung mit der Cloud Computing Technologie.
 
 Cloud Computing Anbieter wie Amazon Web Services (AWS), Microsoft Azure oder Google Cloud stellen, je nach den verwendeten Ressourcen, IaaS beziehungsweise PaaS bereit. 
-Es können sowohl Services, die Ressourcen wie Serverkapazitäten bereitstellen (zum Beispiel AWS EC2) oder bereits vollständig verwaltet sind (zum Beispiel AWS Lambda) genutzt werden. Daher ergibt sich eine Kombination aus IaaS und PaaS.
+Es können sowohl Services, die Ressourcen wie Serverkapazitäten bereitstellen (zum Beispiel AWS EC2) oder bereits vollständig verwaltet sind (zum Beispiel AWS Lambda) genutzt werden.
 
 ### Multi-Tenant Konzepte
 
-Durch die eingangs erwähnte Digitalisierung ist der Nutzerandrang auf Web- und Softwareanwendungenen stark angestiegen. Dabei wird auch eine hohe Verfügbarkeit sowie schnelle Antwortzeiten erwartet, auch wenn viele Nutzer zur gleichen Zeit auf die Anwendung zugreifen. Des weiteren sind auch die Kosten, sowohl für den Anwender, als auch den Bereitsteller der Anwendung kein zu vernachlässigender Faktor.
+Durch die Digitalisierung ist der Nutzerandrang auf Web- und Softwareanwendungenen stark angestiegen. Dabei werden auch eine hohe Verfügbarkeit sowie schnelle Antwortzeiten erwartet, auch wenn viele Nutzer zur gleichen Zeit auf die Anwendung zugreifen. Des weiteren sind auch die Kosten, sowohl für den Anwender, als auch den Bereitsteller der Anwendung kein zu vernachlässigender Faktor.
 
 Nachfolgende Grafik zeigt die Gegenüberstellung einer Single- und Multi-Tenant Architektur.
 
@@ -27,43 +27,42 @@ Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur
 
 Der Begriff „Tenant“ ist hierbei mit dem User gleichzusetzen. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
 
-- _Multi-Tenant mit einer Datenbank pro Tenant:_ Alle Nutzer greifen zwar auf dieselbe Instanz zu, für gegen Tenant wird aber eine eigene Datenbank bereitgestellt[@MicrosoftDocs2019].
+- _Multi-Tenant mit einer Datenbank pro Tenant:_ Alle Nutzer greifen zwar auf dieselbe Instanz zu, für jeden Tenant wird aber eine eigene Datenbank bereitgestellt[@MicrosoftDocs2019].
 
 - _Multi-Tenant mit geteilter Datenbank:_ Auch hierbei greifen alle Nutzer auf eine Instanz zu, wobei mehrere Tenants auf einer Datenbank liegen. Zur Identifizierung der einzelnen Tenants in der Datenbank wird eine zusätzliche Spalte hinzugefügt [@MicrosoftDocs2019].
 
-- _Multi-Tenant Kombination mit eigenständigen und geteilten Datenbanken:_ Hierbei werden die beiden erstgenannten Ansätze gemeinsam verwendet. Es sind also sowohl Datenbanken vorhanden, auf welchen die Daten mehrerer Tenants liegen, als auch Datenbanken die nur für einen Tenant bestimmt sind [@MicrosoftDocs2019].
+- _Multi-Tenant Kombination mit eigenständigen und geteilten Datenbanken:_ Die ersten beiden Ansätze werden kombiniert. Es sind sowohl Datenbanken vorhanden, auf welchen die Daten mehrerer Tenants liegen, als auch Datenbanken, die nur für einen Tenant bestimmt sind [@MicrosoftDocs2019].
 
 **Skalierbarkeit**
 
-Durch die bereits erläuterten hohen Anforderugnen an die Anwendungen liegt der Vorteil der Multi-Tenant Architektur in der Bündelung der Ressourcen. Sowohl die Anwendung an sich, als auch die Datenbanken können mittels Cloudumgebungen problemlos horizontal sowie vertikal skaliert werden. 
+Durch die hohen Anforderugnen an die Anwendungen liegt der Vorteil der Multi-Tenant Architektur in der Bündelung der Ressourcen. Sowohl die Anwendung, als auch die Datenbanken können mittels Cloudumgebungen problemlos horizontal sowie vertikal skaliert werden. 
 Das horizontale Skalieren zeichnet sich dadurch aus, dass zusätzliche Ressourcen, wie zusätzliche Datenbanken, zur Verfügung gestellt werden, während beim vertikalen Skalieren die bestehenden Ressourcen in ihrem Leistungsumfang erweitert werden, wie das Erhöhen der Rechenleistung der Datenbank. Somit kann bei einem hohen Anfrageaufkommen sowohl die Anwendung, als auch die Datenbanken nach den Anforderungen skaliert werden.
-Eine derartige Skalierung wäre bei einer Single-Tenant Anwendung nur bedingt möglich, da sowohl auf die Datenbank, als auch Anwendung separiert zugegriffen wird. Allerdings muss beachtet werden, dass je nach oben genannter Konzeption der Multi-Tenant Archtitektur es auch hier Grenzen in der Effienz der Skalierbarkeit gibt. Zudem ist ein entscheidender Faktor das Betreiben der Ressourcen in der Cloud an sich.
+Eine derartige Skalierung wäre bei einer Single-Tenant Anwendung nur bedingt möglich, da sowohl auf die Datenbank, als auch auf die Anwendung separiert zugegriffen wird. Allerdings muss beachtet werden, dass je nach oben genannter Konzeption der Multi-Tenant Archtitektur es auch hier Grenzen in der Effizienz der Skalierbarkeit gibt. Zudem ist ein entscheidender Faktor das Betreiben der Ressourcen in der Cloud an sich.
 
 **Kosten**
 
-Multi-Tenancy ermöglicht zudem Ressourcen effizienter zu nutzen. Nicht jeder Tenant benötigt in der Praxis genau denselben Speicherplatz auf seiner ihm zugeweisenen Datenbank. Wird dem Nutzer eine beispielsweise 20 GB große Datenbank zur Verfügung gestellt, dieser aber effektiv nur 15 GB benötigt, bleiben 5GB ungebraucht. Werden nun mehrere Tenants auf eine Datenbank gelegt kann der maximal verfügbare Speicherplatz genutzt werden indem jeden Nutzer genau der benötigte Speicherplatz zugewiesen wird.
-Gleiches gilt für die Anwendung an sich, die bei einer höheren Anfragelast entsprechend skaliert werden kann um eine Nichterreichbarkeit oder langsame Antwortzeiten zu verhindern. Dies muss dann nicht für jede einzelne Instanz gemacht werden, sondern kann aufgrund der Multi-Tenancy über eine Instanz geschehen. Nach abflauen der Anfragen, wie beispielsweise Nachts oder nach gewissen Spitzenzeiten, können dann Ressourcen sowie Kosten gespart werden.
+Multi-Tenancy ermöglicht es Ressourcen effizienter zu nutzen. Nicht jeder Tenant benötigt in der Praxis genau den selben Speicherplatz auf seiner ihm zugewiesenen Datenbank. Wird dem Nutzer eine beispielsweise 20 GB große Datenbank zur Verfügung gestellt, dieser aber effektiv nur 15 GB benötigt, bleiben 5GB ungebraucht. Werden nun mehrere Tenants auf eine Datenbank gelegt, kann der maximal verfügbare Speicherplatz genutzt werden, indem jeden Nutzer der individuell benötigte Speicherplatz zugewiesen wird.
+Gleiches gilt für die Anwendung, die bei einer höheren Anfragelast entsprechend skaliert werden kann, um eine Nichterreichbarkeit oder langsame Antwortzeiten zu verhindern. Dies muss nicht für jede Instanz einzeln gemacht werden, sondern kann aufgrund der Multi-Tenancy über eine Instanz geschehen. Bei Rückgang der Anfragen, wie nachts oder nach gewissen Spitzenzeiten, können dadurch Ressourcen sowie Kosten gespart werden.
 
 **Wartung**
 
-Da die Anwendung lediglich über eine einzige Instanz aufgerufen wird, erleichtert sich auch die Wartung sowie das Einspielen von Updates. Zeit und Kosten können gespart werden, da nicht für jede vom Nutzer verwendete Instanz ein Update oder eventuelle Fehlerbehebungen eingespielt werden müssen. Selbiges gilt auch für die Datenbanken, da diese im Idealfall nicht alle einzeln angesprochen werden müssen. Des weiteren erleichtert sich auch die Wartung der einzelnen Ressourcen, dass beispielsweise nur ein Betriebssystem, anstatt mehrerer aktualisiert werden muss.
+Da die Anwendung lediglich über eine einzige Instanz aufgerufen wird, erleichtern sich auch die Wartung sowie das Einspielen von Updates. Zeit und Kosten werden dadurch gespart, weil nicht für jede vom Nutzer verwendete Instanz ein Update oder eventuelle Fehlerbehebung eingespielt werden muss. Selbiges gilt auch für die Datenbanken, da diese nicht alle einzeln angesprochen werden müssen. Des weiteren erleichtert sich auch die Wartung der einzelnen Ressourcen, da beispielsweise nur ein Betriebssystem anstatt mehrerer aktualisiert werden muss.
 
 **Datenseparierung**
 
-Einer der kritischsten Anforderungen bei einer Multi-Tenant Architektur ist die Datenseparierung. Ausgehend von der Konzeption, dass in einer Datenbank mehrere Tenants liegen, müssen die Daten selbstredend sauber voneinander getrennt werden. Dabei muss zwingend verhindert weden, dass die Daten eines Tenants fälschlicherweise von einem anderen Tenant eingesehen werden können. Diese fällt bei einer Single- oder Multi-Tenant Konzeption, bei der jeder Tenant eine eigene Datenbank besitzt deutlich leichter. 
-In der Praxis wird eine eigene Datenbank pro Tenant oftmals dezidiert von den Kunden verlangt. Auch wenn für eine strenge Datenisolation bei einer von mehreren Tenants genutzten Datenbank gesorgt ist, kann dies beispielsweise nicht mit den Unternehmensregularien vereinbart werden. 
-Unabhängig davon ist eine Separierung der jeweiligen Daten schon aus Sicht der Individualisierung eines jeden Tenants notwendig, da logischerweise nicht jeder Nutzer exakt dieselben Anforderungen an seinen Tenant hat.
+Einer der kritischsten Anforderungen bei einer Multi-Tenant Architektur ist die Datenseparierung. Ausgehend von der Konzeption, dass in einer Datenbank mehrere Tenants liegen, müssen deren Daten strikt voneinander getrennt werden. Dabei muss zwingend verhindert weden, dass die Daten eines Tenants fälschlicherweise von einem anderen Tenant eingesehen werden können. Dies fällt bei einer Single- oder Multi-Tenant Konzeption, bei der jeder Tenant eine eigene Datenbank besitzt, deutlich leichter. 
+In der Praxis wird eine eigene Datenbank pro Tenant oftmals dezidiert von den Kunden verlangt. Auch wenn für eine strenge Datenisolation bei einer von mehreren Tenants genutzten Datenbank gesorgt ist, können unter anderem Unternehmensregularien gegen eine solche Datenhaltung sprechen. 
+Unabhängig davon ist eine Separierung der jeweiligen Daten schon aus Sicht der Individualisierung eines jeden Tenants notwendig, da nicht jeder Nutzer exakt dieselben Anforderungen an seinen Tenant hat.
 
 **Codestruktur**
 
-Sieht man sich nun Anwendungen an, bei der jeder Nutzer eine eigene Instanz zugeteilt bekommt fällt auf, dass somit auch auf jeder Instanz, bis auf Individualisierungen für den Nutzer, derselbe Code liegt. Da bei Multi-Tenancy der Hauptcode auf einer Instanz liegt, alle Nutzer darauf zugreifen und die nach Nutzerbedürfnissen erforderlichen Codeteil an die Hauptinstanz angehängt werden, können Speicherplatz verringert und die Wartung erleichtert werden. 
+Bei Single-Tenant Anwendungen nutzt jede Instanz, bis auf Individualisierungen für den Nutzer, denselben Code. Da bei Multi-Tenancy der Hauptcode auf einer Instanz liegt, alle Nutzer darauf zugreifen und die nach Nutzerbedürfnissen erforderlichen Codeteile an die Hauptinstanz angehängt werden, können Speicherplatz verringert und die Wartung erleichtert werden. 
 
-
-Durch den vorangengangen verstärkten Fokus auf das Cloud Computing mag der Eindruck entstehen, dass sich Multi-Tenant Architekturen lediglich in Verbindung mit einer Cloud Archtitektur implementieren lassen. Dem ist aber nicht so. Auch mit herkömmlichen on-premise Servern lassen sich Multi-Tenant Architekturen umsetzen und die genannten Vorteile nutzen. Die Vorteile liegen beim Cloud Computing in der sehr einfach Skalierung von Ressourcen, was im Zusammespiel mit einer Multi-Tenant Archtiektur ein hohe Kosten- sowie Leistungseffizienz ermöglicht.
+Durch den vorangengangen verstärkten Fokus auf das Cloud Computing mag der Eindruck entstehen, dass sich Multi-Tenant Architekturen lediglich in Verbindung mit einer Cloud Archtitektur implementieren lassen. Auch mit herkömmlichen on-premise Servern lassen sich Multi-Tenant Architekturen umsetzen und die genannten Stärken nutzen. Die Vorteile liegen beim Cloud Computing in der sehr einfach Skalierung von Ressourcen, was im Zusammespiel mit einer Multi-Tenant Archtiektur eine hohe Kosten- sowie Leistungseffizienz ermöglicht.
 
 ### Praxisbeispiele: Atlassian und Uber
 
-In der Praxis nutzen bereits viele Unternehmen und bekannte Anwendungen Multi-Tenant Architekturen. Um mögliche Umsetzungen der Architektur beleuchten zu können, werden als Beispiele Atlassian und Uber herangeführt.
+In der Praxis nutzen bereits viele Unternehmen und Anwendungen Multi-Tenant Architekturen. Um mögliche Umsetzungen der Architektur beleuchten zu können, werden als Beispiele Atlassian und Uber herangeführt.
 
 **Atlassian**
 
@@ -74,27 +73,27 @@ Folgende von Atlassian kreierte Abbildung zeigt den Ablauf bei einem Request auf
 ![](source/figures/AtlassianArchitecture.png)
 Abbildung 2: Multi-Tenant Architektur von Atlassian [@Atlassian2020]
 
-Atlassian nutzt dabei verschiedene sogenannte Edges, welche die jeweilige Anwendung umgeben. Wenn sich der Nutzer einloggen möchte gelangt er über ein virtuelles Gate innerhalb dieser Edges.
-Umgekehrt wird dann ein Request abgewickelt, wenn der Nutzer nach erfolgreichen Login beispielsweise eine Confluence-Seite aufrufen möchte. Der Request wird an das nächstgelegene Gate innerhalb der Edges zum Verlassen weitergeleitet und lokalisiert über die Tenant Config wo die zugehörigen Daten liegen sowie welche Daten zurückgeschickt werden müssen.
-Mittels AWS hat Atlassian verschiedene geographische Regionen eingerichtet, wodurch Nutzer bei Anfragen, abhängig von ihrem eigenen Standort, in die nächstgelegene Region geleitet wird. Dies erlaubt Atlassian zum einen bei hohen Anfrageaufkommen in den Regionen entsprechend zu skalieren und zum anderen die Ausfallzeit bei Updates, nach eigener Aussage, auf unter fünf Minuten zu bringen. Letzteres beruht darauf, dass die Updates nicht in allen Regionen gleichzeitig sondern abhängig von der Zeit und geringen Nutzeranfrange, wie beispielsweise Nachts, eingespielt werden können. Zudem können durch Caching-Mechanismen oft angefragte Inhalte in den Regionen für den jeweiligen Nutzer bereitgehalten und bei Bedarf schnell wieder aufgerufen werden. [@Atlassian2020].
+Atlassian nutzt verschiedene sogenannte Edges, welche die jeweilige Anwendung umgeben. Wenn sich der Nutzer einloggen möchte, gelangt er über ein virtuelles Gate innerhalb dieser Edges.
+Umgekehrt wird dann ein Request abgewickelt, wenn der Nutzer nach erfolgreichem Login beispielsweise eine Confluence-Seite aufrufen möchte. Der Request wird an das nächstgelegene Gate innerhalb der Edges zum Verlassen weitergeleitet und lokalisiert über die Tenant Config, wo die zugehörigen Daten liegen und welche Daten zurückgeschickt werden müssen.
+Mittels AWS hat Atlassian verschiedene geographische Regionen eingerichtet, wodurch Nutzer bei Anfragen, abhängig von ihrem eigenen Standort, in die nächstgelegene Region geleitet werden. Dies erlaubt Atlassian zum einen, bei hohen Anfrageaufkommen in den Regionen entsprechend zu skalieren und zum anderen die Ausfallzeit bei Updates, nach eigener Aussage, auf unter fünf Minuten zu bringen. Letzteres beruht darauf, dass die Updates nicht in allen Regionen gleichzeitig, sondern abhängig von der Zeit und geringen Nutzeranfrange, wie nachts, eingespielt werden können. Zudem werden durch Caching-Mechanismen oft angefragte Inhalte in den Regionen für den jeweiligen Nutzer bereitgehalten und können bei Bedarf schnell wieder aufgerufen werden. [@Atlassian2020].
 
 **Uber**
 
-Der bekannte Personenbeförderungsdienst aus den USA setzt ebenso auf eine Multi-Tenant Architektur. Allerdings in Verbindung mit Microservices [@Gud2020].
+Der bekannte Personenbeförderungsdienst aus den USA setzt ebenso auf eine Multi-Tenant Architektur in Verbindung mit Microservices [@Gud2020].
 
-Microservices stellt ebenso eine Architekturvariante dar, bei der eine Anwendung nicht aus der klassischen View-, Business Logik- und Datenhaltungsschicht besteht, sondern viele Komponenten zusammen die Anwendung darstellen. Dabei kommunizieren die Komponenten untereinander mittels Application Programming Interfaces (APIs). Der Vorteil dieser Archtiekturvariante liegt darin, dass die Komponenten unabhängig voneinander agieren. Dadurch können diese schnell ausgetauscht, erweitert oder repariert werden, wodurch andere Komponenten nicht betroffen sind [@Indrasidri2018 7-8].
+Microservices stellen ebenso eine Architekturvariante dar, bei der eine Anwendung nicht aus der klassischen View-, Business Logik- und Datenhaltungsschicht besteht, sondern viele Komponenten zusammen die Anwendung darstellen. Dabei kommunizieren die Komponenten untereinander mittels Application Programming Interfaces (APIs). Der Vorteil dieser Archtiekturvariante liegt darin, dass die Komponenten unabhängig voneinander agieren. Sie können schnell ausgetauscht, erweitert oder repariert werden, wodurch andere Komponenten nicht betroffen sind [@Indrasidri2018 7-8].
 
-Uber führt dabei mehrere Gründe auf, weshalb sich für eine Multi-Tenant Architektur in Verbindung mit Microservices entschieden wurde. Im folgenden soll allerdings nur auf das Deployen und Testen von Uber eingegangen werden.
-Die Änderungen oder Neuentwicklungen eines Services sollen nicht direkt in der Produktionsumgebung, sondern zuvor in einer Testumgebung eingespielt werden. Diese Testumgebung sind dann wiederum ein eigener Tenant, wobei die Datenströme weiterhin zwischen dem geänderten und den bestehenden Services bestehen können. Nachfolgendes Schaubild zeigt, wie Uber dies bei sich umgesetzt hat. Die Rechtecke mit den Buchstaben A-D stellen dabei jeweils einen eigenen Service dar. Somit kann die Testumgebung in einem eigenen Tenant parallel zur Produktionsumgebung laufen.
+Uber führt dabei mehrere Gründe auf, weshalb sich für eine Multi-Tenant Architektur in Verbindung mit Microservices entschieden wurde. Im folgenden wird auf das Deployen und Testen von Uber eingegangen.
+Die Änderungen oder Neuentwicklungen eines Services sollen nicht direkt in der Produktionsumgebung, sondern zuvor in einer Testumgebung eingespielt werden. Diese Testumgebung ist dann wiederum ein eigener Tenant, wobei die Datenströme weiterhin zwischen den geänderten und vorhandenen Services bestehen können. Das nachfolgende Schaubild zeigt, wie Uber dies bei sich umgesetzt hat. Die Rechtecke mit den Buchstaben A-D stellen jeweils einen eigenen Service dar. Somit kann die Testumgebung in einem eigenen Tenant parallel zur Produktionsumgebung laufen.
 
 ![](source/figures/UberMultiTenancy.png)
 
-Abbildung 3: Ubers' Multi-Tenancy Testing [@Gud2020]
+Abbildung 3: Ubers' Multi-Tenant Testing [@Gud2020]
 
-Des weiteren nutzt Uber für das Einführen von Änderungen oder Neuerungen der Services in die Produktionsumgebung das sogenannte Canary Deployment. Bei dieser Art des Deployments gibt es zwei System: Das aktuell sowie das mit den Änderungen. Dabei wird nur ein kleiner Teil der Datenströme auf das neue System geleitet und der Rest läuft noch auf das aktuelle System. Wenn alles funktioniert, können die Datenströme auf das neue System sukzessive erhöht werden.
-Auch hierfür bietet sich neben der aktuellen Produktionsumgebung ein weiterer Tenant an, den Uber nutzt, um darauf das neue System einzuspielen. Zudem nutzt Uber auch Multi-Tenancy um für die soeben genannten Fälle das Routing auf die entsprechenden Tenants beliebig umstellen zu können. [@Gud2020].
+Des weiteren nutzt Uber für das Einführen von Änderungen oder Neuerungen der Services in die Produktionsumgebung das sogenannte Canary Deployment. Bei dieser Art des Deployments gibt es zwei Systeme: Das aktuelle sowie das veränderte. Dabei wird nur ein kleiner Teil der Datenströme auf das neue System geleitet und der restliche Großteil läuft noch auf das aktuelle System. Wenn alles funktioniert, werden die Datenströme auf das neue System sukzessive erhöht.
+Auch hierfür bietet sich neben der aktuellen Produktionsumgebung ein weiterer Tenant an, den Uber nutzt, um darauf das neue System einzuspielen. Zudem verwendet Uber Multi-Tenancy auch, um für die soeben genannten Fälle das Routing auf die entsprechenden Tenants beliebig umstellen zu können. [@Gud2020].
 
-Die beiden Beispiele zeigen auf, dass Multi-Tenant Architekturen nicht nur Kosten beim Unternehmen und Kunden einsparen sowie die Systemeffizienz steigern können. Sie sind auch sehr gut für eine effektive Entwicklerinfrastruktur geeignet.
+Die beiden Beispiele zeigen auf, dass Multi-Tenant Architekturen nicht nur Kosten bei Unternehmen und Kunden einsparen sowie die Systemeffizienz steigern können; sie unterstützen zudem eine effektive Entwicklerinfrastruktur.
 Nichtdestrotz ist die Entscheidung für die Anwendungsarchitektur zuletzt immer von den Anforderungen der jeweiligen Nutzer sowie Unternehmenen abhängig und darf nicht leichtfertig auf Basis von aktuellen Trends und Technologien getroffen werden.
 
 
