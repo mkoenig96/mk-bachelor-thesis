@@ -45,6 +45,11 @@ Beim Deployen werden nur Dateien an die Kundeninstanzen übertragen, welche nich
 
 ## Architektur 
 
+
+![](source/figures/MVC_TS2.png)
+Abbildung 7: Model-View-Controller Architektur bei TeamSports2
+
+
 Insbesondere soll hier das MVC Prinzip mit cakePHP erklärt werden und wie dieses in TeamSports umgesetzt wurde. Die Zusammenhänge sollen auch in er Abbildung dargestellt werden.
 
 
