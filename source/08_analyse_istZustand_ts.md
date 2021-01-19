@@ -19,7 +19,7 @@ Der Nutzer hat bei der Gestaltung seiner Seite sehr viele Optionen, welche vom a
 
 - _Template und Farben:_ Es kann zwischen verschiedenen Templates, die eine jeweils unterschiedliche Anordnung des Menüs, Headerbildes und grundsätzlichen Aufbau der Seitenelemente darstellen, gewählt werden. Des weiteren können die Vereinsfarben auf der Seite mittels verschiedener Optionen zur Gestaltung der Haupt-, Schrift- und Hintergrundfarbe realisiert werden.
 
-- _Seitenaufbau mittels Elementen:_ Jede vom System generierte Seite kann mit verschiedenen Elementen bestückt werden. Ein Element kann wie ein Baustein, welcher aus cakePHP, HTML und CSS Code besteht, gesehen werden. Dies unterscheiden sich jeweils in der Darstellung der Informationen. Dabei können Informationen, der Mannschaftskader, Vereins- oder Teamberichte sein, welche der Nutzer zurvor im Backend eingegeben hat. 
+- _Seitenaufbau mittels Elementen:_ Jede vom System generierte Seite kann mit verschiedenen Elementen bestückt werden. Ein Element kann wie ein Baustein, welcher aus CakePHP, HTML und CSS Code besteht, gesehen werden. Dies unterscheiden sich jeweils in der Darstellung der Informationen. Dabei können Informationen, der Mannschaftskader, Vereins- oder Teamberichte sein, welche der Nutzer zurvor im Backend eingegeben hat. 
 
 - _Nutzerrollen:_ Für jede Instanz kann es einen oder mehrere Administrationsbenutzer geben. Diese können auf alle Bereiche, wie in Abbildung 5 oben rechts zu sehen ist, zugreifen. Darunter gibt es aber auch andere Nutzerrollen, welche beispielsweise als Trainer nur ihr jeweiliges Team bearbeiten können.
 
@@ -45,12 +45,66 @@ Beim Deployen werden nur Dateien an die Kundeninstanzen übertragen, welche nich
 
 ## Architektur 
 
+TeamSports2 ist in PHP geschrieben und nutzt das CakePHP Framework, welches auf dem Model-View-Controller (MVC) Prinzip basiert. Bei diesem Prinzip werden Geschäfts-,  Anwendungslogik und die Datenhaltung voneinander getrennt. 
+
+- _Model:_ Enthält die Geschäftslogik der Anwedung und organisiert die Datenhaltung.
+- _View:_ Darstellung der Inhalte für den Benutzer in PHP und HTML Code.
+- _Controller:_ Enhält die Anwendungslogik und fungiert als Vermittler zwischen View und Model.
+
+[@Ammelburger2008 6-9].
+
+Dadurch sind alle drei Ebenen unabhängig voneinander und logisch getrennt. Dies erleichtert zum einen die Wartung der Anwendung, als auch die Implementierung neuer Funktionen. 
+Mit CakePHP sollen zum einen die Vorteile des MVC Prinzips genutzt und zum anderen nützliche Funktionen seitens des Frameworks bereitgestellt werden. Ein wichtiger Bestandteil dessen ist das „Convention over Configuration“ [@Ammelburger2008 5] Prinzip, welches in CakePHP umgesetzt wird. Dabei müssen keine speziellen Konfigurationen implementiert werden um beispielsweise eine Verbindung zwischen dem Model, der View und dem Controller herzustellen. Die Verbindungen zueinander werden von CakePHP automatisch über die jeweilige Benennung der Komponenten erkannt [@Ammelburger2008 5-6].
+
+Anhand eines beispielhaften Aufrufs einer TeamSports2-Seite soll der Ablauf des MVC Prinzips dargestellt werden.
 
 ![](source/figures/MVC_TS2.png)
 Abbildung 7: Model-View-Controller Architektur bei TeamSports2
 
+Alle TeamSports2 Instanzen laufen auf einem Apache Server unter Ubuntu als Betriebssystem. Sendet ein Nutzer eine Anfrage an die Seite hm-teamsports.de, so wird auf das zur Domain zugehörige Verzeichnis auf dem Server zugegriffen. Für den Aufbau der URLs nutzt CakePHP das „[...] Representational State Transfer Schema, kurz REST, das für den Aufbau verteilter Informationssysteme definiert wurde“ [@Ammelburger2008 46]. „Das URL-Schema ist dabei normalerweise so aufgebaut: _http://domain/controller/action/parameter1/parameter2_“ [@Ammelburger2008 45].
 
-Insbesondere soll hier das MVC Prinzip mit cakePHP erklärt werden und wie dieses in TeamSports umgesetzt wurde. Die Zusammenhänge sollen auch in er Abbildung dargestellt werden.
+Im Beispiel wird der TeamsController angesprochen, welcher die Action „Seniors“ enthält. Die Action ist in diesem Fall eine Funktion, welche im TeamsController implementiert ist.
+
+```
+function seniors($departmentId = null)
+	{
+		$title = $this->getTitle("seniors", $departmentId);
+		$this->set('title_for_layout', $title);
+		$this->set('own_team_id', "0");
+		$teams = $this->getseniors($departmentId);
+		$this->set('teams', $teams);
+	}
+```
+
+Der übergebene Parameter eins in der URL steht für die departmentId, welche der Action übergeben werden muss. Als Department wird in TeamSports2 eine Abteilung des Vereins bezeichnet. Dadurch, dass die View seniors.ctp genau so wie die Action im TeamsController benannt ist, kann die View diese zuordnen. Dass die View seniors.ctp auf den TeamsController zugreifen muss, ist durch die Verzeichnisstruktur im Projekt festgelegt. Alle Views die im View-Ordner wiederum im Teams-Ordner liegen, wissen dass sie mit dem TeamsController verbunden sind. In diesem Fall enthält die seniors View ein Element mit der Nummer 33. Prinzipiell kann in der View auch PHP und HTML Code stehen. An dieser Stelle wurde ein Element verwendet, dass der Nutzer auch selbständig über den Administrationsbereich abändern kann. 
+Der TeamsController steht, ebenfalls durch die Namenskonvention, in Beziehung mit dem Team Model. CakePHP erkannt auch an dieser Stelle, dass in der Datenbank eine Tabelle namens teams besteht und verküpft das Model mit der Tabelle. Im Model werden dann unter anderem die relationalen Beziehungen der jeweiligen Tabelle definiert.
+Beispielsweise drückt $belongsTo aus, dass zwischen der teams sowie age_brackets und departments Tabelle eine n:1 Beziehung besteht.
+
+```
+public $belongsTo = array(
+        "AgeBracket" => array(
+            "className" => "AgeBracket"
+        ),
+        "Department" => array(
+            "className" => "Department"
+        )
+    );
+```
+
+Weitere relationale Beziehungen können wie folgt dargestellt werden.
+
+- 1:1 mit hasOne
+- 1:n mit hasMany
+- m:n mit hasAndBelongsToMany
+
+[@Ammelburger2008 73].
+
+--> Erkennung DepartmentID in Tabelle
+--> Namenskonventionen kurz erklären
+--> Bei Model Notizen anschauen.
+
+
+Insbesondere soll hier das MVC Prinzip mit CakePHP erklärt werden und wie dieses in TeamSports umgesetzt wurde. Die Zusammenhänge sollen auch in er Abbildung dargestellt werden.
 
 
 ## Datenbankmodell 
