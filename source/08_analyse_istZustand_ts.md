@@ -1,4 +1,4 @@
-# Analyse des IST-Zustands von TeamSports2
+# Beschreibung des IST-Zustands von TeamSports2
 
 TeamSports2 ist ein Content-Management-System für Sportvereine. Das System wurde entwickelt um Sportvereinen den Aufbau einer leicht bedienbaren, attraktiven sowie kostengünstigen Vereinshomepage zu ermöglichen. Die Idee dafür entstand aufgrund des Bedarfs einer neuen Homepage im eigenen Handballverein. 
 Die Faktoren Zeit und Pflegen stellen jeweils ein zentrales Kriterium für die Vereine dar, wenn es um den Aufbau oder Relaunch einer Vereinshomepage geht. Die Aufbauarbeit sowie Pflege soll nicht lediglich einer Person obliegen, die den Aufwand alleine betreiben muss. Des weiteren ist auch nicht davon auszugehen, dass es im Verein ausgebildete Programmierer oder ähnlich technikaffine Personen gibt. Zuletzt ist natürlich auch der zeitliche Aufwand ein wichtiger Faktor, weswegen auch hier eine unkompliziert sowie einfache Bedienung wichtig ist.
@@ -36,7 +36,7 @@ Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess da
 ![](source/figures/TeamSports2_Deployment.png)
 Abbildung 6: Deployment-Prozess TeamSports2
 
-In mehreren GitHub-Repositories liegt der Code der Produktionsumgebung mit Entwicklungs(Dev)- sowie Masterbranches. Zum Entwickeln von Code wird ein eingenständiger Entwicklungsserver bereitgestellt, worunter zur Produktonsumgebung adäquate Testseiten erstellt werden können. Dadurch muss nicht auf Liveservern, welche die Kundeninstanzen betreffen würde, getestet werden. Soll neuer Code entwickelt werden kann sich vom Entwicklungs- oder Masterbranch der aktuell Code geholt und ein Featurebranch erstellt werden.
+In mehreren GitHub-Repositories liegt der Code der Produktionsumgebung mit Entwicklungs- sowie Masterbranches. Zum Entwickeln von Code wird ein eingenständiger Entwicklungsserver bereitgestellt, worunter zur Produktonsumgebung adäquate Testseiten erstellt werden können. Dadurch muss nicht auf Liveservern, welche die Kundeninstanzen betreffen würde, getestet werden. Soll neuer Code entwickelt werden kann sich vom Entwicklungs- oder Masterbranch der aktuell Code geholt und ein Featurebranch erstellt werden.
 Mithilfe des Webservices  „DeployHQ“ wurde eine Build- und Deployment Pipeline aufgebaut. DeployHQ ist mit GitHub verbunden, wodurch auch alle mit dem Repository verbundenen Featurebranches auf die gewünschte Testinstanz deployed werden können.
 Ist der Entwickler mit dem Code fertig wird ein PullRequest gestellt. Sobald dieser geprüft und der PullRequest genehmigt wurde, erfolgt ein Merge in den Entwicklungsbranch. Hier werden bei größeren Releases mehrere Features oder Anpassungen gesammelt um diese dann gemeinsam in den Masterbranch zu mergen.
 
@@ -70,7 +70,7 @@ Abbildung 7: Model-View-Controller Architektur bei TeamSports2
 
 Alle TeamSports2 Instanzen laufen auf einem Apache Server unter Ubuntu als Betriebssystem. Sendet ein Nutzer eine Anfrage an die Seite hm-teamsports.de, so wird auf das zur Domain zugehörige Verzeichnis auf dem Server zugegriffen. Für den Aufbau der URLs nutzt CakePHP das „[...] Representational State Transfer Schema, kurz REST, das für den Aufbau verteilter Informationssysteme definiert wurde“ [@Ammelburger2008 46]. „Das URL-Schema ist dabei normalerweise so aufgebaut: _http://domain/controller/action/parameter1/parameter2_“ [@Ammelburger2008 45].
 
-Im Beispiel wird der TeamsController angesprochen, welcher die Action „Seniors“ enthält.
+Im Beispiel wird der TeamsController angesprochen, welcher die Action seniors enthält.
 
 ```
 function seniors($departmentId = null)
@@ -121,9 +121,12 @@ Abbildung 8: Seniors.ctp View bei TeamSports2
 
 ## Datenbankmodell 
 
-Aufgrund der verwendeten MySQL Datenbank ist das gesamte Datenbankmodell relational. 
+Aufgrund der verwendeten MySQL Datenbank ist das gesamte Datenbankmodell relational. Die nachfolgende Abbildung zeigt einen Ausschnitt des aktuellen Datenbankmodells mit einigen Haupttabellen, welches in der dritten Normalform vorliegt.
 
 ![](source/figures/TS2_AusschnittDB-Modell.png)
 Abbildung 9: Ausschnitt Datenbankmodell TeamSports2
 
-Ursprünglicher Plan war, das gesamte Datenbankmodell von TeamSports abzubilden. Mit allen Beziehungen, Tabellen etc. Da dies aber m.E. zu umfangreich ist, soll auf die wichtigsten Tabellen (temas, departments etc.) und deren Struktur sowie Beziehungen eingegangen werden. Auch hierfür ist eine Abbildung vsl sinnvoll.
+In der teams Tabelle sind alle Daten zum Team, wie der Teamname und eine Beschreibung, zu finden. Jede Abteilung kann beliebig viele Teams beinhalten, weswegen die department_id ebenso in der teams Tabelle hinterlegt ist. Jedes Team kann zudem einen Team- oder Spielbericht schreiben, der beliebige Informationen enthält. Hierfür besteht eine Verknüpfung mit der articles Tabelle. Die departmens Tabelle stellt alle Informationen zu einer Abteilung dar. Auch hier kann eine beliebige Anzahl von Abteilungen angelegt werden. Zudem gibt es in jedem Team einen oder mehrere Trainer sowie einen oder mehrere Spieler. Diese werden jeweils über die Zuordnungstabellen team_players sowie teams_trainers dem jeweiligen Team zugeordnet. Prinzipiell ist jeder Spieler oder Trainer immer auch ein Nutzer aus der users Tabelle. In dieser sind alle Nutzerspezifischen Daten, wie der Name, das Passwort, welches in verschlüsselter Form in der Datenbank gespeichert wird, enthalten. Sobald einem Nutzer über das Backend (siehe Abb. 5), beispielsweise eine Trainer- oder Spielerrolle zugewiesen wird entsteht eine Verknüpfung zur players oder trainers Tabelle. 
+
+## Analyse
+
