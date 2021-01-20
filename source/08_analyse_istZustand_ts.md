@@ -29,7 +29,7 @@ Sollte sich der Nutzer vor oder nach Ablauf der 90 Tage für den Kauf seiner Tes
 
 ## Deployment-Prozess und Infrastruktur
 
-Aktuell umfasst TeamSports2 über 150 Live-Instanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubunutbetriebssystem verteilt, welche von einem externen Hostinganbieter gehostet werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist.
+Aktuell umfasst TeamSports2 über 150 Live-Instanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubunutbetriebssystem verteilt, welche von einem externen Hostinganbieter gehostet werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist. Aktuell ist TeamSports2 somit auf einer Singel-Tenant Architektur aufgebaut, wobei jede Instanz auf ihre eigene Anwendung sowie Datenbank zugreift.
 
 Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt.
 
@@ -47,14 +47,21 @@ Beim Deployen werden nur Dateien an die Kundeninstanzen übertragen, welche nich
 
 TeamSports2 ist in PHP geschrieben und nutzt das CakePHP Framework, welches auf dem Model-View-Controller (MVC) Prinzip basiert. Bei diesem Prinzip werden Geschäfts-,  Anwendungslogik und die Datenhaltung voneinander getrennt. 
 
-- _Model:_ Enthält die Geschäftslogik der Anwedung und organisiert die Datenhaltung.
+- _Model:_ Enthält die Geschäftslogik der Anwedung, organisiert die Datenhaltung und stellt die jeweiligen Tabellen dar.
 - _View:_ Darstellung der Inhalte für den Benutzer in PHP und HTML Code.
 - _Controller:_ Enhält die Anwendungslogik und fungiert als Vermittler zwischen View und Model.
 
 [@Ammelburger2008 6-9].
 
 Dadurch sind alle drei Ebenen unabhängig voneinander und logisch getrennt. Dies erleichtert zum einen die Wartung der Anwendung, als auch die Implementierung neuer Funktionen. 
-Mit CakePHP sollen zum einen die Vorteile des MVC Prinzips genutzt und zum anderen nützliche Funktionen seitens des Frameworks bereitgestellt werden. Ein wichtiger Bestandteil dessen ist das „Convention over Configuration“ [@Ammelburger2008 5] Prinzip, welches in CakePHP umgesetzt wird. Dabei müssen keine speziellen Konfigurationen implementiert werden um beispielsweise eine Verbindung zwischen dem Model, der View und dem Controller herzustellen. Die Verbindungen zueinander werden von CakePHP automatisch über die jeweilige Benennung der Komponenten erkannt [@Ammelburger2008 5-6].
+Mit CakePHP sollen zum einen die Vorteile des MVC Prinzips genutzt und zum anderen nützliche Funktionen seitens des Frameworks bereitgestellt werden. Ein wichtiger Bestandteil dessen ist das „Convention over Configuration“ [@Ammelburger2008 5] Prinzip, welches in CakePHP umgesetzt wird. Dabei müssen keine speziellen Konfigurationen implementiert werden um beispielsweise eine Verbindung zwischen dem Model, der View und dem Controller herzustellen. Die Verbindungen zueinander werden von CakePHP automatisch über die jeweilige Benennung der Komponenten erkannt [@Ammelburger2008 5-6]. Nachfolgende Tabelle zeigt, worauf bei der Benennung der jeweiligen Komponenenten geachtet werden muss.
+
+| Komponente | Schreibweise | Numerus  | Beispiel        |
+|------------|--------------|----------|-----------------|
+| DB Tabelle | klein        | Plural   | teams           |
+| Model      | groß         | Singular | Team            |
+| Controller | groß         | Plural   | TeamsController |
+| View       | groß         | Plural   | Teams           |
 
 Anhand eines beispielhaften Aufrufs einer TeamSports2-Seite soll der Ablauf des MVC Prinzips dargestellt werden.
 
@@ -85,8 +92,8 @@ echo $this->element('view_elements/33');
 ```
 
 CakePHP erkennt mithilfe von *$this->element*, dass auf den View Ordner, worin der Elements Ordner liegt zugegriffen werden muss. Die gleiche Ordnerstruktur ist im Controller Ordner auch auf dem Server vorzufinden mit der Ergänzung des view_elements Ordners. Somit wird im Ordner View der Unterordner Elements gesucht. In letzerem ist dann der view_elements Symlink enthalten welcher das Element 33 enthält.
-Der TeamsController steht, ebenfalls durch die Namenskonvention, in Beziehung mit dem Team Model. CakePHP erkennt auch an dieser Stelle, dass in der Datenbank eine Tabelle namens teams besteht und verküpft das Model mit der Tabelle. Im Model werden dann unter anderem die relationalen Beziehungen der jeweiligen Tabelle definiert.
-Beispielsweise drückt $belongsTo aus, dass zwischen der teams sowie age_brackets und departments Tabelle eine n:1 Beziehung besteht.
+Der TeamsController steht, ebenfalls durch die Namenskonvention, in Beziehung mit dem Team Model. CakePHP erkennt auch an dieser Stelle, dass in der Datenbank eine Tabelle namens teams besteht und verküpft das Model mit der Tabelle. Im Model werden dann unter anderem die relationalen Beziehungen der Models untereinander definiert.
+Beispielsweise drückt $belongsTo aus, dass zwischen dem AgeBracket sowie Department Model eine n:1 Beziehung besteht.
 
 ```
 public $belongsTo = array(
@@ -112,16 +119,11 @@ Durch den Parameter in der URL können alle Seniorenteams der Abteilung mit depa
 ![](source/figures/SeniorsView.png)
 Abbildung 8: Seniors.ctp View bei TeamSports2
 
-
-
---> Erkennung DepartmentID in Tabelle
---> Namenskonventionen kurz erklären
---> Bei Model Notizen anschauen.
-
-
-Insbesondere soll hier das MVC Prinzip mit CakePHP erklärt werden und wie dieses in TeamSports umgesetzt wurde. Die Zusammenhänge sollen auch in er Abbildung dargestellt werden.
-
-
 ## Datenbankmodell 
+
+Aufgrund der verwendeten MySQL Datenbank ist das gesamte Datenbankmodell relational. 
+
+![](source/figures/TS2_AusschnittDB-Modell.png)
+Abbildung 9: Ausschnitt Datenbankmodell TeamSports2
 
 Ursprünglicher Plan war, das gesamte Datenbankmodell von TeamSports abzubilden. Mit allen Beziehungen, Tabellen etc. Da dies aber m.E. zu umfangreich ist, soll auf die wichtigsten Tabellen (temas, departments etc.) und deren Struktur sowie Beziehungen eingegangen werden. Auch hierfür ist eine Abbildung vsl sinnvoll.
