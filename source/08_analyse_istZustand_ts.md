@@ -63,7 +63,7 @@ Abbildung 7: Model-View-Controller Architektur bei TeamSports2
 
 Alle TeamSports2 Instanzen laufen auf einem Apache Server unter Ubuntu als Betriebssystem. Sendet ein Nutzer eine Anfrage an die Seite hm-teamsports.de, so wird auf das zur Domain zugehörige Verzeichnis auf dem Server zugegriffen. Für den Aufbau der URLs nutzt CakePHP das „[...] Representational State Transfer Schema, kurz REST, das für den Aufbau verteilter Informationssysteme definiert wurde“ [@Ammelburger2008 46]. „Das URL-Schema ist dabei normalerweise so aufgebaut: _http://domain/controller/action/parameter1/parameter2_“ [@Ammelburger2008 45].
 
-Im Beispiel wird der TeamsController angesprochen, welcher die Action „Seniors“ enthält. Die Action ist in diesem Fall eine Funktion, welche im TeamsController implementiert ist.
+Im Beispiel wird der TeamsController angesprochen, welcher die Action „Seniors“ enthält.
 
 ```
 function seniors($departmentId = null)
@@ -76,8 +76,16 @@ function seniors($departmentId = null)
 	}
 ```
 
-Der übergebene Parameter eins in der URL steht für die departmentId, welche der Action übergeben werden muss. Als Department wird in TeamSports2 eine Abteilung des Vereins bezeichnet. Dadurch, dass die View seniors.ctp genau so wie die Action im TeamsController benannt ist, kann die View diese zuordnen. Dass die View seniors.ctp auf den TeamsController zugreifen muss, ist durch die Verzeichnisstruktur im Projekt festgelegt. Alle Views die im View-Ordner wiederum im Teams-Ordner liegen, wissen dass sie mit dem TeamsController verbunden sind. In diesem Fall enthält die seniors View ein Element mit der Nummer 33. Prinzipiell kann in der View auch PHP und HTML Code stehen. An dieser Stelle wurde ein Element verwendet, dass der Nutzer auch selbständig über den Administrationsbereich abändern kann. 
-Der TeamsController steht, ebenfalls durch die Namenskonvention, in Beziehung mit dem Team Model. CakePHP erkannt auch an dieser Stelle, dass in der Datenbank eine Tabelle namens teams besteht und verküpft das Model mit der Tabelle. Im Model werden dann unter anderem die relationalen Beziehungen der jeweiligen Tabelle definiert.
+Der übergebene Parameter eins in der URL steht für die departmentId, welche der Action übergeben werden muss. Als Department wird in TeamSports2 eine Abteilung des Vereins bezeichnet. Dadurch, dass die View seniors.ctp  wie die Action im TeamsController benannt ist, kann die View diese zuordnen. Dass die View seniors.ctp auf den TeamsController zugreifen muss, ist durch die Verzeichnisstruktur im Projekt festgelegt. Alle Views die im View-Ordner und dort wiederum im Teams-Ordner liegen, wissen dass sie mit dem TeamsController verbunden sind. In diesem Fall enthält die seniors View ein Element mit der Nummer 33. Prinzipiell kann in der View auch PHP und HTML Code stehen. An dieser Stelle wurde ein Element verwendet, dass der Nutzer auch selbständig über den Administrationsbereich abändern kann. Grundsätzlich enthält jede Instanz Elemente, die zu Darstellungen in den Views dienen. Damit diese nicht bei jeder Instanz einzeln abgelegt werden müssen, enthält jede Instanz im View Ordner den Ordner view_elements. Dieser ist ein Symlink zum Pfad */opt/elements/view* auf demselben Server. Unter diesem Pfad findet sich dann auch das passende Element. In der View seniors.ctp wird das Element 33 mit folgendem Code aufgerufen.
+
+```
+<?php
+echo $this->element('view_elements/33');
+?>
+```
+
+CakePHP erkennt mithilfe von *$this->element*, dass auf den View Ordner, worin der Elements Ordner liegt zugegriffen werden muss. Die gleiche Ordnerstruktur ist im Controller Ordner auch auf dem Server vorzufinden mit der Ergänzung des view_elements Ordners. Somit wird im Ordner View der Unterordner Elements gesucht. In letzerem ist dann der view_elements Symlink enthalten welcher das Element 33 enthält.
+Der TeamsController steht, ebenfalls durch die Namenskonvention, in Beziehung mit dem Team Model. CakePHP erkennt auch an dieser Stelle, dass in der Datenbank eine Tabelle namens teams besteht und verküpft das Model mit der Tabelle. Im Model werden dann unter anderem die relationalen Beziehungen der jeweiligen Tabelle definiert.
 Beispielsweise drückt $belongsTo aus, dass zwischen der teams sowie age_brackets und departments Tabelle eine n:1 Beziehung besteht.
 
 ```
@@ -98,6 +106,13 @@ Weitere relationale Beziehungen können wie folgt dargestellt werden.
 - m:n mit hasAndBelongsToMany
 
 [@Ammelburger2008 73].
+
+Durch den Parameter in der URL können alle Seniorenteams der Abteilung mit department_id = 1, in diesem Fall die Fußballabteilung, aufgerufen werden. Die unter *hm-teamsports.de/teams/seniors/1* aufgerufene Seite wird dann wie folgt angezeigt.
+
+![](source/figures/SeniorsView.png)
+Abbildung 8: Seniors.ctp View bei TeamSports2
+
+
 
 --> Erkennung DepartmentID in Tabelle
 --> Namenskonventionen kurz erklären
