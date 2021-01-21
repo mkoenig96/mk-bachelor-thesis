@@ -1,4 +1,4 @@
-# Beschreibung des IST-Zustands von TeamSports2
+# IST-Zustand von TeamSports2
 
 TeamSports2 ist ein Content-Management-System für Sportvereine. Das System wurde entwickelt um Sportvereinen den Aufbau einer leicht bedienbaren, attraktiven sowie kostengünstigen Vereinshomepage zu ermöglichen. Die Idee dafür entstand aufgrund des Bedarfs einer neuen Homepage im eigenen Handballverein. 
 Die Faktoren Zeit und Pflegen stellen jeweils ein zentrales Kriterium für die Vereine dar, wenn es um den Aufbau oder Relaunch einer Vereinshomepage geht. Die Aufbauarbeit sowie Pflege soll nicht lediglich einer Person obliegen, die den Aufwand alleine betreiben muss. Des weiteren ist auch nicht davon auszugehen, dass es im Verein ausgebildete Programmierer oder ähnlich technikaffine Personen gibt. Zuletzt ist natürlich auch der zeitliche Aufwand ein wichtiger Faktor, weswegen auch hier eine unkompliziert sowie einfache Bedienung wichtig ist.
@@ -130,3 +130,31 @@ In der teams Tabelle sind alle Daten zum Team, wie der Teamname und eine Beschre
 
 ## Analyse
 
+TeamSports2 ist ein Software as a Service Produkt welches eine einfache sowie schnelle Erstellung einer voll funktionsfäigen Webseite ermöglicht. Dabei sind in der Infrastruktur sowie Architektur einige nicht mehr zeitgemäßge Implementierungen auszumachen 
+
+**MVC Prinzip mit CakePHP**
+
+Das Model View Controller Prinzip bietet eine hohe Flexibilität was die Wartung sowie Neuimplementierung von neuen Softwarekomponenten angeht. Neue Funktionalitäten und damit einhergehende neue Views, Models oder Controller können mithilfe der CakePHP Namenkonventionen ohne zusätzlichen Implementierungsaufwand hinzugefügt werden. Auch die Wartung einzelner Komponenten innerhalb der drei Ebenen gestaltet sich durch die Separierung dieser als vergleichsweise einfach. Tritt beispielsweise ein Darstellungsfehler in einer der Views auf kann dieser in der View direkt beziehungsweise im zugehörigen Element behoben werden. Das Antasten von Controller oder Model ist nicht weiter notwendig. Dies spart Entwicklungszeit und minimiert das Risiko, dass andere Komponenten beim Beheben des Fehlers betroffen sein können. 
+Des weiteren sind die in dieser Arbeit dargestellten CakePHP Funktionen nur ein Bruchteil dessen, was das Framework anbietet. Dieses bietet sehr viel mehr Funktonen um die Entwicklungsarbeit effizienter sowie schneller zu gestalten.
+
+**Wartung der Infrastruktur**
+
+Jeder Apache Server, auf dem die zurzeit Instanzen der Vereine liegen, wird aktuell vollständig selbst verwaltet. Lediglich die Ressourcen werden von einem Hostinganbieter bereitgestellt. Die Instandhaltung obliegt den Entwicklern. Dies beinhaltet unter anderem das Updaten des Betriebssystem, Sicherstellung einer Rebootsicheren Konfiguration für Updates seitens des Hostinganbieters sowie die vollständige Verwaltung.
+
+**Skalierbarkeit**
+
+Im aktuellen Zustand ist das System sehr schwerfällig zu skalieren. Die Einrichtung eines neuen Servers muss komplett händisch von einem Entwickler durchgeführt werden. Es gibt hierbei keine automatisierten Prozess die die Einrichtung erleichtern. Bei einem großen Neukunden Andrang müsste sich vorerst auf die Bereitstellung der Ressourcen anstatt um das Betreuen der Neukunden gekümmert werden.
+Des weiteren sind die Ressourcen sehr statisch verteilt. Unabhängig der Nutzeranfragen bleiben die Kapazitäten immer konstant. Dabei ist am Wochendende und zu Beginn sowie Ende Woche stets ein erhöhtes Nutzeraufkommen festzustellen. Dies ist dadurch begründet, dass der Spielbetrieb der Vereine sich größtenteils am Wochenende
+
+![](source/figures/TS2_SeitenaufrufeJahr.png)
+Abbildung 10: Seitenaufrufe in der Woche von TeamSports2
+
+![](source/figures/TS2_SeitenaufrufeWoche.png)
+Abbildung 11: Seitenaufrufe im Jahr von TeamSports2
+
+
+**Deployment**
+
+
+
+**Testing**
