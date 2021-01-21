@@ -29,7 +29,7 @@ Sollte sich der Nutzer vor oder nach Ablauf der 90 Tage für den Kauf seiner Tes
 
 ## Deployment-Prozess und Infrastruktur
 
-Aktuell umfasst TeamSports2 über 150 Live-Instanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubunutbetriebssystem verteilt, welche von einem externen Hostinganbieter gehostet werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist. Aktuell ist TeamSports2 somit auf einer Singel-Tenant Architektur aufgebaut, wobei jede Instanz auf ihre eigene Anwendung sowie Datenbank zugreift.
+Aktuell umfasst TeamSports2 über 160 Live-Instanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubunutbetriebssystem verteilt, welche von einem externen Hostinganbieter gehostet werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist. Aktuell ist TeamSports2 somit auf einer Singel-Tenant Architektur aufgebaut, wobei jede Instanz auf ihre eigene Anwendung sowie Datenbank zugreift.
 
 Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt.
 
@@ -126,7 +126,7 @@ Aufgrund der verwendeten MySQL Datenbank ist das gesamte Datenbankmodell relatio
 ![](source/figures/TS2_AusschnittDB-Modell.png)
 Abbildung 9: Ausschnitt Datenbankmodell TeamSports2
 
-In der teams Tabelle sind alle Daten zum Team, wie der Teamname und eine Beschreibung, zu finden. Jede Abteilung kann beliebig viele Teams beinhalten, weswegen die department_id ebenso in der teams Tabelle hinterlegt ist. Jedes Team kann zudem einen Team- oder Spielbericht schreiben, der beliebige Informationen enthält. Hierfür besteht eine Verknüpfung mit der articles Tabelle. Die departmens Tabelle stellt alle Informationen zu einer Abteilung dar. Auch hier kann eine beliebige Anzahl von Abteilungen angelegt werden. Zudem gibt es in jedem Team einen oder mehrere Trainer sowie einen oder mehrere Spieler. Diese werden jeweils über die Zuordnungstabellen team_players sowie teams_trainers dem jeweiligen Team zugeordnet. Prinzipiell ist jeder Spieler oder Trainer immer auch ein Nutzer aus der users Tabelle. In dieser sind alle Nutzerspezifischen Daten, wie der Name, das Passwort, welches in verschlüsselter Form in der Datenbank gespeichert wird, enthalten. Sobald einem Nutzer über das Backend (siehe Abb. 5), beispielsweise eine Trainer- oder Spielerrolle zugewiesen wird entsteht eine Verknüpfung zur players oder trainers Tabelle. 
+In der teams Tabelle sind alle Daten zum Team, wie der Teamname und eine Beschreibung, zu finden. Jede Abteilung kann beliebig viele Teams beinhalten, weswegen die department_id ebenso in der teams Tabelle hinterlegt ist. Jedes Team kann zudem einen Team- oder Spielbericht schreiben, der beliebige Informationen enthält. Hierfür besteht eine Verknüpfung mit der articles Tabelle. Die departmens Tabelle stellt alle Informationen zu einer Abteilung dar. Auch hier kann eine beliebige Anzahl von Abteilungen angelegt werden. Zudem gibt es in jedem Team einen oder mehrere Trainer sowie einen oder mehrere Spieler. Diese werden jeweils über die Zuordnungstabellen team_players sowie teams_trainers dem jeweiligen Team zugeordnet. Prinzipiell ist jeder Spieler oder Trainer immer auch ein Nutzer aus der users Tabelle. In dieser sind alle Nutzerspezifischen Daten, wie der Name oder das Passwort enthalten. Wird einem Nutzer beispielsweise eine Trainer- oder Spielerrolle zugewiesen, entsteht eine Verknüpfung zur players oder trainers Tabelle. 
 
 ## Analyse
 
@@ -144,17 +144,26 @@ Jeder Apache Server, auf dem die zurzeit Instanzen der Vereine liegen, wird aktu
 **Skalierbarkeit**
 
 Im aktuellen Zustand ist das System sehr schwerfällig zu skalieren. Die Einrichtung eines neuen Servers muss komplett händisch von einem Entwickler durchgeführt werden. Es gibt hierbei keine automatisierten Prozess die die Einrichtung erleichtern. Bei einem großen Neukunden Andrang müsste sich vorerst auf die Bereitstellung der Ressourcen anstatt um das Betreuen der Neukunden gekümmert werden.
-Des weiteren sind die Ressourcen sehr statisch verteilt. Unabhängig der Nutzeranfragen bleiben die Kapazitäten immer konstant. Dabei ist am Wochendende und zu Beginn sowie Ende Woche stets ein erhöhtes Nutzeraufkommen festzustellen. Dies ist dadurch begründet, dass der Spielbetrieb der Vereine sich größtenteils am Wochenende
-
-![](source/figures/TS2_SeitenaufrufeJahr.png)
-Abbildung 10: Seitenaufrufe in der Woche von TeamSports2
+Des weiteren sind die Ressourcen sehr statisch verteilt. Unabhängig der Nutzeranfragen bleiben die diese immer konstant. Dabei haben Auswertungen die folgende Höhe der Seitenaufrufe über die Woche verteilt ergeben.
 
 ![](source/figures/TS2_SeitenaufrufeWoche.png)
+Abbildung 10: Seitenaufrufe in der Woche von TeamSports2
+
+Die Schwankungen sind darin begründet, dass zu Beginn und Ende der Woche die Vorbereitungen für die jeweiligen Spieltage am Wochenende beginnen. Es werden Vorberichte eingepflegt, letzte Informationen zum Spieltag weitergegeben und die Fans informieren sich wann welche Spiele stattfinden. Zu Beginn der Woche werden dann wiederum die Spielberichte des vergangenen Spieltags auf die Webseiten gestellt, welche wiederum von den Fans gelesen werden. Am Wochenende findet dann der eigentlich Spieltag statt, wobei Ergebnisse und  erste Spiel- oder Vorberichte auf den Seiten eingestellt werden. 
+Über das Jahr hinweg gesehen sind ebenso relativ eindeutige Schwankungen, gemessen an den Seitenaufrufen, festzustellen.
+
+![](source/figures/TS2_SeitenaufrufeJahr.png)
 Abbildung 11: Seitenaufrufe im Jahr von TeamSports2
 
+Aufgrund der relativ langen Winterpause von Fußballvereinen, welche 65 Prozent der Instanzen bei TeamSports2 ausmachen, findet auf den Seiten weniger Aktivität statt. Gleiches gilt für die Zeit zwischen Juni und Juli, wo sich viele Vereine in der Sommerpause befinden. Zu Saisonbeginn im Herbststeigt dann wiederum das Nutzeraufkommen. 
+
+Anhand der Auswertungen wird deutlich, dass es große Unterschiede in der Lastenverteilung gibt. Die aktuellen Ressourcen können die höhere Anfragelast in den Spitzenzeiten zwar problemlos bewältigen, allerdings laufen die gleichen Ressourcen auch in niedrig frequentierten Zeiten. 
 
 **Deployment**
 
-
+Für das Bereitstellen eines neuen Releases oder Updates muss der gesamte Code aus dem GitHub-Projekt auf jede der aktuell 160 Live-Instanzen einzeln deployed werden. Der Deplyoment Prozess nimmt somit nicht nur mehr Zeit in Anspruch, es muss auch ein erheblicher Konfigurationsaufwand betrieben werden. Jede Instanz ist ein DeployHQ einzeln angelegt und mit dem richtigen Pfad auf dem Server versehen. Zwar muss die Einrichtung grundsätzlich nur einmal erfolgen, allerdings stellen die Konfigurationen eine potenzielle Fehlerquelle dar. Ist der beispielsweise der Pfad nicht richtig, bekommt die Instanz das Update nicht. Zu dem Deployment auf die 160 Live Instanzen kommen noch eine alle Testinstanzen auf einem weiteren Server hinzu, deren Anzahl auf den einen hohen zweistelligen bis niedrigen dreistelligen Bereich beziffert werden kann.
+Des weiteren befindet sich auf den Servern sehr viel doppelter Code. Da alle Models, Views und Controller auf jeder Instanz gleich sind, diese aber trotzdem auf jeder Instanz liegen.
 
 **Testing**
+
+Um neu entwickelten Code zu testen steht ein eigener Entwicklungsserver mit Testinstanzen zur Verfügung. Sowohl die Instanzen, als auch der Server sind adäquat zum Livesystem. Dadurch ist es allerdings nicht möglich unter den Voraussetzungen des Livesystems zu testen. Trotz gleicher Konfigurationen kann es bei den Liveinstanzen zu Fehlern kommen, welche in der Entwicklung nciht aufgetreten sind. Somit kann es passieren, dass auf der Liveinstanz Fehler auftreten, welche auf der Entwicklungsinstanz nicht in entdeckt wurden. Um den Fehler zu behen muss wieder ein neuer Deploymentprozess über alle Instanzen angestoßen werden. In DeployHQ können zwar Models und Controler sowie die View separat voneinander deployed werden, aber auch dies muss jeweils fortlaufend über alle Instanzen geschehen. Zuletzt ist auch der Kundeneindruck nicht unerheblich, wenn neue Updates auf den Liveseiten unterwünschtes Verhalten oder im schlimmsten Fall einen Ausfall der Seite hervorrufen.
