@@ -63,6 +63,8 @@ Mit CakePHP sollen zum einen die Vorteile des MVC Prinzips genutzt und zum ander
 | Controller | groß         | Plural   | TeamsController |
 | View       | groß         | Plural   | Teams           |
 
+Tabelle 1: CakePHP Namenskonventionen
+
 Anhand eines beispielhaften Aufrufs einer TeamSports2-Seite soll der Ablauf des MVC Prinzips dargestellt werden.
 
 ![](source/figures/MVC_TS2.png)
