@@ -5,9 +5,20 @@ Hier sollen die Kosten der aktuellen und möglichen neuen Architektur ggü. stel
 
 Ein Gedanke (hattest du ja auch schon angebracht) war noch ein weiteres Kapitel miteiner Qualitativen Analyse zu machen. Hier möchte ich analysieren welche Verbesserungsmöglichkeiten es beim aktuellen System gibt und wie diese durch MultiTenant realisiert werden können. Aber auch ob es evtl. Nachteile gibt TS2 auf Multi Tenant umzustellen. 
 
+
+| Server    | SUM DBs in MB | Festplattenauslastung in GB | Festplattenauslastung in % | Festplattenspeicher Gesamt in GB | Anzahl Instanzen |
+|-----------|---------------|-----------------------------|----------------------------|----------------------------------|------------------|
+| Live 1    |          76,5 |                        83,8 |                       27,7 |                            302,3 |               34 |
+| Live 2    |         122,7 |                       111,4 |                       22,1 |                            503,8 |               60 |
+| Live 3    |          83,6 |                        76,1 |                       15,1 |                            503,8 |               61 |
+| Live 4    |          11,4 |                        14,3 |                        2,8 |                            503,8 |                5 |
+| Generator |         184,5 |                        29,5 |                        9,8 |                            302,3 |               90 |
+
 ## Kosten 
 
-
+```
+SELECT table_schema "localhost", ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) "DB Size in MB" FROM information_schema.tables GROUP BY table_schema
+```
 
 
 ## Häufige Queries 
