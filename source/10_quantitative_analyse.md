@@ -49,7 +49,7 @@ Tabelle X: Kosten für fünf EC2-Instanzen bei AWS
 | Lambda      | 1.735.586.217 Requests                                 | 344,82             |
 | Aurora      | vCPU: 2, RAM: 15.25, Speicher: 500 GB                  | 680,50             |
 |             |                                                        |                    |
-| Gesamt      |                                                        | 1237,27            |
+| **Gesamt**      |                                                        | 1237,27            |
 Tabelle X: Kosten einer möglichen vollständigen AWS Infrastruktur
 
 
