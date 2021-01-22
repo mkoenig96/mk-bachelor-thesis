@@ -28,7 +28,7 @@ Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur
 Der Begriff „Tenant“ ist hierbei mit dem User gleichzusetzen. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
 
 - _Multi-Tenant mit einer Datenbank pro Tenant:_ Alle Nutzer greifen zwar auf dieselbe Instanz zu, für jeden Tenant wird aber eine eigene Datenbank bereitgestellt[@MicrosoftDocs2019].
-
+\pagebreak
 - _Multi-Tenant mit geteilter Datenbank:_ Auch hierbei greifen alle Nutzer auf eine Instanz zu, wobei mehrere Tenants auf einer Datenbank liegen. Zur Identifizierung der einzelnen Tenants in der Datenbank wird eine zusätzliche Spalte hinzugefügt [@MicrosoftDocs2019].
 
 - _Multi-Tenant Kombination mit eigenständigen und geteilten Datenbanken:_ Die ersten beiden Ansätze werden kombiniert. Es sind sowohl Datenbanken vorhanden, auf welchen die Daten mehrerer Tenants liegen, als auch Datenbanken, die nur für einen Tenant bestimmt sind [@MicrosoftDocs2019].
@@ -244,6 +244,8 @@ Hiermit wird der Schlüssel teamId mit dem zugehörigen Wert name gesetzt.
 ```
 SET teamId "name"
 ```
+\pagebreak
+
 Durch Ausführen des Befehls
 ```
 GET teamId

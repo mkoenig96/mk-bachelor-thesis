@@ -1,6 +1,6 @@
 # IST-Zustand von TeamSports2
 
-TeamSports2 ist ein Content-Management-System (CMS) für Sportvereine. Das System wurde entwickelt, um Sportvereinen den Aufbau einer intuitiven, attraktiven sowie kostengünstigen Vereinshomepage zu ermöglichen. Die Faktoren Zeit und Pflege der Homepage stellen jeweils ein zentrales Kriterium für die Vereine dar, wenn es um den Aufbau oder Relaunch einer Vereinshomepage geht. Durch TeamSports2 kann jeder Verein für sich entscheiden, welche und wieviele Personen die Verwaltung der Homepage übernehmen. Zudem ist die Administration der Homepage für jederman, unabhängig von Ausbildung und Weberfahrung, möglich.
+TeamSports2 ist ein Content-Management-System für Sportvereine. Das System wurde entwickelt, um Sportvereinen den Aufbau einer intuitiven, attraktiven sowie kostengünstigen Vereinshomepage zu ermöglichen. Die Faktoren Zeit und Pflege der Homepage stellen jeweils ein zentrales Kriterium für die Vereine dar, wenn es um den Aufbau oder Relaunch einer Vereinshomepage geht. Durch TeamSports2 kann jeder Verein für sich entscheiden, welche und wieviele Personen die Verwaltung der Homepage übernehmen. Zudem ist die Administration der Homepage für jederman, unabhängig von Ausbildung und Weberfahrung, möglich.
 
 ## Grundlegende Produktstruktur
 
@@ -55,6 +55,8 @@ TeamSports2 ist in PHP geschrieben und nutzt das CakePHP Framework, welches auf 
 Dadurch sind alle drei Ebenen unabhängig voneinander und logisch getrennt. Dies erleichtert die Wartung der Anwendung sowie die Implementierung neuer Funktionen. 
 Mit CakePHP sollen zum einen die Vorteile des MVC Prinzips genutzt und zum anderen nützliche Funktionen seitens des Frameworks bereitgestellt werden. Ein wichtiger Bestandteil dessen ist das „Convention over Configuration“ [@Ammelburger2008 5] Prinzip, welches in CakePHP umgesetzt wird. Dabei müssen keine speziellen Konfigurationen implementiert werden, um Verknüpfungen zwischen dem Model, der View und dem Controller herzustellen. Die Verbindungen zueinander werden von CakePHP automatisch über die jeweilige Benennung der Komponenten erkannt [@Ammelburger2008 5-6]. Nachfolgende Tabelle zeigt, worauf bei der Benennung der jeweiligen Komponenenten geachtet werden muss:
 
+\pagebreak
+
 | Komponente | Schreibweise | Numerus  | Beispiel        |
 |------------|--------------|----------|-----------------|
 | DB Tabelle | klein        | Plural   | teams           |
@@ -106,7 +108,6 @@ public $belongsTo = array(
         )
     );
 ```
-
 Weitere relationale Beziehungen können wie folgt dargestellt werden.
 
 - 1:1 mit hasOne
@@ -119,6 +120,8 @@ Durch den Parameter in der URL können alle Seniorenteams der Abteilung mit depa
 
 ![](source/figures/SeniorsView.png)
 Abbildung 8: Seniors.ctp View bei TeamSports2
+
+\pagebreak
 
 ## Datenbankmodell 
 
