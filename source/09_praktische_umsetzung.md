@@ -37,33 +37,36 @@ Der Hintergrund, die aktuelle Datenbankstruktur weitestgehend zu erhalten liegt 
 Die Umstellung auf eine NoSQL Datenbank ist in diesem Falle nicht sinnvoll, da sowohl Ausfalltoleranz als auch die hohe Verfügbarkeit bei Homepages von Sportvereinen nur bedingt gegeben sein müssen. Dahingegen ist die Integrität sowie Konsistenz ein ausschlaggebendes Argument um weiterhin eine SQL Datenbank, in Form von MySQL, zu nutzen. Da mehrere Benutzer auf die Datenbank zugreifen und auch bei jeder Instanz stets mehrere Benutzer im Backendbereich Änderungen vornehmen können ist die Datenbankkonsistenz eine Funktionalität, welche erfüllt sein muss und durch eine NoSQL Datenbank nicht gegeben wäre. Nichtzuletzt ist das CakePHP Framework allein in seiner Grundfunktionlität für eine relationale Datenbank ausgelegt. Dies zeigt sich unter anderem an dem von CakePHP bereitgestellten CRUD-Prinzip, wonach die SQL-Befehle INSERT, SELECT, UPDATE und DELETE als SQL-Datenbankoperationen direkt vom Framework unterstützt sowie angewendet um Daten während der Laufzeit zu selektieren [@Ammelburger2008 5].
 
 Bei den notwendigen Tabellen, soll eine neue Tabellenspalte hinzugefügt werden um den richtigen Tenant identifizieren zu können. 
-Der Ausschnitt des Datenbankmodells wurde dementsprechend angepasst.
+Hierfür muss bei allen nötigen Tabellen folgender Befehl ausgeführt werden.
 
-![](source/figures/TS2_AusschnittDB-Modell_MultiTenant.png)
-Abbildung 12: Ausschnitt Datenbankmodell mit Multi-Tenant TeamSports2
+```
+ALTER TABLE teams 
+DROP PRIMARY KEY, 
+ADD COLUMN tenantId int(11) NOT NULL, 
+ADD PRIMARY KEY (id,tenantId)
+```
 
-
+Die Primärschlüssel der angesprochenen Tabelle müssen zuerst entfernt  und dann mit dem neuen zusammengesetzten Primärschlüssel wieder angelegt werden. Der Befehl 
 
 ```
 ALTER TABLE teams 
 ADD COLUMN tenantId int(11) NOT NULL PRIMARY KEY
 ```
+gibt eine Fehlermeldung unter MySQL zurück, dass mehrere Primärschlüssel definiert sind. 
+Mithilfe des neuen Attributes tenantId in der jeweiligen Tabelle kann dann die zugehörige Instanz eindeutig identifiziert werden. Die tenantId fungiert dann in der Tabelle mit dem bereits bestehenden Primärschlüssel als zusammengesetzter Primärschlüssel, da nur durch tenantId und beispielsweise die teamId die richtige Zeile in der Tabelle eindeutig bestimmt weden kann.  
+Wie bereits angedeutet muss nicht bei allen Tabellen eine neue Spalte zur Identifikation des Tenants hinzugefügt werden, da die tenantId für einige Tabellen nicht relevant ist. Beispielsweise die age_brackets Tabelle, worin die aktuellen Jahrgänge für die Teams enthalten sind. Die darin enthaltenen Daten sind für alle Instanzen gleich und müssen nicht separiert werden.
+Nachdem allen Tabellen die neue Spalte hinzugefügt wurde, sieht das Datenbankmodell wie folgt aus. Auch hier wurde ein Ausschnitt gewählt, welcher bereits im vorherigen Kapitel beschrieben wurde.
 
-```
-ALTER TABLE teams 
-DROP PRIMARY KEY, 
-ADD COLUMN tenantId varchar(11) NOT NULL, 
-ADD PRIMARY KEY (id,tenantId)
-```
+![](source/figures/TS2_AusschnittDB-Modell_MultiTenant.png)
+Abbildung 12: Ausschnitt Datenbankmodell mit Multi-Tenant TeamSports2
 
-
-
-
-
-
+Die Fremdschlüssel sowie die Beziehungen der einzelnen Tabellen zueinander bleiben erhalten. Auch durch DROP PRIMARY KEY bleiben die Fremdschlüssel in der jeweiligen Tabelle enthalten.
+- Änderungen bei Models?
 
 
 ## Implementierung
+
+
 
 
 
