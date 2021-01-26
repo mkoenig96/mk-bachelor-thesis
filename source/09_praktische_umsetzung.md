@@ -1,6 +1,6 @@
 # Praktische Umsetzung
 
-Das Kapitel der praktischen Umsetzung zeigt in diesem Fall eine theoretische Annäherung, wie TeamSports2 in eine Multi-Tenant Architektur überführt werden kann, welche Stellen im System bei der Migration kritisch umzusetzen sind und wie eine praktische Herangehensweise an die Migration aussehen kann.
+Das Kapitel der praktischen Umsetzung zeigt in diesem Fall eine theoretische Annäherung auf, wie TeamSports2 in eine Multi-Tenant Architektur überführt werden kann, welche praktische Herangehensweise für die Migration verwendet wurde.
 Ursprünglich war geplant, einen Prototypen für eine Multi-Tenant Archtitektur mit TeamSports2 zu entwickeln. Dabei sollten zwei Instanzen in eine Multi-Tenant Architektur migriert werden. Nach Beginn der Umsetzung wurde allerdings klar, dass dies für diese Arbeit, ein zu umfangreiches Unterfangen ist. Die Komplexität des Systems in den verschiedenen Models, Views und Controllern sowie das Datenbankmodell ließen eine Migration in der vorgegebenen Zeit nicht zu. Daraufhin wurde ein weiterer Versuch unternommen, indem ein kleiner Teil der Komponenten aus dem bestehenden System herausgelöst wurde um damit eine Multi-Tenant Architektur zu erreichen. Auch dieser Versuch scheiterte, da die Instanzen, ohne die fehlenden Komponenten und durch die bestehenden Abhängigkeiten nicht mehr funktioniert hätten. 
 
 ## Vorgehensweise
@@ -74,22 +74,25 @@ WHERE name= 'base_url' AND value= 'domain'
 
 ## Neue Architektur
 
-Um von den Tenant, welcher auf die Anwendung zugreifen möchte, eindeutig identifizieren zu können soll die Domain in Verbindung mit der tenantId genutzt werden. Beim ersten Aufruf der Seite wird die Domain der aktuellen Session gespeichert und ein Request an die Settings Tabelle gesendet. In dem Request ist dann die URL der Seite enhalten und es wird in der Settings Tabelle nach der passenden URL gesucht. Ist diese gefunden, kann die tenantId wieder zurück an die Session geschickt werden. Während der gesamten Session bleibt die tenantId gespeichert um nicht bei jedem Neuaufruf einer View der Seite eine Datenbankabfrage senden zu müssen. 
+Um den Tenant, welcher auf die Anwendung zugreifen möchte, eindeutig identifizieren zu können soll die Domain in Verbindung mit der tenantId genutzt werden. Beim ersten Aufruf der Seite wird die Domain der aktuellen Session gespeichert und ein Request an die Settings Tabelle gesendet. In dem Request ist dann die URL der Seite enhalten und es wird in der Settings Tabelle nach der passenden URL gesucht. Ist diese gefunden, kann die tenantId wieder zurück an die Session geschickt werden. Während der gesamten Session bleibt die tenantId gespeichert um nicht bei jedem Neuaufruf einer View der Seite eine Datenbankabfrage senden zu müssen. 
 Über die von CakePHP bereitgestellte Session-Component können die Einstellungen für jede Session sowohl allgemein, als auch in jedem Controller extra gesetzt werden. Für jede Session wird von CakePHP eine Session-ID vergeben, worunter dann für die Gültigkeit der Session auch die tenantId zu finden ist. 
+Die aus der Session stammende URL soll zudem auch für die Zuordnung der richtigen View zum Controller dienen. 
+Nahezu der gesamte Code liegt mit der neuen Architektur nicht mehr in jeder einzelnen Instanz, sondern zentral auf dem Server. Die Instanz greift darauf zu und ruft im Controller die jeweilige Action auf. Je nachdem ob es sich um eine, für alle Instanzen gültige oder individuelle View handelt, die durch die Action aufgerufen werden soll, wird der Pfad für die View über die Action angepasst.
+Wird eine allgemeine View angesprochen dann kann auf den zentralen View Ordner, welcher wiederum im App Ordner liegt, zugegriffen werden. Handelt es sich um eine individuelle View der Instanz muss der Pfad zu der View in der Action explizit neu gesetzt werden. Des Setzen des neuen View Pfades in der Action muss so nur bei den Actions geschehen, wo die View individueller Natur ist. Weitere Abfragen, um auf eine allgemeine View zu prüfen, sind im Controller nicht weiter notwendig. Die aus der Session stammende Domain der Instanz wird im Controller übergeben und als Parameter in dem Pfad, welcher zur View der Action führt, gesetzt. 
 
+\pagebreak
 
-![](source/figures/TS2_AusschnittDB-Modell_MultiTenantTS2.png)
+```
+$sessionDomain = 'hm-teamsports2.de';
+
+function seniors ($departmendId = null) {
+    $this->viewPath = /Tenants/$sessionDomain/app/View;
+}
+```
+Somit ruft die seniors Action nun die passende View im zugehörigen Ordner der Instanz und nicht mehr im allgemeingültigen Ordner auf. Die Bennenung des Ordners des Tenants ist serverseitig immer gleich zur Domain der jeweiligen Instanz. Damit die in den Views der Tenants bestehenden Verweise auf die View Elements weiterhin gültig sind, wird im View Ordner der Instanz ebenso ein view_elements Ordner erstellt. Dieser stellt einen Symlink zum zentralen Pfad der View Elements auf dem Server dar. Um dem Fall vorzubeugen, dass auch allgemeingültige Views Elemente haben können, wurde im View Ordner der App ebenso ein Symlink zu den View Elements erstellt. Da die Models von den jeweiligen Controllern aufgerufen werden  und nicht vom Tenant abhängig sind, können diese im allgemeinen App Ordner verbleiben und müssen nicht weiter modifiziert werden.
+Wie die Mulit-Tenant Architektur demnach aussehen kann, zeigt nachfolgende Abbildung.
+
+![](source/figures/MultiTenantTS2.png)
 Abbildung 13: Multi-Tenant Architektur TeamSports2
-
-
-
-
-
-
-Die Models sowie Controller können von jeder Instanz, unabhängig der tenantId aufgerufen. Auch in der jetzigen Architektur greifen alle Instanzen auf einem Server auf die gleichen Models und Controller zu. 
-
-
-
-
 
 
