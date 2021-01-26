@@ -1,6 +1,6 @@
 # Praktische Umsetzung
 
-Das Kapitel der praktischen Umsetzung zeigt in diesem Fall eine theoretische Annäherung auf, wie TeamSports2 in eine Multi-Tenant Architektur überführt werden kann, welche Stellen im System bei der Migration kritisch umzusetzen sind und wie eine praktische Herangehensweise an die Migration aussehen kann.
+Das Kapitel der praktischen Umsetzung zeigt in diesem Fall eine theoretische Annäherung, wie TeamSports2 in eine Multi-Tenant Architektur überführt werden kann, welche Stellen im System bei der Migration kritisch umzusetzen sind und wie eine praktische Herangehensweise an die Migration aussehen kann.
 Ursprünglich war geplant, einen Prototypen für eine Multi-Tenant Archtitektur mit TeamSports2 zu entwickeln. Dabei sollten zwei Instanzen in eine Multi-Tenant Architektur migriert werden. Nach Beginn der Umsetzung wurde allerdings klar, dass dies für diese Arbeit, ein zu umfangreiches Unterfangen ist. Die Komplexität des Systems in den verschiedenen Models, Views und Controllern sowie das Datenbankmodell ließen eine Migration in der vorgegebenen Zeit nicht zu. Daraufhin wurde ein weiterer Versuch unternommen, indem ein kleiner Teil der Komponenten aus dem bestehenden System herausgelöst wurde um damit eine Multi-Tenant Architektur zu erreichen. Auch dieser Versuch scheiterte, da die Instanzen, ohne die fehlenden Komponenten und durch die bestehenden Abhängigkeiten nicht mehr funktioniert hätten. 
 
 ## Vorgehensweise
@@ -13,7 +13,7 @@ Die Analyse des Systems im vorherigen Kapitel hat aufgezeigt, an welchen Stellen
 1. An welchen Stellen ist Code implementiert, welcher durch die Instanzen individualisiert wird?
 1. Welche Strategie soll bei der Datenbankstruktur künftig verfolgt werden?
 
-Die Fragen können nun auf das TeamSports2-System adaptiert werden.
+Diese Fragen können nun auf das TeamSports2-System adaptiert werden.
 
 1. Ziele
     - Schnelleres sowie leichter konfigurierbares Depyloment
@@ -21,7 +21,8 @@ Die Fragen können nun auf das TeamSports2-System adaptiert werden.
     - Reduktion der Kosten durch effizientere Ressourcennutzung
 1. Gleicher Code
     - Die Models und Controller sind bei jeder Instanz gleich. Aktuell stellt der jeweilige Ordner in der Instanz einen Symlink dar, welcher auf einen zentralen Ordner auf dem Server verweist. 
-    - Teile der Views werden ebenso auf allen Instanzen gleich dargestellt. Beispielsweise ist die Grundstruktur der Backend-Views bei jeder Instanz gleich.
+    - Einige Views werden ebenso auf allen Instanzen übereinstimmend dargestellt. Beispielsweise ist die Grundstruktur der Backend-Views bei jeder Instanz gleich.
+    - Der Ordner view_elements stellt für alle Instanzen dieselben Elemente bereit. 
 1. Unterschiedlicher Code
     - Alle Views die wiederum auf die view_elements über einen Symlink verweisen sind bei jeder Instanz unterschiedlich. Wenn der Nutzer seinen Seitenaufbau, beispielsweise bei der Mannschaftsansicht, abwandelt wird die View nach jedem Speichervorgang mit den geänderten Elementen neu geschrieben.
     - Jede Instanz kann eigene Dateien (Mannschaftsfotos, Spielerfotos, PDFs, Bildergalerien) hochladen. Dafür ist in jeder Instanz ein webroot Ordner enthalten, der beispielsweise beim Hochladen eines Mannschaftsfotos um den jeweiligen Teamordner erweitert wird. Gleiches gilt für das Hochladen anderer Dateien.
@@ -46,7 +47,7 @@ ADD COLUMN tenantId int(11) NOT NULL,
 ADD PRIMARY KEY (id,tenantId)
 ```
 
-Die Primärschlüssel der angesprochenen Tabelle müssen zuerst entfernt  und dann mit dem neuen zusammengesetzten Primärschlüssel wieder angelegt werden. Der Befehl 
+Die Primärschlüssel der angesprochenen Tabelle müssen zuerst entfernt  und dann mit dem neuen zusammengesetzten Primärschlüssel wieder angelegt werden. Dies wirkt sich nicht auf das Löschen der Fremschlüssel in der jeweiligen Tabelle aus. Der Befehl 
 
 ```
 ALTER TABLE teams 
@@ -55,18 +56,36 @@ ADD COLUMN tenantId int(11) NOT NULL PRIMARY KEY
 gibt eine Fehlermeldung unter MySQL zurück, dass mehrere Primärschlüssel definiert sind. 
 Mithilfe des neuen Attributes tenantId in der jeweiligen Tabelle kann dann die zugehörige Instanz eindeutig identifiziert werden. Die tenantId fungiert dann in der Tabelle mit dem bereits bestehenden Primärschlüssel als zusammengesetzter Primärschlüssel, da nur durch tenantId und beispielsweise die teamId die richtige Zeile in der Tabelle eindeutig bestimmt weden kann.  
 Wie bereits angedeutet muss nicht bei allen Tabellen eine neue Spalte zur Identifikation des Tenants hinzugefügt werden, da die tenantId für einige Tabellen nicht relevant ist. Beispielsweise die age_brackets Tabelle, worin die aktuellen Jahrgänge für die Teams enthalten sind. Die darin enthaltenen Daten sind für alle Instanzen gleich und müssen nicht separiert werden.
-Nachdem allen Tabellen die neue Spalte hinzugefügt wurde, sieht das Datenbankmodell wie folgt aus. Auch hier wurde ein Ausschnitt gewählt, welcher bereits im vorherigen Kapitel beschrieben wurde.
+Nachdem allen Tabellen die neue Spalte hinzugefügt wurde, sieht das Datenbankmodell wie folgt aus.
 
 ![](source/figures/TS2_AusschnittDB-Modell_MultiTenant.png)
 Abbildung 12: Ausschnitt Datenbankmodell mit Multi-Tenant TeamSports2
 
-Die Fremdschlüssel sowie die Beziehungen der einzelnen Tabellen zueinander bleiben erhalten. Auch durch DROP PRIMARY KEY bleiben die Fremdschlüssel in der jeweiligen Tabelle enthalten.
-- Änderungen bei Models?
+Da der Datentyp bei den meisten Schlüsselattributen int(11) ist, wurde dies auch für die tenantId übernommen.
+An den Fremschlüsseln sowie den zugehörigen Beziehungen in den Tabellen müssen keine weiteren Änderungen vorgenommen werden, da diese so erhalten bleiben sollen und sich an den Beziehungen durch die Migration in Multi-Tenant nichts ändert. Dadurch müssen auch keine weiteren Anpassungen an den Models vorgenommen werden. Für die bestehenden Instanzen können die neuen tenantIds per Skript zufällig an die jeweiligen Tabellenattribute vergeben werden. Bei allen neu angelegten Seiten muss das Ausstellen einer tenantId in den Prozess, wodurch eine neue Testseite generiert wird, mit eingebunden werden.
+
+Des weiteren muss die Settings Tabelle um die tenantId erweitert werden. Die Settings Tabelle umfasst Informationen wie die Host Mailadresse der jeweiligen Instanz, die Captcha Sitekeys sowie die URL der Instanz. Letztgenannte steht in der Settings Tabelle als der Wert base_url des Tabellenattributs name. Das Attribut name stellt sogleich den Primärschlüssel der Settings Tabelle dar. Mithilfe folgender SQL Abfrage kann dann die passende tenantId zur jeweiligen Domain des Tenants identifiziert werden.
+
+```
+SELECT tenantId FROM `settings` 
+WHERE name= 'base_url' AND value= 'domain'
+```
 
 
-## Implementierung
+## Neue Architektur
 
 
+**Identifizierung der Tenants**
+
+Um von den Tenant, welcher auf die Anwendung zugreifen möchte, eindeutig identifizieren zu können soll die Domain in Verbindung mit der tenantId genutzt werden. Beim ersten Aufruf der Seite wird die Domain der aktuellen Session gespeichert und ein Request an die Settings Tabelle gesendet. In dem Request ist dann die URL der Seite enhalten und es wird in der Settings Tabelle nach der passenden URL gesucht. Ist diese gefunden, kann die tenantId wieder zurück an die Session geschickt werden. Während der gesamten Session bleibt die tenantId gespeichert um nicht bei jedem Neuaufruf einer View der Seite eine Datenbankabfrage senden zu müssen. 
+Über die von CakePHP bereitgestellte Session-Component können die Einstellungen für jede Session sowohl allgemein, als auch in jedem Controller extra gesetzt werden. Für jede Session wird von CakePHP eine Session-ID vergeben, worunter dann für die Gültigkeit der Session auch die tenantId zu finden ist. 
+
+**Models und Controller**
+
+Die Models sowie Controller können von jeder Instanz, unabhängig der tenantId aufgerufen. Auch in der jetzigen Architektur greifen alle Instanzen auf einem Server auf die gleichen Models und Controller zu. 
+
+
+**Views**
 
 
 
