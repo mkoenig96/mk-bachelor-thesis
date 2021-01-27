@@ -35,7 +35,7 @@ Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr gün
 | **Gesamt** |         |              |         |               108,96 |       
 Tabelle X: Aktuelle Gesamtkosten pro Server bei TeamSports2
 
-Durch die neue Multi-Tenant fähige Architektur werden weniger Server und Datenbanken benötigt. Dahingegen ist die notwendige Gesamtgröße um alle Tenants auf einem Server mit einer Datenbank betreiben zu können auf eine Ressource in Form des Servers konzentriert. Eine vergleichbare on-premise Lösung, mit der die aktuellen Lasten bewältigt werden können, ist in folgender Tabelle unter dem Hosting Service zu finden. Aufgrund der konzentrierten Anfragelast auf einen Server werden für den Server dementsprechend mehr Ressourcen benötigt.
+Durch die neue Multi-Tenant Architektur werden weniger Server und Datenbanken benötigt. Dahingegen ist die notwendige Gesamtgröße um alle Tenants auf einem Server mit einer Datenbank betreiben zu können auf eine Ressource in Form des Servers konzentriert. Eine vergleichbare on-premise Lösung, mit der die aktuellen Lasten bewältigt werden können, ist in folgender Tabelle unter dem Hosting Service zu finden. Aufgrund der konzentrierten Anfragelast auf einen Server werden für den Server dementsprechend mehr Ressourcen benötigt.
 
 | Service | Anzahl in Stk. | CPU in vCores | RAM in GB | SSD in GB | Kosten in € / p.m. |
 |---------|----------------|---------------|-----------|-----------|--------------------|
@@ -44,7 +44,7 @@ Durch die neue Multi-Tenant fähige Architektur werden weniger Server und Datenb
 | EC2     |              1 |            32 |        48 |      1000 |             569,97 |   
 Tabelle X: Kosten der AWS EC2-Instanzen
 
-Da eine effektivere Nutzung der Ressourcen, als auf herkömmlichen on-premise Servern, mithilfe der neuen Multi-Tenant Architektur in Verbindung mit Cloud Computing effektiver möglich ist, werden vergleichbare Infrastrukturen in AWS ebenso beleuchtet.
+Da eine effizientere Nutzung der Ressourcen, als auf herkömmlichen on-premise Servern, mithilfe der neuen Multi-Tenant Architektur in Verbindung mit Cloud Computing möglich ist, werden vergleichbare Infrastrukturen in AWS ebenso beleuchtet.
 Als Cloud Computing Anbieter wurde in der gesamten Analyse AWS gewählt, wobei auch andere Cloud Computing Anbieter gleichwertige Services zur Verfügung stellen. Alle Kosten der AWS Services wurden mithilfe des AWS Kostenkalkulators ermittelt und die zugehörigen Kostenparameter, wie CPU oder Requests, mit den Werten aus der aktuellen TeamSports2 Architektur gleichgesetzt. 
 
 Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfigruation der Server übernimmt AWS. Wie zu sehen ist, sind die bentöigten EC2 Instanzen circa um das Zehnfache teurer, als die jetzige Infrastruktur, wenn die jetzige Infrastruktur nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastrukutr verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen aber immer noch um einiges teurer als ein on-premise Server mit gleichem Leistungsumfang. 
@@ -63,7 +63,7 @@ Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Di
 |-------------|--------------------------------------------------------|--------------------|
 | S3          | 350 GB Speicherplatz  (SELECT Abfragen berücksichtigt) | 211,95             |
 | Lambda      | 1.735.586.217 Requests                                 | 344,82             |
-| Aurora      | vCPU: 2 RAM: 15.25, Speicher: 500 GB                  | 680,50             |
+| Aurora      | vCPU: 2, RAM: 15.25, Speicher: 500 GB                  | 680,50             |
 |             |                                                        |                    |
 | **Gesamt**      |                                                        | 1237,27            |
 Tabelle X: Kosten einer möglichen AWS Infrastruktur
@@ -72,8 +72,7 @@ Die Berechnungen zeigen, dass eine reine AWS Infrastruktur im Vergleich zur jetz
 Das Betreiben mehrerer oder einer EC2 Instanzen stellt dahingegen, aufgrund der vergleichsweise hohen Kosten keine praktikable Lösung dar. Hier ist der vom Hostinganbieter bereitgestellte Server mit besserem Leistungsumfang, in Verbindung mitder neuen Multi-Tenant Architektur, die günstigere Variante.
 Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit der neuen Mulit-Tenant Architektur Kosten- sowie Verwaltungsaufwände, durch die Reduktion der Server, minimiert werden.
 
-## Häufige Queries 
-
+## Häufige Datenbankabfragen 
 <!--
 
 |           | **DB-Verbindungen** |              |               |             |
@@ -87,6 +86,16 @@ Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit
 Tabelle X: Datenbank-Verbindungen TeamSports2
 -->
 
+Mit der aktuellen Architektur setzt sich bei allen Liveservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für die Live eins und zwei Server finden sich bei den Liveservern drei und vier ebenso wieder.
+
+![](source/figures/Queries-diagram_Live1.png)
+Abbildung 14: Queries gegen die Datenbank auf dem Live 1 Server
+
+![](source/figures/Queries-diagram_Live2.png)
+Abbildung 15: Queries gegen die Datenbank auf dem Live 2 Server
+
+\pagebreak
+<!--
 |           | SELECT Abfragen |            |             |
 |-----------|-----------------|------------|-------------|
 | Server    |    ø pro Stunde |  ø pro Tag | ø pro Monat |
@@ -97,14 +106,17 @@ Tabelle X: Datenbank-Verbindungen TeamSports2
 | Generator | 9.388           | 225.312    | 6.759.360   |
 |           |                 |            |             |
 | Gesamt    | 818.788         | 19.352.112 | 580.563.360 |
-Tabelle X: SELECT Abfragen in Stück
-
-
+Tabelle X: SELECT Abfragen aller Server in Stück
+-->
+Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 % an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen.
 
 ![](source/figures/Queries-diagram_Generator.png)
-Abbildung X: Queries gegen die Datenbank auf dem Generator Server
+Abbildung 16: Queries gegen die Datenbank auf dem Generator Server
 
-![](source/figures/Queries-diagram_Live1.png)
+Mit der neuen Multi-Tenant Architektur können die SELECT Abfragen nur bedingt reduziert werden. Zwar cached Redis mittels seines Key/Value Stores häufig angefragte Daten und kann somit die Anfragelast verringern. Allerdings muss auf jeden Fall eine initiale Abfrage an die Datenbank geschehen um die Daten auch im Redis Cache vorhalten zu können. Die Abfragelast durch die neue Archtiektur aber nochmals gesteigert, um beim ersten Aufruf der Seite die ID des Tenants ermitteln zu können. 
+
+
+<!--![](source/figures/Queries-diagram_Live1.png)
 Abbildung X: Queries gegen die Datenbank auf dem Live 1 Server
 
 ![](source/figures/Queries-diagram_Live2.png)
@@ -114,5 +126,7 @@ Abbildung X: Queries gegen die Datenbank auf dem Live 2 Server
 Abbildung X: Queries gegen die Datenbank auf dem Live 3 Server
 
 ![](source/figures/Queries-diagram_Live4.png)
-Abbildung X: Queries gegen die Datenbank auf dem Live 4 Server
+Abbildung X: Queries gegen die Datenbank auf dem Live 4 Server-->
+
+
 
