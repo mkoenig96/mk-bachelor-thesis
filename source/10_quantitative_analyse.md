@@ -1,7 +1,11 @@
 # Quantitative Analyse der aktuellen sowie neuen Architektur 
 
-Ich habe hier jetzt einfach mal die aus meiner Sicht wichtigsten Daten gesammelt. Zur neuen Architektur muss ich mal schauen, wie ich die Kosten/Queries da am besten angebe. Das kann, aufgrund der theoretischen Annäherung, eben nicht allzu genau gesagt werden. Daher auch der Vergleich zu AWS, da ich auf das Cloud-Thema auch recht stark bei den technischen Grundlagen eingegangen bin und ich dadurch auf jedne Fall einen Vergleich zu einer alternativen Cloud-Architektur habe.
-Bei dem Kapitel zu den häufigsten Queries werde ich nicht alle Diagramm einsetzen, da Live 1-3 nahezu gleiche Werte aufweisen.
+Um feststellen zu können, welche Änderungen hinsichtlich der Kosten und Datenbankabfragen sich durch die Migration in eine Multi-Tenant Anwendung, wie sie im vorherigen Kapitel dargestellt wurde, bei TeamSports2 ergeben, soll dieses Kapitel Aufschluss darüber geben, wie hoch die Kosten 
+
+In die Analyse wurden stets die nachfolgenden fünf Server mit einbezogen.
+
+<!--Ich habe hier jetzt einfach mal die aus meiner Sicht wichtigsten Daten gesammelt. Zur neuen Architektur muss ich mal schauen, wie ich die Kosten/Queries da am besten angebe. Das kann, aufgrund der theoretischen Annäherung, eben nicht allzu genau gesagt werden. Daher auch der Vergleich zu AWS, da ich auf das Cloud-Thema auch recht stark bei den technischen Grundlagen eingegangen bin und ich dadurch auf jedne Fall einen Vergleich zu einer alternativen Cloud-Architektur habe.
+Bei dem Kapitel zu den häufigsten Queries werde ich nicht alle Diagramm einsetzen, da Live 1-3 nahezu gleiche Werte aufweisen.-->
 
 
 |           | **Datenbankgröße** | **SSD** |                 |              | 
@@ -14,17 +18,12 @@ Bei dem Kapitel zu den häufigsten Queries werde ich nicht alle Diagramm einsetz
 | Generator |          184,5 |             29,5 |             9,8 |        302,3 |         |
 Tabelle X: Serverkapazitäten TeamSports2
 
-
-
+Auf den Liveservern liegen die Liveinstanzen der Kunden unter einer eigenen Domain. Der Generatorserver beinhaltet dahingegen alle Testinstanzen, welcher durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatte bei Live 1 und Generator zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
 
 ## Kosten 
 
-Bei den Kosten soll bewusst der Vergleich zwischen den drei Optionen gezogen werden um klarzustellen, dass  eine "halbe" Migration (nur EC2-Istnanzen anmieten) kostentechnisch mit einer vollen Migration gleich zusetzen ist. Bei der vollen Migration aber der Verwaltungsaufwand sowie die Möglichkeit der Skalierung um einiges flexibler ist.
-Zudem soll darauf eingegangen werden, dass eben der größte Vorteil bei der Mulit-Tenancy in der guten Skalierbarkeit in Verbindung mit der Cloud liegt.
-Zuletzt auch noch ein kleiner Abstecher darauf, dass die Kosten in der Cloud zwar höher im Vergleich zur jetzigen on-premise Infrastruktur, aber man auch den niedrigeren Verwaltungsaufwand sehen muss, was wiederum Entwicklerkosten einspart die anderen Stellen eingesetzt werden können.
-
-Mir ist bewusst, dass ich aufpassen muss nicht zu sehr in die Cloudrichtung abzudriften. Das werde ich auch in der theoretischen Architektur beachten.
-
+Aus vorangegangener Tabelle wird deutlich, dass bei Normalsauslastung der Server viele Ressourcen ungenutzt sind. Bei keinem Server steigt die Auslastung SSD Festplatte über 30%. Trotzdem müssen die Ressourcen vorgehalten werden um Anfragespitzen zuverlässig verarbeiten und bei jeder Instanz eine schnelle Antwortzeit gewährleisten zu können. Zuletzt werden die aktuell gebuchten Serverpakete auch aufgrund der damit verbundenen vCores des Prozessors und des RAMs benötigt. Eine geringere SSD Kapazität würde wiederum weniger vCores sowie RAM bedeuten, welche bei der Anzahl der Instanzen auf den Servern zu einer längeren Antwortzeit führt.
+Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr günstig einzustufen. Allerdings ist dem gegenüberstellt, dass einige Kapazitäten ungenutzt sind und keine Skalierung der Ressourcen möglich ist.
 
 | Server    | Instanzen | CPU in vCores | RAM in GB | Kosten in € / p.m.  | 
 |-----------|-----------|---------------|-----------|---------------------|
@@ -36,25 +35,43 @@ Mir ist bewusst, dass ich aufpassen muss nicht zu sehr in die Cloudrichtung abzu
 | **Gesamt** |         |              |         |               108,96 |       
 Tabelle X: Aktuelle Gesamtkosten pro Server bei TeamSports2
 
-Hier soll verglichen werden, was die aktuelle Infrastruktur quasi einfach in die Cloud adaptiert Kosten würde.
+Durch die neue Multi-Tenant fähige Architektur werden weniger Server und Datenbanken benötigt. Dahingegen ist die notwendige Gesamtgröße um alle Tenants auf einem Server mit einer Datenbank betreiben zu können auf eine Ressource in Form des Servers konzentriert. Eine vergleichbare on-premise Lösung, mit der die aktuellen Lasten bewältigt werden können, ist in folgender Tabelle unter dem Hosting Service zu finden. Aufgrund der konzentrierten Anfragelast auf einen Server werden für den Server dementsprechend mehr Ressourcen benötigt.
 
-| Service | CPU in vCores | RAM in GB | SSD in GB | Kosten in € / p.m.  | 
-|---------|---------------|-----------|-----------|---------------------|
-| EC2     |             8 |        32 | 120       |            1.160,96 |     
-Tabelle X: Kosten für fünf EC2-Instanzen bei AWS
+| Service | Anzahl in Stk. | CPU in vCores | RAM in GB | SSD in GB | Kosten in € / p.m. |
+|---------|----------------|---------------|-----------|-----------|--------------------|
+| EC2     |              5 |             8 |        32 |       120 |            1160,96 |
+| Hosting |              1 |            32 |        48 |      1000 |              79,99 |
+| EC2     |              1 |            32 |        48 |      1000 |             569,97 |   
+Tabelle X: Kosten der AWS EC2-Instanzen
+
+Da eine effektivere Nutzung der Ressourcen, als auf herkömmlichen on-premise Servern, mithilfe der neuen Multi-Tenant Architektur in Verbindung mit Cloud Computing effektiver möglich ist, werden vergleichbare Infrastrukturen in AWS ebenso beleuchtet.
+Als Cloud Computing Anbieter wurde in der gesamten Analyse AWS gewählt, wobei auch andere Cloud Computing Anbieter gleichwertige Services zur Verfügung stellen. Alle Kosten der AWS Services wurden mithilfe des AWS Kostenkalkulators ermittelt und die zugehörigen Kostenparameter, wie CPU oder Requests, mit den Werten aus der aktuellen TeamSports2 Architektur gleichgesetzt. 
+
+Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfigruation der Server übernimmt AWS. Wie zu sehen ist, sind die bentöigten EC2 Instanzen circa um das Zehnfache teurer, als die jetzige Infrastruktur, wenn die jetzige Infrastruktur nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastrukutr verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen aber immer noch um einiges teurer als ein on-premise Server mit gleichem Leistungsumfang. 
+
+Dem gegenüber gestellt ist eine vollständige AWS Infrastruktur. Die verwendeten Services werden zum Verständnis kurz vorgestellt:
+
+- _S3:_ Vollständig verwalteter Objektspeicherservice.
+- _Lambda:_ Ermöglicht die Ausführung von vollständig serverlosen Code, sogenannte Lambda Functions.
+- _Aurora:_ Vollständig verwaltete sowie skalier- und replizierbare MySQL Datenbank.
+
+Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Die Abrechnung erfolgt nach Speicherplatz und Requests an den sogenanten S3 Bucket. Daher können die im folgenden Kapitel dargestellten Daten zu den SELECT Abfragen berücksichtigt werden. Bei Lambda wird nur die Anzahl der Requests und der damit ausgeführte Code berücksichtigt. Finden keine Requests statt, erfolgt auch keine Berechnung. Für Aurora wurde sich an den aktuellen 
 
 | AWS Service | Leistung                                               | Kosten in € / p.m. |
 |-------------|--------------------------------------------------------|--------------------|
 | S3          | 350 GB Speicherplatz  (SELECT Abfragen berücksichtigt) | 211,95             |
 | Lambda      | 1.735.586.217 Requests                                 | 344,82             |
-| Aurora      | vCPU: 2, RAM: 15.25, Speicher: 500 GB                  | 680,50             |
+| Aurora      | vCPU: 2 RAM: 15.25, Speicher: 500 GB                  | 680,50             |
 |             |                                                        |                    |
 | **Gesamt**      |                                                        | 1237,27            |
 Tabelle X: Kosten einer möglichen vollständigen AWS Infrastruktur
 
 
 
+
 ## Häufige Queries 
+
+<!--
 
 |           | **DB-Verbindungen** |              |               |             |
 |-----------|--------------|--------------|---------------|-------------|
@@ -65,7 +82,7 @@ Tabelle X: Kosten einer möglichen vollständigen AWS Infrastruktur
 | Live 4    |       38.543 |          642 |            11 | 
 | Generator |       15.544 |          259 |             4 | 
 Tabelle X: Datenbank-Verbindungen TeamSports2
-
+-->
 
 |           | SELECT Abfragen |            |             |
 |-----------|-----------------|------------|-------------|
