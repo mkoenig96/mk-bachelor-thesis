@@ -55,7 +55,9 @@ Dem gegenüber gestellt ist eine vollständige AWS Infrastruktur. Die verwendete
 - _Lambda:_ Ermöglicht die Ausführung von vollständig serverlosen Code, sogenannte Lambda Functions.
 - _Aurora:_ Vollständig verwaltete sowie skalier- und replizierbare MySQL Datenbank.
 
-Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Die Abrechnung erfolgt nach Speicherplatz und Requests an den sogenanten S3 Bucket. Daher können die im folgenden Kapitel dargestellten Daten zu den SELECT Abfragen berücksichtigt werden. Bei Lambda wird nur die Anzahl der Requests und der damit ausgeführte Code berücksichtigt. Finden keine Requests statt, erfolgt auch keine Berechnung. Für Aurora wurde sich an den aktuellen 
+Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Die Abrechnung erfolgt nach Speicherplatz und Requests an den sogenanten S3 Bucket. Daher können die im folgenden Kapitel dargestellten Daten zu den SELECT Abfragen berücksichtigt werden. Bei Lambda wird nur die Anzahl der Requests und der damit ausgeführte Code berücksichtigt. Finden keine Requests statt, erfolgt auch keine Berechnung. Für Aurora wurde sich an den aktuellen Auslastungen des Systems orientiert.
+
+\pagebreak
 
 | AWS Service | Leistung                                               | Kosten in € / p.m. |
 |-------------|--------------------------------------------------------|--------------------|
@@ -64,10 +66,11 @@ Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Di
 | Aurora      | vCPU: 2 RAM: 15.25, Speicher: 500 GB                  | 680,50             |
 |             |                                                        |                    |
 | **Gesamt**      |                                                        | 1237,27            |
-Tabelle X: Kosten einer möglichen vollständigen AWS Infrastruktur
+Tabelle X: Kosten einer möglichen AWS Infrastruktur
 
-
-
+Die Berechnungen zeigen, dass eine reine AWS Infrastruktur im Vergleich zur jetzigen Infrastruktur sehr viel teurer wäre. Dahingegen fällt der gesamte Verwaltungs- sowie Wartungsaufwand bei einer Migration in die Cloud für die zu betreibenden Ressourcen weg. Somit können auch Entwicklerkosten gespart werden, da sich diese auf das Schreiben von Code konzentrieren können und nicht parallel die Server verwalten müssen. Zudem ist durch die Cloud Infrastruktur ein Skalieren zu höher und niedriger frequentierten Zeiten, welche bei TeamSports2 den Analysen nach sehr häufig vorkommen, überhaupt erst möglich. 
+Das Betreiben mehrerer oder einer EC2 Instanzen stellt dahingegen, aufgrund der vergleichsweise hohen Kosten keine praktikable Lösung dar. Hier ist der vom Hostinganbieter bereitgestellte Server mit besserem Leistungsumfang, in Verbindung mitder neuen Multi-Tenant Architektur, die günstigere Variante.
+Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit der neuen Mulit-Tenant Architektur Kosten- sowie Verwaltungsaufwände, durch die Reduktion der Server, minimiert werden.
 
 ## Häufige Queries 
 
