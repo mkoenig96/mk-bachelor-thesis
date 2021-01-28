@@ -72,6 +72,8 @@ Die Berechnungen zeigen, dass eine reine AWS Infrastruktur im Vergleich zur jetz
 Das Betreiben mehrerer oder einer EC2 Instanzen stellt dahingegen, aufgrund der vergleichsweise hohen Kosten keine praktikable Lösung dar. Hier ist der vom Hostinganbieter bereitgestellte Server mit besserem Leistungsumfang, in Verbindung mitder neuen Multi-Tenant Architektur, die günstigere Variante.
 Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit der neuen Mulit-Tenant Architektur Kosten- sowie Verwaltungsaufwände, durch die Reduktion der Server, minimiert werden.
 
+\pagebreak
+
 ## Häufige Queries 
 <!--
 
@@ -86,15 +88,15 @@ Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit
 Tabelle X: Datenbank-Verbindungen TeamSports2
 -->
 
-Mit der aktuellen Architektur setzt sich bei allen Liveservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für die Live eins und zwei Server finden sich bei den Liveservern drei und vier ebenso wieder.
+Mit der aktuellen Architektur setzt sich bei allen Liveservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für den Live eins Server finden sich bei den Liveservern zwei, drei und vier ebenso wieder.
 
 ![](source/figures/Queries-diagram_Live1.png)
 Abbildung 14: Queries gegen die Datenbank auf dem Live 1 Server
 
-![](source/figures/Queries-diagram_Live2.png)
-Abbildung 15: Queries gegen die Datenbank auf dem Live 2 Server
+<!--![](source/figures/Queries-diagram_Live2.png)
+Abbildung 15: Queries gegen die Datenbank auf dem Live 2 Server-->
 
-\pagebreak
+
 
 Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 % an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
 
