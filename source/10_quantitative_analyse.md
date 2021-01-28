@@ -1,12 +1,7 @@
 # Quantitative Analyse der aktuellen sowie neuen Architektur 
 
-Um feststellen zu können, welche Änderungen hinsichtlich der Kosten und Datenbankabfragen sich durch die Migration in eine Multi-Tenant Anwendung, wie sie im vorherigen Kapitel dargestellt wurde, bei TeamSports2 ergeben, soll dieses Kapitel Aufschluss darüber geben, wie hoch die Kosten 
-
+Dieses Kapitel soll Aufschluss darüber geben, welche Änderungen sich hinsichtlich der neuen Multi-Tenant Architektur in Bezug auf das aktuelle System in puncto Kosten und Datenbankabfragen ergeben. 
 In die Analyse wurden stets die nachfolgenden fünf Server mit einbezogen.
-
-<!--Ich habe hier jetzt einfach mal die aus meiner Sicht wichtigsten Daten gesammelt. Zur neuen Architektur muss ich mal schauen, wie ich die Kosten/Queries da am besten angebe. Das kann, aufgrund der theoretischen Annäherung, eben nicht allzu genau gesagt werden. Daher auch der Vergleich zu AWS, da ich auf das Cloud-Thema auch recht stark bei den technischen Grundlagen eingegangen bin und ich dadurch auf jedne Fall einen Vergleich zu einer alternativen Cloud-Architektur habe.
-Bei dem Kapitel zu den häufigsten Queries werde ich nicht alle Diagramm einsetzen, da Live 1-3 nahezu gleiche Werte aufweisen.-->
-
 
 |           | **Datenbankgröße** | **SSD** |                 |              | 
 |-----------|----------------|------------------|-----------------|--------------|-----------|
@@ -16,7 +11,7 @@ Bei dem Kapitel zu den häufigsten Queries werde ich nicht alle Diagramm einsetz
 | Live 3    |           83,6 |             76,1 |            15,1 |        503,8 |         |
 | Live 4    |           11,4 |             14,3 |             2,8 |        503,8 |          |
 | Generator |          184,5 |             29,5 |             9,8 |        302,3 |         |
-Tabelle X: Serverkapazitäten TeamSports2
+Tabelle 2: Serverkapazitäten TeamSports2
 
 Auf den Liveservern liegen die Liveinstanzen der Kunden unter einer eigenen Domain. Der Generatorserver beinhaltet dahingegen alle Testinstanzen, welcher durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatte bei Live 1 und Generator zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
 
@@ -33,7 +28,7 @@ Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr gün
 | Live 4    |         5 |            12 |        24 |               24,99 |             
 | Generator |        90 |             6 |        12 |               17,00 |             
 | **Gesamt** |         |              |         |               108,96 |       
-Tabelle X: Aktuelle Gesamtkosten pro Server bei TeamSports2
+Tabelle 3: Aktuelle Gesamtkosten pro Server bei TeamSports2
 
 Durch die neue Multi-Tenant Architektur werden weniger Server und Datenbanken benötigt. Dahingegen ist die notwendige Gesamtgröße um alle Tenants auf einem Server mit einer Datenbank betreiben zu können auf eine Ressource in Form des Servers konzentriert. Eine vergleichbare on-premise Lösung, mit der die aktuellen Lasten bewältigt werden können, ist in folgender Tabelle unter dem Hosting Service zu finden. Aufgrund der konzentrierten Anfragelast auf einen Server werden für den Server dementsprechend mehr Ressourcen benötigt.
 
@@ -42,7 +37,7 @@ Durch die neue Multi-Tenant Architektur werden weniger Server und Datenbanken be
 | EC2     |              5 |             8 |        32 |       120 |            1160,96 |
 | Hosting |              1 |            32 |        48 |      1000 |              79,99 |
 | EC2     |              1 |            32 |        48 |      1000 |             569,97 |   
-Tabelle X: Kosten der AWS EC2-Instanzen
+Tabelle 4: Kosten der AWS EC2-Instanzen
 
 Da eine effizientere Nutzung der Ressourcen, als auf herkömmlichen on-premise Servern, mithilfe der neuen Multi-Tenant Architektur in Verbindung mit Cloud Computing möglich ist, werden vergleichbare Infrastrukturen in AWS ebenso beleuchtet.
 Als Cloud Computing Anbieter wurde in der gesamten Analyse AWS gewählt, wobei auch andere Cloud Computing Anbieter gleichwertige Services zur Verfügung stellen. Alle Kosten der AWS Services wurden mithilfe des AWS Kostenkalkulators ermittelt und die zugehörigen Kostenparameter, wie CPU oder Requests, mit den Werten aus der aktuellen TeamSports2 Architektur gleichgesetzt. 
@@ -66,7 +61,7 @@ Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Di
 | Aurora      | vCPU: 2, RAM: 15.25, Speicher: 500 GB                  | 680,50             |
 |             |                                                        |                    |
 | **Gesamt**      |                                                        | 1237,27            |
-Tabelle X: Kosten einer möglichen AWS Infrastruktur
+Tabelle 5: Kosten einer möglichen AWS Infrastruktur
 
 Die Berechnungen zeigen, dass eine reine AWS Infrastruktur im Vergleich zur jetzigen Infrastruktur sehr viel teurer wäre. Dahingegen fällt der gesamte Verwaltungs- sowie Wartungsaufwand bei einer Migration in die Cloud für die zu betreibenden Ressourcen weg. Somit können auch Entwicklerkosten gespart werden, da sich diese auf das Schreiben von Code konzentrieren können und nicht parallel die Server verwalten müssen. Zudem ist durch die Cloud Infrastruktur ein Skalieren zu höher und niedriger frequentierten Zeiten, welche bei TeamSports2 den Analysen nach sehr häufig vorkommen, überhaupt erst möglich. 
 Das Betreiben mehrerer oder einer EC2 Instanzen stellt dahingegen, aufgrund der vergleichsweise hohen Kosten keine praktikable Lösung dar. Hier ist der vom Hostinganbieter bereitgestellte Server mit besserem Leistungsumfang, in Verbindung mitder neuen Multi-Tenant Architektur, die günstigere Variante.
@@ -75,28 +70,11 @@ Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit
 \pagebreak
 
 ## Häufige Queries 
-<!--
-
-|           | **DB-Verbindungen** |              |               |             |
-|-----------|--------------|--------------|---------------|-------------|
-| **Server**    | *ø pro Stunde* | *ø pro Minute* | *ø pro Sekunde* | 
-| Live 1    |      210.691 |        3.512 |            59 | 
-| Live 2    |      363.582 |        6.060 |           101 | 
-| Live 3    |      364.066 |        6.068 |           101 | 
-| Live 4    |       38.543 |          642 |            11 | 
-| Generator |       15.544 |          259 |             4 | 
-Tabelle X: Datenbank-Verbindungen TeamSports2
--->
 
 Mit der aktuellen Architektur setzt sich bei allen Liveservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für den Live eins Server finden sich bei den Liveservern zwei, drei und vier ebenso wieder.
 
 ![](source/figures/Queries-diagram_Live1.png)
 Abbildung 14: Queries gegen die Datenbank auf dem Live 1 Server
-
-<!--![](source/figures/Queries-diagram_Live2.png)
-Abbildung 15: Queries gegen die Datenbank auf dem Live 2 Server-->
-
-
 
 Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 % an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
 
@@ -115,12 +93,25 @@ Abbildung 16: Queries gegen die Datenbank auf dem Generator Server
 | Generator | 9.388           | 225.312    | 6.759.360   |
 |           |                 |            |             |
 | Gesamt    | 818.788         | 19.352.112 | 580.563.360 |
-Tabelle X: SELECT Abfragen aller Server in Stück
+Tabelle 6: SELECT Abfragen aller Server in Stück
 
-Die Häufigkeit der SELECT Abfragen im Vergleich zu anderen Abfragen ist in dieem Fall nicht verwunderlich, da in TeamSports2 hautpsächlich Daten aus bestimmten Tabellen angefragt werden und keine komplexen JOIN Operationen oder vergleichbares vorgenommen werden müssen. 
-Mit der neuen Multi-Tenant Architektur kann besagte Häufigkeit nicht reduziert werden; da sowohl an den Datenbankabfragen in den Controllern, als auch an der Anzahl der Tabellen keine Änderungen vorgesehen sind. Hierfür müsste zum einen das Datenbankmodell von Grund auf überdacht werden um gegebenenfalls überflüssige Tabellen zu entfernen und die Datenstruktur für die Abfragen zu verbessern. Zum anderen wäre auch das Überarbeiten der Abfragen an die Datenbank in den Controllern notwendig, ob beispielsweise an Stellen überflüssigerweisen alle Daten aus einer Tabelle geladen werden, anstatt nur die benötigten.   
-Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Anfragen reduziert werden. Zwar findet zu Beginn einer jeden Session ein zusätzlicher Request an die Datenbank für die Ermittlung der tenantId statt; wohingegen häufig angefragte Daten mittels Redis gecached werden und somit die Anzahl der Anfragen durch SELECT auf die Datenbank reduziert wird. Dies ist auch aufgrund der Konzentration aller Daten in einer Datenbank hilfreich um die Last auf die Datenbank bei vielen gleichzeitige Anfragen durch die Tenants zu reduzieren. 
+Der hohe Anteil der SELECT Abfragen im Vergleich zu anderen Abfragen ist in dieem Fall nicht verwunderlich, da in TeamSports2 hautpsächlich Daten aus bestimmten Tabellen angefragt werden und keine komplexen JOIN Operationen oder vergleichbares vorgenommen werden müssen. 
+Mit der neuen Multi-Tenant Architektur kann besagter Anteil nicht reduziert werden; da sowohl an den Datenbankabfragen in den Controllern, als auch an der Anzahl der Tabellen keine Änderungen vorgesehen sind. Hierfür müsste zum einen das Datenbankmodell von Grund auf überdacht werden um gegebenenfalls überflüssige Tabellen zu entfernen und die Datenstruktur für die Abfragen zu verbessern. Zum anderen wäre auch das Überarbeiten der Abfragen an die Datenbank in den Controllern notwendig, ob beispielsweise an Stellen überflüssigerweisen alle Daten aus einer Tabelle geladen werden, anstatt nur die benötigten.   
+Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Anfragen reduziert werden. Zwar findet zu Beginn einer jeden Session ein zusätzlicher Request an die Datenbank für die Ermittlung der tenantId statt; wohingegen häufig angefragte Daten mittels Redis gecached werden und somit die Anzahl der Anfragen durch SELECT auf die Datenbank reduziert wird. Dies ist auch aufgrund der Konzentration aller Daten in einer Datenbank hilfreich um die Last auf die Datenbank bei vielen gleichzeitige Anfragen durch die Tenants zu reduzieren. Der Einsatz von Redis Cache wäre zwar auch in der jetzigen Architektur mögich, zumal CakePHP den diesen untersützt. Allerdings darf hierbei nicht vergessen werden, dass ein RedisCache für jede einzelne Datenbank in einer Single-Tenant Anwendung hohe Kosten sowie Wartungs- und Implementierungsaufwände verursacht, wodurch die Performancevorteile wieder relativiert werden würden.
 
+
+<!--
+
+|           | **DB-Verbindungen** |              |               |             |
+|-----------|--------------|--------------|---------------|-------------|
+| **Server**    | *ø pro Stunde* | *ø pro Minute* | *ø pro Sekunde* | 
+| Live 1    |      210.691 |        3.512 |            59 | 
+| Live 2    |      363.582 |        6.060 |           101 | 
+| Live 3    |      364.066 |        6.068 |           101 | 
+| Live 4    |       38.543 |          642 |            11 | 
+| Generator |       15.544 |          259 |             4 | 
+Tabelle X: Datenbank-Verbindungen TeamSports2
+-->
 
 <!--![](source/figures/Queries-diagram_Live1.png)
 Abbildung X: Queries gegen die Datenbank auf dem Live 1 Server
