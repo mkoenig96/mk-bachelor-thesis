@@ -15,6 +15,8 @@ Tabelle 2: Serverkapazitäten TeamSports2
 
 Auf den Produktivservern liegen die Instanzen der Kunden unter einer eigenen Domain. Der Testserver beinhaltet dahingegen alle Testinstanzen, welcher durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatte bei Produktiv eins und Test Server zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
 
+\pagebreak
+
 ## Kosten 
 
 Aus vorangegangener Tabelle wird deutlich, dass bei Normalauslastung der Server viele Ressourcen ungenutzt sind. Bei keinem Server steigt die Auslastung SSD Festplatte über 30 Prozent. Trotzdem müssen die Ressourcen vorgehalten werden um Anfragespitzen zuverlässig verarbeiten und bei jeder Instanz eine schnelle Antwortzeit gewährleisten zu können. Die aktuell gebuchten Serverpakete werden auch aufgrund der damit verbundenen vCores des Prozessors und des RAMs benötigt. Eine geringere SSD Kapazität würde wiederum weniger vCores sowie RAM bedeuten, welche bei der Anzahl der Instanzen auf den Servern zu einer längeren Antwortzeit führt.
@@ -42,23 +44,25 @@ Tabelle 4: Kosten der AWS EC2-Instanzen
 Da eine effizientere Nutzung der Ressourcen, als auf herkömmlichen on-premise Servern, mithilfe der neuen Multi-Tenant Architektur in Verbindung mit Cloud Computing möglich ist, werden vergleichbare Cloud Computing Infrastrukturen ebenso beleuchtet.
 Als Cloud Computing Anbieter wurde in der gesamten Analyse AWS gewählt, wobei auch andere Anbieter gleichwertige Services zur Verfügung stellen. Alle Kosten der AWS Services wurden mithilfe des AWS Kostenkalkulators ermittelt und die zugehörigen Kostenparameter, wie CPU oder Requests, mit den Werten aus der aktuellen TeamSports2 Architektur gleichgesetzt. 
 
-Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfigruation der Server übernimmt AWS. Wie zu sehen ist, sind die bentöigten EC2 Instanzen circa um das Zehnfache teurer, als die gegenwärtige Infrastruktur, wenn diese nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastrukutr verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen aber immer noch um einiges teurer als ein on-premise Server mit gleichem Leistungsumfang. 
+Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfigruation der Server übernimmt AWS. Wie zu sehen ist, sind die bentöigten EC2 Instanzen circa um das Zehnfache teurer, als die gegenwärtige Infrastruktur, wenn diese nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastruktur verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen aber immer noch um einiges teurer als ein on-premise Server mit gleichem Leistungsumfang. 
 
 Dem gegenüber gestellt ist eine vollständige AWS Infrastruktur. Die verwendeten Services werden zum Verständnis kurz vorgestellt:
 
-- _S3:_ Vollständig verwalteter Objektspeicherservice.
-- _Lambda:_ Ermöglicht die Ausführung von vollständig serverlosen Code, sogenannte Lambda Functions.
-- _Aurora:_ Vollständig verwaltete sowie skalier- und replizierbare MySQL Datenbank.
+- _S3:_ Vollständig verwalteter Objektspeicherservice [@AmazonWebServices2021].
+- _Lambda:_ Ermöglicht die Ausführung von Code ohne die Konfiguration der verwendeten Ressourcen, was auch als „serverless„ bezeichnet wird [@AmazonWebServices2021a].
+- _Aurora:_ Vollständig verwaltete sowie skalier- und replizierbare MySQL Datenbank [@AmazonWebServices2021b].
 
 Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Die Abrechnung erfolgt nach Speicherplatz und Requests an den sogenanten S3 Bucket. Daher können die im folgenden Kapitel dargestellten Daten zu den SELECT Abfragen berücksichtigt werden. Bei Lambda wird nur die Anzahl der Requests und der damit ausgeführte Code berücksichtigt. Finden keine Requests statt, erfolgt auch keine Berechnung. Für Aurora wurde sich an den aktuellen Auslastungen des Systems orientiert.
 
+\pagebreak
+
 | AWS Service | Leistung                                               | Kosten in € / p.m. |
 |-------------|--------------------------------------------------------|--------------------|
-| S3          | 350 GB Speicherplatz  (SELECT Abfragen berücksichtigt) | 211,95             |
+| S3          | 350 GB Speicherplatz  (GET-Requests berücksichtigt) | 211,95             |
 | Lambda      | 1.735.586.217 Requests                                 | 344,82             |
-| Aurora      | vCPU: 2, RAM: 15.25, Speicher: 500 GB                  | 680,50             |
+| Aurora      | vCPU: 2, RAM: 15.25, Speicher: 10 GB                  | 212,75             |
 | Redis Cache | vCPU: 2, RAM: 3.09, Knoten: 3                          | 137,03             |
-| **Gesamt**  |                                                        | **1374,30**            |
+| **Gesamt**  |                                                        | **906,55**         |
 Tabelle 5: Kosten einer möglichen AWS Infrastruktur
 
 Die Berechnungen zeigen, dass eine reine AWS Infrastruktur im Vergleich zur jetzigen Infrastruktur sehr viel teurer wäre. Allerdings kann dadurch eine bedarfsgerechte Skalierung ermöglicht werden, wodurch wiederum Kosteneinsparungen eintreten. Zudem können auch Entwicklerkosten besser eingesetzt werden, da sich die Entwickler nicht parallel um die Verwaltung der Infrastruktur kümmern müssen. 
@@ -93,9 +97,10 @@ Abbildung 15: Queries gegen die Datenbank auf dem Testserver
 | Gesamt    | 818.788         | 19.352.112 | 580.563.360 |
 Tabelle 6: SELECT Abfragen aller Server in Stück
 
-Der hohe Anteil der SELECT Abfragen im Vergleich zu anderen Abfragen ist in dieem Fall nicht verwunderlich, da in TeamSports2 hautpsächlich Daten aus bestimmten Tabellen angefragt werden und keine komplexen JOIN Operationen oder vergleichbares vorgenommen werden müssen. 
+Der hohe Anteil der SELECT Abfragen im Vergleich zu anderen Abfragen ist in diesem Fall nicht verwunderlich, da in TeamSports2 hautpsächlich Daten aus bestimmten Tabellen angefragt und keine komplexen Operationen vorgenommen werden müssen. 
 Mit der neuen Multi-Tenant Architektur kann besagter Anteil nicht reduziert werden; da sowohl an den Datenbankabfragen in den Controllern, als auch an der Anzahl der Tabellen keine Änderungen vorgesehen sind. Hierfür müsste zum einen das Datenbankmodell von Grund auf überdacht werden um gegebenenfalls überflüssige Tabellen zu entfernen und die Datenstruktur für die Abfragen zu verbessern. Zum anderen wäre auch das Überarbeiten der Abfragen an die Datenbank in den Controllern notwendig, ob beispielsweise an Stellen überflüssigerweisen alle Daten aus einer Tabelle geladen werden, anstatt nur die benötigten.   
-Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Anfragen reduziert werden. Zwar findet zu Beginn einer jeden Session ein zusätzlicher Request an die Datenbank für die Ermittlung der tenantId statt; wohingegen häufig angefragte Daten mittels Redis gecached werden und somit die Anzahl der Anfragen durch SELECT auf die Datenbank reduziert wird. Dies ist auch aufgrund der Konzentration aller Daten in einer Datenbank hilfreich um die Last auf die Datenbank bei vielen gleichzeitige Anfragen durch die Tenants zu reduzieren. Der Einsatz von Redis Cache wäre zwar auch in der jetzigen Architektur möglich, zumal CakePHP diesen untersützt. Allerdings darf hierbei nicht vergessen werden, dass ein RedisCache für jede einzelne Datenbank in einer Single-Tenant Anwendung hohe Kosten sowie Wartungs- und Implementierungsaufwände verursacht, wodurch die Performancevorteile wieder relativiert werden würden.
+Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Anfragen reduziert werden. Zwar findet zu Beginn einer jeden Session ein zusätzlicher Request an die Datenbank für die Ermittlung der tenantId statt; wohingegen häufig angefragte Daten mittels Redis gecached werden und somit die Anzahl der Anfragen durch SELECT auf die Datenbank reduziert wird. Dies ist auch aufgrund der Konzentration aller Daten in einer Datenbank hilfreich um die Last auf die Datenbank bei vielen gleichzeitige Anfragen durch die Tenants zu reduzieren. Der Einsatz von Redis Cache wäre zwar auch in der jetzigen Architektur möglich, zumal CakePHP diesen untersützt. Allerdings darf hierbei nicht vergessen werden, dass ein RedisCache für jede einzelne Datenbank in einer Single-Tenant Anwendung hohe Kosten sowie Wartungs- und Implementierungsaufwände verursacht, wodurch die Performancevorteile wieder relativiert werden würden.    
+Des weiteren kann auch eine Reduzierung der Datenbankanfragen aufgrund durch Multi-Tenant leichteren horizontalen Skalierung der Datenbank. Mithilfe von Aurora Replikationen werden Kopien der Daten aus der primären Datenbank erstellt, worauf die einzelnen Tenants zugreifen können. Somit müssen die Daten bei Anfragen nicht immer neu aus der primären Datenbank geladen werden. [@AmazonWebServices2021c].
 
 
 <!--
