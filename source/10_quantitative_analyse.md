@@ -6,14 +6,14 @@ In die Analyse wurden stets die nachfolgenden fünf Server mit einbezogen.
 |           | **Datenbankgröße** | **SSD** |                 |              | 
 |-----------|----------------|------------------|-----------------|--------------|-----------|
 | **Server**    | *in MB*          | *Auslastung in GB* | *Auslastung in %* | *Gesamt in GB* | 
-| Live 1    |           76,5 |             83,8 |            27,7 |        302,3 |         |
-| Live 2    |          122,7 |            111,4 |            22,1 |        503,8 |         |
-| Live 3    |           83,6 |             76,1 |            15,1 |        503,8 |         |
-| Live 4    |           11,4 |             14,3 |             2,8 |        503,8 |          |
-| Generator |          184,5 |             29,5 |             9,8 |        302,3 |         |
+| Produktiv 1    |           76,5 |             83,8 |            27,7 |        302,3 |         |
+| Produktiv 2    |          122,7 |            111,4 |            22,1 |        503,8 |         |
+| Produktiv 3    |           83,6 |             76,1 |            15,1 |        503,8 |         |
+| Produktiv 4    |           11,4 |             14,3 |             2,8 |        503,8 |          |
+| Test |          184,5 |             29,5 |             9,8 |        302,3 |         |
 Tabelle 2: Serverkapazitäten TeamSports2
 
-Auf den Liveservern liegen die Liveinstanzen der Kunden unter einer eigenen Domain. Der Generatorserver beinhaltet dahingegen alle Testinstanzen, welcher durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatte bei Live 1 und Generator zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
+Auf den Produktivservern liegen die Instanzen der Kunden unter einer eigenen Domain. Der Testserver beinhaltet dahingegen alle Testinstanzen, welcher durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatte bei Produktiv eins und Test Server zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
 
 ## Kosten 
 
@@ -22,11 +22,11 @@ Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr gün
 
 | Server    | Instanzen | CPU in vCores | RAM in GB | Kosten in € / p.m.  | 
 |-----------|-----------|---------------|-----------|---------------------|
-| Live 1    |        34 |             6 |        12 |               16,99 |            
-| Live 2    |        60 |            12 |        24 |               24,99 |            
-| Live 3    |        61 |            12 |        24 |               24,99 |            
-| Live 4    |         5 |            12 |        24 |               24,99 |             
-| Generator |        90 |             6 |        12 |               17,00 |             
+| Produktiv 1    |        34 |             6 |        12 |               16,99 |            
+| Produktiv 2    |        60 |            12 |        24 |               24,99 |            
+| Produktiv 3    |        61 |            12 |        24 |               24,99 |            
+| Produktiv 4    |         5 |            12 |        24 |               24,99 |             
+| Test |        90 |             6 |        12 |               17,00 |             
 | **Gesamt** |         |              |         |               **108,96** |       
 Tabelle 3: Aktuelle Gesamtkosten pro Server bei TeamSports2
 
@@ -69,26 +69,26 @@ Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit
 
 ## Häufige Queries 
 
-Mit der aktuellen Architektur setzt sich bei allen Liveservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für den Live eins Server finden sich bei den Liveservern zwei, drei und vier ebenso wieder. Alle Diagramme (Abbildung 16) und Zahlen (Tabelle 6) wurden aus dem MySQL Statistik Dashboard generiert.
+Mit der aktuellen Architektur setzt sich bei allen Produktivservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für den Produktiv eins Server finden sich bei den Produktivservern zwei, drei und vier ebenso wieder. Alle Diagramme (Abbildung 16) und Zahlen (Tabelle 6) wurden aus dem MySQL Statistik Dashboard generiert.
 
 ![](source/figures/Queries-diagram_Live1.png)
-Abbildung 14: Queries gegen die Datenbank auf dem Live 1 Server
+Abbildung 14: Queries gegen die Datenbank auf dem Produktiv 1 Server
 
-Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 Prozent an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
+Einzig der Testserver weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 Prozent an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
 
 ![](source/figures/Queries-diagram_Generator.png)
-Abbildung 15: Queries gegen die Datenbank auf dem Generator Server
+Abbildung 15: Queries gegen die Datenbank auf dem Testserver
 
 Über alle fünf Server verteilt sich die genaue Anzahl der SELECT Anfragen wie in folgender Tabelle zu sehen ist.
 
 |           | SELECT Abfragen |            |             |
 |-----------|-----------------|------------|-------------|
 | Server    |    ø pro Stunde |  ø pro Tag | ø pro Monat |
-| Live 1    | 173.500         | 4.164.000  | 124.920.000 |
-| Live 2    | 302.700         | 7.264.800  | 217.944.000 |
-| Live 3    | 308.300         | 7.399.200  | 221.976.000 |
-| Live 4    | 24.900          | 298.800    | 8.964.000   |
-| Generator | 9.388           | 225.312    | 6.759.360   |
+| Produktiv 1    | 173.500         | 4.164.000  | 124.920.000 |
+| Produktiv 2    | 302.700         | 7.264.800  | 217.944.000 |
+| Produktiv 3    | 308.300         | 7.399.200  | 221.976.000 |
+| Produktiv 4    | 24.900          | 298.800    | 8.964.000   |
+| Test | 9.388           | 225.312    | 6.759.360   |
 |           |                 |            |             |
 | Gesamt    | 818.788         | 19.352.112 | 580.563.360 |
 Tabelle 6: SELECT Abfragen aller Server in Stück
@@ -103,11 +103,11 @@ Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Anfragen reduzie
 |           | **DB-Verbindungen** |              |               |             |
 |-----------|--------------|--------------|---------------|-------------|
 | **Server**    | *ø pro Stunde* | *ø pro Minute* | *ø pro Sekunde* | 
-| Live 1    |      210.691 |        3.512 |            59 | 
-| Live 2    |      363.582 |        6.060 |           101 | 
-| Live 3    |      364.066 |        6.068 |           101 | 
-| Live 4    |       38.543 |          642 |            11 | 
-| Generator |       15.544 |          259 |             4 | 
+| Produktiv 1    |      210.691 |        3.512 |            59 | 
+| Produktiv 2    |      363.582 |        6.060 |           101 | 
+| Produktiv 3    |      364.066 |        6.068 |           101 | 
+| Produktiv 4    |       38.543 |          642 |            11 | 
+| Test |       15.544 |          259 |             4 | 
 Tabelle X: Datenbank-Verbindungen TeamSports2
 -->
 

@@ -25,7 +25,7 @@ Nachfolgende Grafik zeigt die Gegenüberstellung einer Single- und Multi-Tenant 
 ![](source/figures/SingleVsMulti-Tenant.png)
 Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur
 
-Der Begriff „Tenant“ ist hierbei mit dem User gleichzusetzen. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
+Der Begriff „Tenant“ ist hierbei mit dem Nutzer gleichzusetzen. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
 
 - _Multi-Tenant mit einer Datenbank pro Tenant:_ Alle Nutzer greifen zwar auf dieselbe Instanz zu, für jeden Tenant wird aber eine eigene Datenbank bereitgestellt[@MicrosoftDocs2019].
 \pagebreak
