@@ -17,7 +17,7 @@ Auf den Liveservern liegen die Liveinstanzen der Kunden unter einer eigenen Doma
 
 ## Kosten 
 
-Aus vorangegangener Tabelle wird deutlich, dass bei Normalauslastung der Server viele Ressourcen ungenutzt sind. Bei keinem Server steigt die Auslastung SSD Festplatte über 30%. Trotzdem müssen die Ressourcen vorgehalten werden um Anfragespitzen zuverlässig verarbeiten und bei jeder Instanz eine schnelle Antwortzeit gewährleisten zu können. Die aktuell gebuchten Serverpakete werden auch aufgrund der damit verbundenen vCores des Prozessors und des RAMs benötigt. Eine geringere SSD Kapazität würde wiederum weniger vCores sowie RAM bedeuten, welche bei der Anzahl der Instanzen auf den Servern zu einer längeren Antwortzeit führt.
+Aus vorangegangener Tabelle wird deutlich, dass bei Normalauslastung der Server viele Ressourcen ungenutzt sind. Bei keinem Server steigt die Auslastung SSD Festplatte über 30 Prozent. Trotzdem müssen die Ressourcen vorgehalten werden um Anfragespitzen zuverlässig verarbeiten und bei jeder Instanz eine schnelle Antwortzeit gewährleisten zu können. Die aktuell gebuchten Serverpakete werden auch aufgrund der damit verbundenen vCores des Prozessors und des RAMs benötigt. Eine geringere SSD Kapazität würde wiederum weniger vCores sowie RAM bedeuten, welche bei der Anzahl der Instanzen auf den Servern zu einer längeren Antwortzeit führt.
 Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr günstig einzustufen. Allerdings ist dem gegenüberstellt, dass einige Kapazitäten ungenutzt sind und keine Skalierung der Ressourcen möglich ist.
 
 | Server    | Instanzen | CPU in vCores | RAM in GB | Kosten in € / p.m.  | 
@@ -74,7 +74,7 @@ Mit der aktuellen Architektur setzt sich bei allen Liveservern der Hauptteil der
 ![](source/figures/Queries-diagram_Live1.png)
 Abbildung 14: Queries gegen die Datenbank auf dem Live 1 Server
 
-Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 % an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
+Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 Prozent an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
 
 ![](source/figures/Queries-diagram_Generator.png)
 Abbildung 15: Queries gegen die Datenbank auf dem Generator Server

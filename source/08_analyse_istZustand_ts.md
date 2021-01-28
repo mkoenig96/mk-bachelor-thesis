@@ -153,7 +153,7 @@ Des weiteren sind die Ressourcen sehr statisch verteilt. Unabhängig der Nutzera
 ![](source/figures/TS2_SeitenaufrufeWoche.png)
 Abbildung 10: Seitenaufrufe in der Woche von TeamSports2
 
-Die Schwankungen sind darin begründet, dass zu Beginn und Ende der Woche die Vorbereitungen für die jeweiligen Spieltage am Wochenende beginnen. Es werden Vorberichte eingepflegt, letzte Informationen zum kommenden Spieltag weitergegeben und die Fans informieren sich über die Spielzeiten ihrer Mannschaften. Zu Beginn der Woche werden dann wiederum die Spielberichte des vergangenen Spieltags auf die Webseiten gestellt, welche wiederum von den Fans gelesen werden. Am Wochenende findet dann der eigentlich Spieltag statt, wobei Ergebnisse und erste Spiel- oder Vorberichte auf den Seiten eingestellt werden. 
+Die Schwankungen sind darin begründet, dass zu Beginn und Ende der Woche die Vorbereitungen für die jeweiligen Spieltage am Wochenende beginnen. Es werden Vorberichte eingepflegt, letzte Informationen zum kommenden Spieltag weitergegeben und die Fans informieren sich über die Spielzeiten ihrer Mannschaften. Zu Beginn der Woche werden dann die Spielberichte des vergangenen Spieltags auf die Webseiten gestellt, welche wiederum von den Fans gelesen werden. Am Wochenende findet dann der eigentlich Spieltag statt, wobei Ergebnisse und erste Spiel- oder Vorberichte auf den Seiten eingestellt werden. 
 Über das Jahr hinweg gesehen sind ebenso relativ eindeutige Schwankungen, gemessen an den Seitenaufrufen, festzustellen.
 
 ![](source/figures/TS2_SeitenaufrufeJahr.png)
