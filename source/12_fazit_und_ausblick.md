@@ -7,3 +7,4 @@ Zuletzt ist eine parallele Migration der Anwendung in die Cloud notwendig um die
 Auch wenn die Migration einen längeren Umstellungs- und Implementierungsprozess umfasst sowie das Betreiben der Multi-Tenant Architektur kurzfristig einen höheren Kostenaufwand bedeutet, so können langfristig gesehen Kosten für Verwaltung, Ressourcen sowie Entwickler eingespart werden und bestehende Prozesse, wie das Deployment, optimiert werden.
 
 
+

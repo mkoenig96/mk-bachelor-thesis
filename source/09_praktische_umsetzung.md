@@ -27,7 +27,7 @@ Diese Fragen können nun auf das TeamSports2-System adaptiert werden.
     - Alle Views die wiederum auf die view_elements über einen Symlink verweisen sind bei jeder Instanz unterschiedlich. Wenn der Nutzer seinen Seitenaufbau, beispielsweise bei der Mannschaftsansicht, abwandelt wird die View nach jedem Speichervorgang mit den geänderten Elementen neu geschrieben.
     - Jede Instanz kann eigene Dateien (Mannschaftsfotos, Spielerfotos, PDFs, Bildergalerien) hochladen. Dafür ist in jeder Instanz ein webroot Ordner enthalten, der beispielsweise beim Hochladen eines Mannschaftsfotos um den jeweiligen Teamordner erweitert wird. Gleiches gilt für das Hochladen anderer Dateien.
 1. Datenbankstruktur
-    - Das in jeder Datenbank-Instanz zugrunde liegende Datenbankmodell (Tabellen, Schlüssel, Attribute) ist adäquat.
+    - Das in jeder Datenbank-Instanz zugrunde liegende Datenbankmodell (Tabellen, Schlüssel, Attribute) ist gleichbleibend.
     - Die Datenbankstruktur sollte weitestgehend erhalten werden.
 
 Grundsätzlich sollen in der neuen Architektur möglichst viele bestehende Komponenten der jetzigen Implementierung erhalten bleiben. Dies ist vorallem durch die von CakePHP vorgegebenen Namenskonvetionen begründet. Eine Umbenennung von Actions, Models, Views, Controllern und anderen Komponenten würde demnach auch immer die verknüpften Komponenten betreffen. Um dem vorzubeugen sollen die Kernkomponenten möglichst unberührt bleiben. 
