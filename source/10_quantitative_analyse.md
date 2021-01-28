@@ -72,7 +72,7 @@ Die Berechnungen zeigen, dass eine reine AWS Infrastruktur im Vergleich zur jetz
 Das Betreiben mehrerer oder einer EC2 Instanzen stellt dahingegen, aufgrund der vergleichsweise hohen Kosten keine praktikable Lösung dar. Hier ist der vom Hostinganbieter bereitgestellte Server mit besserem Leistungsumfang, in Verbindung mitder neuen Multi-Tenant Architektur, die günstigere Variante.
 Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit der neuen Mulit-Tenant Architektur Kosten- sowie Verwaltungsaufwände, durch die Reduktion der Server, minimiert werden.
 
-## Häufige Datenbankabfragen 
+## Häufige Queries 
 <!--
 
 |           | **DB-Verbindungen** |              |               |             |
@@ -95,7 +95,14 @@ Abbildung 14: Queries gegen die Datenbank auf dem Live 1 Server
 Abbildung 15: Queries gegen die Datenbank auf dem Live 2 Server
 
 \pagebreak
-<!--
+
+Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 % an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
+
+![](source/figures/Queries-diagram_Generator.png)
+Abbildung 16: Queries gegen die Datenbank auf dem Generator Server
+
+Über alle fünf Server verteilt sich die genaue Anzahl der SELECT Anfragen wie in folgender Tabelle zu sehen ist.
+
 |           | SELECT Abfragen |            |             |
 |-----------|-----------------|------------|-------------|
 | Server    |    ø pro Stunde |  ø pro Tag | ø pro Monat |
@@ -107,13 +114,10 @@ Abbildung 15: Queries gegen die Datenbank auf dem Live 2 Server
 |           |                 |            |             |
 | Gesamt    | 818.788         | 19.352.112 | 580.563.360 |
 Tabelle X: SELECT Abfragen aller Server in Stück
--->
-Einzig der Generator Server weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 % an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen.
 
-![](source/figures/Queries-diagram_Generator.png)
-Abbildung 16: Queries gegen die Datenbank auf dem Generator Server
-
-Mit der neuen Multi-Tenant Architektur können die SELECT Abfragen nur bedingt reduziert werden. Zwar cached Redis mittels seines Key/Value Stores häufig angefragte Daten und kann somit die Anfragelast verringern. Allerdings muss auf jeden Fall eine initiale Abfrage an die Datenbank geschehen um die Daten auch im Redis Cache vorhalten zu können. Die Abfragelast durch die neue Archtiektur aber nochmals gesteigert, um beim ersten Aufruf der Seite die ID des Tenants ermitteln zu können. 
+Die Häufigkeit der SELECT Abfragen im Vergleich zu anderen Abfragen ist in dieem Fall nicht verwunderlich, da in TeamSports2 hautpsächlich Daten aus bestimmten Tabellen angefragt werden und keine komplexen JOIN Operationen oder vergleichbares vorgenommen werden müssen. 
+Mit der neuen Multi-Tenant Architektur kann besagte Häufigkeit nicht reduziert werden; da sowohl an den Datenbankabfragen in den Controllern, als auch an der Anzahl der Tabellen keine Änderungen vorgesehen sind. Hierfür müsste zum einen das Datenbankmodell von Grund auf überdacht werden um gegebenenfalls überflüssige Tabellen zu entfernen und die Datenstruktur für die Abfragen zu verbessern. Zum anderen wäre auch das Überarbeiten der Abfragen an die Datenbank in den Controllern notwendig, ob beispielsweise an Stellen überflüssigerweisen alle Daten aus einer Tabelle geladen werden, anstatt nur die benötigten.   
+Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Anfragen reduziert werden. Zwar findet zu Beginn einer jeden Session ein zusätzlicher Request an die Datenbank für die Ermittlung der tenantId statt; wohingegen häufig angefragte Daten mittels Redis gecached werden und somit die Anzahl der Anfragen durch SELECT auf die Datenbank reduziert wird. Dies ist auch aufgrund der Konzentration aller Daten in einer Datenbank hilfreich um die Last auf die Datenbank bei vielen gleichzeitige Anfragen durch die Tenants zu reduzieren. 
 
 
 <!--![](source/figures/Queries-diagram_Live1.png)
