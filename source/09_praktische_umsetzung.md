@@ -80,7 +80,12 @@ Um den Tenant, welcher auf die Anwendung zugreifen möchte, eindeutig identifizi
 Über die von CakePHP bereitgestellte Session-Component können die Einstellungen für jede Session sowohl allgemein, als auch in jedem Controller extra gesetzt werden. Für jede Session wird von CakePHP eine Session-ID vergeben, worunter dann für die Gültigkeit der Session auch die tenantId zu finden ist. 
 Die aus der Session stammende URL soll zudem auch für die Zuordnung der richtigen View zum Controller dienen. 
 Nahezu der gesamte Code liegt mit der neuen Architektur nicht mehr in jeder einzelnen Instanz, sondern zentral auf dem Server. Die Instanz greift darauf zu und ruft im Controller die jeweilige Action auf. Je nachdem ob es sich um eine, für alle Instanzen gültige oder individuelle View handelt, die durch die Action aufgerufen werden soll, wird der Pfad für die View über die Action angepasst.
-Wird eine allgemeine View angesprochen dann kann auf den zentralen View Ordner, welcher wiederum im App Ordner liegt, zugegriffen werden. Handelt es sich um eine individuelle View der Instanz muss der Pfad zu der View in der Action explizit neu gesetzt werden. Des Setzen des neuen View Pfades in der Action muss so nur bei den Actions geschehen, wo die View individueller Natur ist. Weitere Abfragen, um auf eine allgemeine View zu prüfen, sind im Controller nicht weiter notwendig. Die aus der Session stammende Domain der Instanz wird im Controller übergeben und als Parameter in dem Pfad, welcher zur View der Action führt, gesetzt. 
+Wird eine allgemeine View angesprochen dann kann auf den zentralen View Ordner, welcher wiederum im App Ordner liegt, zugegriffen werden. Handelt es sich um eine individuelle View der Instanz muss der Pfad zu der View in der Action explizit neu gesetzt werden. 
+
+![](source/figures/MultiTenantTS2.png)
+Abbildung 13: Multi-Tenant Architektur TeamSports2
+
+Das Setzen des neuen View Pfades in der Action muss so nur bei den Actions geschehen, wo die View individueller Natur ist. Weitere Abfragen, um auf eine allgemeine View zu prüfen, sind im Controller nicht weiter notwendig. Die aus der Session stammende Domain der Instanz wird im Controller übergeben und als Parameter in dem Pfad, welcher zur View der Action führt, gesetzt. 
 
 ```
 $sessionDomain = 'hm-teamsports2.de';
@@ -91,7 +96,6 @@ function seniors ($departmendId = null) {
 ```
 Somit ruft die seniors Action nun die passende View im zugehörigen Ordner der Instanz und nicht mehr im allgemeingültigen Ordner auf. Die Bennenung des Ordners des Tenants ist serverseitig immer gleich zur Domain der jeweiligen Instanz. Damit die in den Views der Tenants bestehenden Verweise auf die View Elements weiterhin gültig sind, wird im View Ordner der Instanz ebenso ein view_elements Ordner erstellt. Dieser stellt einen Symlink zum zentralen Pfad der View Elements auf dem Server dar. Um dem Fall vorzubeugen, dass auch allgemeingültige Views Elemente haben können, wurde im View Ordner der App ebenso ein Symlink zu den View Elements erstellt. Da die Models von den jeweiligen Controllern aufgerufen werden  und nicht vom Tenant abhängig sind, können diese im allgemeinen App Ordner verbleiben und müssen nicht weiter modifiziert werden. Die Pfade für die im Tenant zugehörigen Daten im Webroot Ordner, beispielsweise PDFs und Bilder, werden mithilfe der Domain aus der Session ebenso in den zugehörigen Komponenten angepasst.
 
-![](source/figures/MultiTenantTS2.png)
-Abbildung 13: Multi-Tenant Architektur TeamSports2
+
 
 
