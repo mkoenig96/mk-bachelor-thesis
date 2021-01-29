@@ -13,14 +13,14 @@ In die Analyse wurden stets die nachfolgenden fünf Server mit einbezogen.
 | Test |          184,5 |             29,5 |             9,8 |        302,3 |         |
 Tabelle 2: Serverkapazitäten TeamSports2
 
-Auf den Produktivservern liegen die Instanzen der Kunden unter einer eigenen Domain. Der Testserver beinhaltet dahingegen alle Testinstanzen, welcher durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatte bei Produktiv eins und Test Server zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
+Auf den Produktivservern liegen die Instanzen der Kunden unter einer eigenen Domain. Der Testserver beinhaltet dahingegen alle Testinstanzen, welche durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatten bei Produktiv eins und Testserver zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
 
 \pagebreak
 
 ## Kosten 
 
-Aus vorangegangener Tabelle wird deutlich, dass bei Normalauslastung der Server viele Ressourcen ungenutzt sind. Bei keinem Server steigt die Auslastung SSD Festplatte über 30 Prozent. Trotzdem müssen die Ressourcen vorgehalten werden um Anfragespitzen zuverlässig verarbeiten und bei jeder Instanz eine schnelle Antwortzeit gewährleisten zu können. Die aktuell gebuchten Serverpakete werden auch aufgrund der damit verbundenen vCores des Prozessors und des RAMs benötigt. Eine geringere SSD Kapazität würde wiederum weniger vCores sowie RAM bedeuten, welche bei der Anzahl der Instanzen auf den Servern zu einer längeren Antwortzeit führt.
-Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr günstig einzustufen. Allerdings ist dem gegenüberstellt, dass einige Kapazitäten ungenutzt sind und keine Skalierung der Ressourcen möglich ist.
+Aus vorangegangener Tabelle wird deutlich, dass bei Normalauslastung der Server viele Ressourcen ungenutzt sind. Bei keinem Server steigt die Auslastung SSD Festplatte über 30 Prozent. Trotzdem müssen die Ressourcen vorgehalten werden, um Anfragespitzen zuverlässig verarbeiten und bei jeder Instanz eine schnelle Antwortzeit gewährleisten zu können. Die aktuell gebuchten Serverpakete werden auch aufgrund der damit verbundenen vCores des Prozessors und des RAMs benötigt. Eine geringere SSD Kapazität würde wiederum weniger vCores sowie RAM bedeuten, welche bei der Anzahl der Instanzen auf den Servern zu einer längeren Antwortzeit führt.
+Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr günstig einzustufen. Allerdings ist dem gegenüberzustellen, dass einige Kapazitäten ungenutzt sind und keine Skalierung der Ressourcen möglich ist.
 
 | Server    | Instanzen | CPU in vCores | RAM in GB | Kosten in € / p.m.  | 
 |-----------|-----------|---------------|-----------|---------------------|
@@ -32,27 +32,27 @@ Die aktuellen monatlichen Kosten für die angemieteten Server sind als sehr gün
 | **Gesamt** |         |              |         |               **108,96** |       
 Tabelle 3: Aktuelle Gesamtkosten pro Server bei TeamSports2
 
-Durch die neue Multi-Tenant Architektur werden weniger Server und Datenbanken benötigt. Dahingegen ist die notwendige Gesamtgröße um alle Tenants auf einem Server mit einer Datenbank betreiben zu können auf eine Ressource, in Form des Servers, konzentriert. Eine vergleichbare on-premise Lösung, mit der die aktuellen Lasten bewältigt werden können, ist in folgender Tabelle unter dem Hosting Service zu finden. Aufgrund der gesammelten Anfragelast auf einen Server werden für den Server dementsprechend mehr Ressourcen benötigt.
+Durch die neue Multi-Tenant Architektur werden weniger Server und Datenbanken benötigt. Dahingegen ist die notwendige Gesamtgröße, um alle Tenants auf einem Server mit einer Datenbank betreiben zu können, auf eine Ressource in Form des Servers konzentriert. Eine vergleichbare on-premise Lösung, mit der die aktuellen Lasten bewältigt werden können, ist in folgender Tabelle unter dem Hosting Service zu finden. Aufgrund der gesammelten Anfragelast auf einen Server wird dementsprechend mehr Leistung benötigt.
 
 | Service | Anzahl in Stk. | CPU in vCores | RAM in GB | SSD in GB | Kosten in € / p.m. |
 |---------|----------------|---------------|-----------|-----------|--------------------|
 | EC2     |              5 |             8 |        32 |       120 |            1160,96 |
 | Hosting |              1 |            32 |        48 |      1000 |              79,99 |
 | EC2     |              1 |            32 |        48 |      1000 |             569,97 |   
-Tabelle 4: Kosten der AWS EC2-Instanzen
+Tabelle 4: Kosten der AWS EC2-Instanzen und eines on-premise Servers
 
-Da eine effizientere Nutzung der Ressourcen, als auf herkömmlichen on-premise Servern, mithilfe der neuen Multi-Tenant Architektur in Verbindung mit Cloud Computing möglich ist, werden vergleichbare Cloud Computing Infrastrukturen ebenso beleuchtet.
+Durch die neue Multi-Tenant Architektur können Ressourcen in Verbindung mit Cloud Computing effizienter als auf herkömmlichen on-premise Servern genutzt werden. Daher wird eine vergleichbare Cloud Computing Infrastruktur ebenso vorgestellt.
 Als Cloud Computing Anbieter wurde in der gesamten Analyse AWS gewählt, wobei auch andere Anbieter gleichwertige Services zur Verfügung stellen. Alle Kosten der AWS Services wurden mithilfe des AWS Kostenkalkulators [@AmazonWebServices2021e] ermittelt und die zugehörigen Kostenparameter, wie CPU oder Requests, mit den Werten aus der aktuellen TeamSports2 Architektur gleichgesetzt. 
 
-Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfigruation der Server übernimmt AWS [@AmazonWebServices2021d]. Wie zu sehen ist, sind die bentöigten EC2 Instanzen circa um das Zehnfache teurer, als die gegenwärtige Infrastruktur, wenn diese nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastruktur verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen aber immer noch um einiges teurer als ein on-premise Server mit gleichem Leistungsumfang. 
+Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfiguration der Server übernimmt AWS [@AmazonWebServices2021d]. Es ist zu sehen, dass die bentöigten EC2 Instanzen circa um das Zehnfache teurer sind als die gegenwärtige Infrastruktur, wenn diese nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastruktur verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen, aber immer noch um einiges teurer als ein on-premise Server mit ähnlichem Leistungsumfang. 
 
 Dem gegenüber gestellt ist eine vollständige AWS Infrastruktur. Die verwendeten Services werden zum Verständnis kurz vorgestellt:
 
 - _S3:_ Vollständig verwalteter Objektspeicherservice [@AmazonWebServices2021].
-- _Lambda:_ Ermöglicht die Ausführung von Code ohne die Konfiguration der verwendeten Ressourcen, was auch als „serverless„ bezeichnet wird [@AmazonWebServices2021a].
+- _Lambda:_ Ermöglichung der Ausführung von Code ohne die Konfiguration der verwendeten Ressourcen, was auch als „serverless„ bezeichnet wird [@AmazonWebServices2021a].
 - _Aurora:_ Vollständig verwaltete sowie skalier- und replizierbare MySQL Datenbank [@AmazonWebServices2021b].
 
-Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Die Abrechnung erfolgt nach Speicherplatz und Requests an den sogenanten S3 Bucket. Daher können die im folgenden Kapitel dargestellten Daten zu den SELECT Abfragen berücksichtigt werden. Bei Lambda wird nur die Anzahl der Requests und der damit ausgeführte Code berücksichtigt. Finden keine Requests statt, erfolgt auch keine Berechnung. Für Aurora wurde sich an den aktuellen Auslastungen des Systems orientiert.
+Mithilfe von S3 werden durch die Tenants hochgeladenen Dateien gespeichert. Die Abrechnung erfolgt nach Speicherplatz und Requests an den sogenanten S3 Bucket. Daher können die im folgenden Kapitel dargestellten Daten zu den SELECT Abfragen berücksichtigt werden. Bei Lambda wird nur die Anzahl der Requests und der damit ausgeführte Code berücksichtigt. Finden keine Requests statt, erfolgt auch keine Berechnung. Für Aurora wurde sich an den aktuellen Auslastungen des Systems orientiert.
 
 \pagebreak
 
@@ -66,8 +66,8 @@ Mithilfe von S3 werden, durch die Tenants hochgeladenen Dateien, gespeichert. Di
 Tabelle 5: Kosten einer möglichen AWS Infrastruktur
 
 Die Berechnungen zeigen, dass eine reine AWS Infrastruktur im Vergleich zur jetzigen Infrastruktur sehr viel teurer wäre. Allerdings kann dadurch eine bedarfsgerechte Skalierung ermöglicht werden, wodurch wiederum Kosteneinsparungen eintreten. Zudem können auch Entwicklerkosten besser eingesetzt werden, da sich die Entwickler nicht parallel um die Verwaltung der Infrastruktur kümmern müssen. 
-Das Betreiben einer oder mehrerer EC2 Instanzen stellt dahingegen, aufgrund der vergleichsweise hohen Kosten keine praktikable Lösung dar. Hier ist der vom Hostinganbieter bereitgestellte Server mit besserem Leistungsumfang, in Verbindung mit der neuen Multi-Tenant Architektur, die günstigere Variante.
-Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit der neuen Mulit-Tenant Architektur Kosten- sowie Verwaltungsaufwände, durch die Reduktion der Server, verringert werden.
+Das Betreiben einer oder mehrerer EC2 Instanzen stellt dahingegen aufgrund der vergleichsweise hohen Kosten keine praktikable Lösung dar. Hier ist der vom Hostinganbieter bereitgestellte Server mit besserem Leistungsumfang, in Verbindung mit der neuen Multi-Tenant Architektur, die günstigere Variante.
+Unabhängig davon, ob eine Migration in die Cloud durchgeführt wird, können mit der neuen Mulit-Tenant Architektur Kosten- sowie Verwaltungsaufwände durch die Reduktion der Server eingespart werden.
 
 \pagebreak
 
@@ -78,12 +78,12 @@ Mit der aktuellen Architektur setzt sich bei allen Produktivservern der Haupttei
 ![](source/figures/Queries-diagram_Live1.png)
 Abbildung 14: Queries gegen die Datenbank auf dem Produktiv 1 Server
 
-Einzig der Testserver weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 Prozent an SET OPTION Anfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort gesetzt werden müssen [@OracleCorporation2021]. Zudem passiert es des öfteren, dass Nutzer ein neue Seite erstellen, dieser aber schon nach kurzer Zeit nicht mehr aktiv nutzen. 
+Einzig der Testserver weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 Prozent an SET OPTION Abfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort, gesetzt werden müssen [@OracleCorporation2021]. 
 
 ![](source/figures/Queries-diagram_Generator.png)
 Abbildung 15: Queries gegen die Datenbank auf dem Testserver
 
-Über alle fünf Server verteilt sich die genaue Anzahl der SELECT Anfragen wie in folgender Tabelle zu sehen ist.
+Über alle fünf Server verteilt sich die genaue Anzahl der SELECT Abfragen wie in folgender Tabelle zu sehen ist.
 
 |           | SELECT Abfragen |            |             |
 |-----------|-----------------|------------|-------------|
@@ -95,12 +95,12 @@ Abbildung 15: Queries gegen die Datenbank auf dem Testserver
 | Test | 9.388           | 225.312    | 6.759.360   |
 |           |                 |            |             |
 | Gesamt    | 818.788         | 19.352.112 | 580.563.360 |
-Tabelle 6: SELECT Abfragen aller Server in Stück
+Tabelle 6: SELECT Abfragen der einzelnen Server in Stück
 
-Der hohe Anteil der SELECT Abfragen im Vergleich zu anderen Abfragen ist in diesem Fall nicht verwunderlich, da in TeamSports2 hautpsächlich Daten aus bestimmten Tabellen angefragt und keine komplexen Operationen vorgenommen werden müssen. 
-Mit der neuen Multi-Tenant Architektur kann besagter Anteil nicht reduziert werden; da sowohl an den Datenbankabfragen in den Controllern, als auch an der Anzahl der Tabellen keine Änderungen vorgesehen sind. Hierfür müsste zum einen das Datenbankmodell von Grund auf überdacht werden um gegebenenfalls überflüssige Tabellen zu entfernen und die Datenstruktur für die Abfragen zu verbessern. Zum anderen wäre auch das Überarbeiten der Abfragen an die Datenbank in den Controllern notwendig, ob beispielsweise an Stellen überflüssigerweisen alle Daten aus einer Tabelle geladen werden, anstatt nur die benötigten.   
-Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Anfragen reduziert werden. Zwar findet zu Beginn einer jeden Session ein zusätzlicher Request an die Datenbank für die Ermittlung der tenantId statt. Allerdings werden häufig angefragte Daten mittels Redis gecached und somit die Anzahl der Anfragen durch SELECT auf die Datenbank reduziert. Das Caching ist auch aufgrund der Konzentration aller Daten in einer Datenbank hilfreich um die Last auf die Datenbank bei vielen gleichzeitige Anfragen durch die Tenants zu reduzieren. Bereits gecachte Daten müssen somit nicht mehr von der Datenbank abgefragt werden. Der Einsatz von Redis Cache wäre zwar auch in der jetzigen Architektur möglich, zumal CakePHP diesen untersützt. Allerdings darf hierbei nicht vergessen werden, dass ein RedisCache für jede einzelne Datenbank in einer Single-Tenant Anwendung hohe Kosten sowie Wartungs- und Implementierungsaufwände verursacht, wodurch die Performancevorteile wieder relativiert werden würden.    
-Des weiteren kann auch eine Reduzierung der Datenbankanfragen aufgrund durch Multi-Tenant leichteren horizontalen Skalierung der Datenbank erwirkt werden. Beispielsweise können mithilfe von Aurora Replikationen Kopien der Daten aus der primären Datenbank erstellt werden, worauf die einzelnen Tenants zugreifen können. Somit müssen die Daten bei Anfragen nicht immer neu aus der primären Datenbank geladen werden. [@AmazonWebServices2021c].
+Der hohe Anteil der SELECT Abfragen im Vergleich zu anderen Abfragen ist in diesem Fall nicht verwunderlich, da in TeamSports2 hauptsächlich Daten aus bestimmten Tabellen angefragt und keine komplexen Operationen vorgenommen werden müssen. 
+Mit der neuen Multi-Tenant Architektur kann besagter Anteil nicht reduziert werden, da sowohl an den Datenbankabfragen in den Controllern als auch an der Anzahl der Tabellen keine Änderungen vorgesehen sind. Hierfür müsste zum einen das Datenbankmodell von Grund auf überdacht werden, um gegebenenfalls überflüssige Tabellen zu entfernen und die Datenstruktur für die Abfragen zu verbessern. Zum anderen wäre auch das Überarbeiten der Abfragen an die Datenbank in den Controllern notwendig, ob beispielsweise an Stellen alle Daten aus einer Tabelle geladen werden, anstatt nur die benötigten.   
+Dahingegen kann mit der neuen Architektur die Anzahl der SELECT Abfragen reduziert werden. Zwar findet zu Beginn einer jeden Session ein zusätzlicher Request an die Datenbank für die Ermittlung der tenantId statt. Allerdings werden häufig angefragte Daten mittels Redis gecached und somit die Anzahl der Abfragen durch SELECT auf die Datenbank reduziert. Das Caching ist auch aufgrund der Konzentration aller Daten in einer Datenbank hilfreich, um die Last auf die Datenbank bei vielen gleichzeitigen Abfragen durch die Tenants zu reduzieren. Bereits gecachte Daten müssen somit nicht mehr von der Datenbank abgefragt werden. Der Einsatz von Redis Cache wäre zwar auch in der jetzigen Architektur möglich, zumal CakePHP diesen untersützt. Allerdings darf nicht vergessen werden, dass ein RedisCache für jede einzelne Datenbank in einer Single-Tenant Anwendung hohe Kosten sowie Wartungs- und Implementierungsaufwände verursacht, wodurch sich die Performancevorteile wieder relativieren würden.  
+Des weiteren kann durch Multi-Tenant eine leichtere horizontale Skalierung der Datenbank erwirkt werden, was ebenso eine Verringerung der Datenbankabfragen ermöglicht. Mithilfe von Aurora Replikationen können Kopien der Daten aus der primären Datenbank erstellt werden, worauf die einzelnen Tenants zugreifen können. Somit müssen die Daten bei gleichen Abfragen nicht immer neu aus der primären Datenbank geladen werden. [@AmazonWebServices2021c].
 
 
 <!--
