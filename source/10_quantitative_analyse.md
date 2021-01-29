@@ -42,9 +42,9 @@ Durch die neue Multi-Tenant Architektur werden weniger Server und Datenbanken be
 Tabelle 4: Kosten der AWS EC2-Instanzen
 
 Da eine effizientere Nutzung der Ressourcen, als auf herkömmlichen on-premise Servern, mithilfe der neuen Multi-Tenant Architektur in Verbindung mit Cloud Computing möglich ist, werden vergleichbare Cloud Computing Infrastrukturen ebenso beleuchtet.
-Als Cloud Computing Anbieter wurde in der gesamten Analyse AWS gewählt, wobei auch andere Anbieter gleichwertige Services zur Verfügung stellen. Alle Kosten der AWS Services wurden mithilfe des AWS Kostenkalkulators ermittelt und die zugehörigen Kostenparameter, wie CPU oder Requests, mit den Werten aus der aktuellen TeamSports2 Architektur gleichgesetzt. 
+Als Cloud Computing Anbieter wurde in der gesamten Analyse AWS gewählt, wobei auch andere Anbieter gleichwertige Services zur Verfügung stellen. Alle Kosten der AWS Services wurden mithilfe des AWS Kostenkalkulators [@AmazonWebServices2021e] ermittelt und die zugehörigen Kostenparameter, wie CPU oder Requests, mit den Werten aus der aktuellen TeamSports2 Architektur gleichgesetzt. 
 
-Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfigruation der Server übernimmt AWS. Wie zu sehen ist, sind die bentöigten EC2 Instanzen circa um das Zehnfache teurer, als die gegenwärtige Infrastruktur, wenn diese nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastruktur verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen aber immer noch um einiges teurer als ein on-premise Server mit gleichem Leistungsumfang. 
+Mithilfe von EC2 stellt AWS in der Cloud Serverkapazitäten zur Verfügung. Die vollständige Wartung sowie Konfigruation der Server übernimmt AWS [@AmazonWebServices2021d]. Wie zu sehen ist, sind die bentöigten EC2 Instanzen circa um das Zehnfache teurer, als die gegenwärtige Infrastruktur, wenn diese nahezu gleich in AWS aufgebaut werden würde. Des weiteren wurde in der Kalkulation mit den niedrigst möglichen Ressourcen gerechnet und es sind keine Anfragespitzen mit einberechnet. Zwar ist eine automatische vertikale Skalierung aufgrund von Parametern wie CPU Auslastung über AWS problemlos möglich, allerdings ist damit ein zusätzlicher Anstieg der ohnehin vergleichweise teuren EC2 Infrastruktur verbunden. Eine einzige EC2 Instanz mit größerem Leistungsumfang wäre zwar günstiger als fünf EC2 Instanzen aber immer noch um einiges teurer als ein on-premise Server mit gleichem Leistungsumfang. 
 
 Dem gegenüber gestellt ist eine vollständige AWS Infrastruktur. Die verwendeten Services werden zum Verständnis kurz vorgestellt:
 
@@ -73,7 +73,7 @@ Unabhängig davon ob eine Migration in die Cloud durchgeführt wird, können mit
 
 ## Häufige Queries 
 
-Mit der aktuellen Architektur setzt sich bei allen Produktivservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für den Produktiv eins Server finden sich bei den Produktivservern zwei, drei und vier ebenso wieder. Alle Diagramme (Abbildung 16) und Zahlen (Tabelle 6) wurden aus dem MySQL Statistik Dashboard generiert.
+Mit der aktuellen Architektur setzt sich bei allen Produktivservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für den Produktiv eins Server finden sich bei den Produktivservern zwei, drei und vier ebenso wieder. Alle Diagramme (Abbildung 14 und 15) und Zahlen (Tabelle 6) wurden aus dem MySQL Statistik Dashboard generiert.
 
 ![](source/figures/Queries-diagram_Live1.png)
 Abbildung 14: Queries gegen die Datenbank auf dem Produktiv 1 Server

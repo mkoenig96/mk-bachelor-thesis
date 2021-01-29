@@ -35,7 +35,8 @@ Grundsätzlich sollen in der neuen Architektur möglichst viele bestehende Kompo
 ## Datenbankmodell
 
 Der Hintergrund, die aktuelle Datenbankstruktur weitestgehend zu erhalten liegt an der Verknüpfung der Tabellen mit den Models. Müsste das gesamte Datenbankmodell neu gestaltet werden, so würde damit auch ein Rebuild aller knapp 60 Models einhergehen. Nicht nur die Models müssten, aufgrund von anderen Tabellennamen, umbenannt werden, auch die zugehörigen Controller sowie alle Beziehungen zwischen den Models müssten neu gesetzt werden. 
-Die Umstellung auf eine NoSQL Datenbank, welche die aktuelle relationale Datenbank ersetzt, ist in diesem Falle nicht sinnvoll, da sowohl Ausfalltoleranz als auch die hohe Verfügbarkeit bei Homepages von Sportvereinen nur bedingt gegeben sein müssen. Dahingegen ist die Integrität sowie Konsistenz ein ausschlaggebendes Argument um weiterhin eine SQL Datenbank, in Form von MySQL, zu nutzen. Da mehrere Benutzer auf die Datenbank zugreifen und auch bei jeder Instanz stets mehrere Benutzer im Backendbereich Änderungen vornehmen können ist die strenge Datenbankkonsistenz eine Funktionalität, welche erfüllt sein muss und durch eine NoSQL Datenbank nicht gegeben wäre. Nichtzuletzt ist das CakePHP Framework allein in seiner Grundfunktionlität für eine relationale Datenbank ausgelegt. Dies zeigt sich unter anderem an dem von CakePHP bereitgestellten CRUD-Prinzip, wonach die SQL-Befehle INSERT, SELECT, UPDATE und DELETE als SQL-Datenbankoperationen direkt vom Framework unterstützt sowie angewendet um Daten während der Laufzeit zu selektieren [@Ammelburger2008 5]. Nichtdestotrotz wurde in der neuen Architektur eine NoSQL Datenbank in Form eines Redis Cache Key/Value Stores implementiert. Diese Form einer NoSQL Datenbank ergibt daher Sinn, als dass an die Datenbank häufig gestellte Abfragen gecached werden können, wodurch wiederum der User kürzere Ladezeiten der Seite sowie eine reduzierte Abfragenmenge an die Datenbank erwartet werden können. Genauere Auswertungen hierzu finden sich im nachfolgenden Kapitel zur quantitativen Analyse.
+Die Umstellung auf eine NoSQL Datenbank, welche die aktuelle relationale Datenbank ersetzt, ist in diesem Falle nicht sinnvoll, da sowohl Ausfalltoleranz als auch die hohe Verfügbarkeit bei Homepages von Sportvereinen nur bedingt gegeben sein müssen. Dahingegen ist die Integrität sowie Konsistenz ein ausschlaggebendes Argument um weiterhin eine SQL Datenbank, in Form von MySQL, zu nutzen. Da mehrere Benutzer auf die Datenbank zugreifen und auch bei jeder Instanz stets mehrere Benutzer im Backendbereich Änderungen vornehmen können ist die strenge Datenbankkonsistenz eine Funktionalität, welche erfüllt sein muss und durch eine NoSQL Datenbank nicht gegeben wäre. Nichtzuletzt ist das CakePHP Framework allein in seiner Grundfunktionlität für eine relationale Datenbank ausgelegt. Dies zeigt sich unter anderem an dem von CakePHP bereitgestellten CRUD-Prinzip, wonach die SQL-Befehle INSERT, SELECT, UPDATE und DELETE als SQL-Datenbankoperationen direkt vom Framework unterstützt sowie angewendet um Daten während der Laufzeit zu selektieren [@Ammelburger2008 5]. Nichtdestotrotz wurde in der neuen Architektur eine NoSQL Datenbank in Form eines Redis Cache Key/Value Stores implementiert. Da mit der neuen Architektur sehr viele Tenants auf eine Datenbank zugreifen, sollen die Datenbankabfragen durch das clientseitige Caching für die Dauer der Nutzer Session reduziert werden.     
+Redis soll dabei so konfiguriert werden, dass die vom Besucher genutzen Primärschlüssel durch den Server gespeichert werden und dann bei Änderungen in der Datenbank nur die Primärschlüssel aktualisiert werden, welche auch wirklich vom Nutzer benötigt werden. Dies kann über die von Redis standarmäßig zur Verfügung gestellte Methodik beim clientseitigen Caching realisiert werden. [@Redis.io].
 
 Bei den notwendigen Tabellen, soll eine neue Tabellenspalte hinzugefügt werden um den richtigen Tenant identifizieren zu können. 
 Hierfür muss bei allen nötigen Tabellen folgender Befehl ausgeführt werden.
@@ -54,15 +55,14 @@ ALTER TABLE teams
 ADD COLUMN tenantId int(11) NOT NULL PRIMARY KEY
 ```
 gibt eine Fehlermeldung unter MySQL zurück, dass mehrere Primärschlüssel definiert sind. 
-Mithilfe des neuen Attributes tenantId in der jeweiligen Tabelle kann dann die zugehörige Instanz eindeutig identifiziert werden. Die tenantId fungiert dann in der Tabelle mit dem bereits bestehenden Primärschlüssel als zusammengesetzter Primärschlüssel, da nur durch tenantId und beispielsweise die teamId die richtige Zeile in der Tabelle eindeutig bestimmt weden kann.  Die Position der tenantId ist bewusst an erster Stelle gesetzt, da die Reihenfolge eine Auswirkungen auf die Indizierung hat und eher nach allen Tenants gesucht wird, die eine gewisse id vergeben haben.
-Wie bereits angedeutet muss nicht bei allen Tabellen eine neue Spalte zur Identifikation des Tenants hinzugefügt werden, da die tenantId für einige Tabellen nicht relevant ist. Beispielsweise die age_brackets Tabelle, worin die aktuellen Jahrgänge für die Teams enthalten sind. Die darin enthaltenen Daten sind für alle Instanzen gleich und müssen nicht separiert werden.
-Nachdem allen Tabellen die neue Spalte hinzugefügt wurde, sieht das Datenbankmodell wie folgt aus.
+Mithilfe des neuen Attributes tenantId in der jeweiligen Tabelle kann dann die zugehörige Instanz eindeutig identifiziert werden. Die tenantId fungiert dann in der Tabelle mit dem bereits bestehenden Primärschlüssel als zusammengesetzter Primärschlüssel, da nur durch tenantId und beispielsweise die teamId die richtige Zeile in der Tabelle eindeutig bestimmt weden kann.  Die Position der tenantId ist bewusst an erster Stelle gesetzt, da die Reihenfolge eine Auswirkungen auf die Indizierung hat und eher nach allen Tenants gesucht wird, die eine gewisse id vergeben haben. Nachdem allen Tabellen die neue Spalte hinzugefügt wurde, sieht das Datenbankmodell wie folgt aus.
 
 ![](source/figures/TS2_AusschnittDB-Modell_MultiTenant.png)
 Abbildung 12: Ausschnitt Datenbankmodell mit Multi-Tenant TeamSports2
 
 \pagebreak
 
+Wie bereits angedeutet muss nicht bei allen Tabellen eine neue Spalte zur Identifikation des Tenants hinzugefügt werden, da die tenantId für einige Tabellen nicht relevant ist. Beispielsweise die age_brackets Tabelle, worin die aktuellen Jahrgänge für die Teams enthalten sind. Die darin enthaltenen Daten sind für alle Instanzen gleich und müssen nicht separiert werden.
 Da der Datentyp bei den meisten Schlüsselattributen int(11) ist, wurde dies auch für die tenantId übernommen.
 An den Fremschlüsseln sowie den zugehörigen Beziehungen in den Tabellen müssen keine weiteren Änderungen vorgenommen werden, da diese so erhalten bleiben sollen und sich an den Beziehungen durch die Migration in Multi-Tenant nichts ändert.       
 CakePHP setzt standardmäßig in jeder Tabelle das Attribut id als Primärschlüssel. Daher muss in den jeweiligen Models explizit der neue zusammengesetzte Primärschlüssel aus tenantId und id angegeben werden. Dies kann mithilfe der sogenannten CakePHP Rules realisiert werden, welche es jedem Model ermöglichen von den CakePHP Konventionen abweichende Konfigurationen vorzunehmen. In diesem Fall wird der neue zusammengesetzte Primärschlüssel in einem Array an die ExistsIn Regel übergeben. [@Cookbook2021].         
@@ -75,21 +75,20 @@ SELECT tenantId FROM `settings`
 WHERE name= 'base_url' AND value= 'domain'
 ```
 
+\pagebreak
 
 ## Neue Architektur
 
 Um den Tenant, welcher auf die Anwendung zugreifen möchte, eindeutig identifizieren zu können soll die Domain in Verbindung mit der tenantId genutzt werden. Beim ersten Aufruf der Seite wird die Domain der aktuellen Session gespeichert und ein Request an die Settings Tabelle gesendet. In dem Request ist dann die URL der Seite enhalten und es wird in der Settings Tabelle nach der passenden URL gesucht. Ist diese gefunden, kann die tenantId wieder zurück an die Session geschickt werden. Während der gesamten Session bleibt die tenantId gespeichert um nicht bei jedem Neuaufruf einer View der Seite eine Datenbankabfrage senden zu müssen. 
 Über die von CakePHP bereitgestellte Session-Component können die Einstellungen für jede Session sowohl allgemein, als auch in jedem Controller extra gesetzt werden. Für jede Session wird von CakePHP eine Session-ID vergeben, worunter dann für die Gültigkeit der Session auch die tenantId zu finden ist. 
 Die aus der Session stammende URL soll zudem auch für die Zuordnung der richtigen View zum Controller dienen. 
-Nahezu der gesamte Code liegt mit der neuen Architektur nicht mehr in jeder einzelnen Instanz, sondern zentral auf dem Server. Die Instanz greift darauf zu und ruft im Controller die jeweilige Action auf. Je nachdem ob es sich um eine, für alle Instanzen gültige oder individuelle View handelt, die durch die Action aufgerufen werden soll, wird der Pfad für die View über die Action angepasst.
-Wird eine allgemeine View angesprochen dann kann auf den zentralen View Ordner, welcher wiederum im App Ordner liegt, zugegriffen werden. Handelt es sich um eine individuelle View der Instanz muss der Pfad zu der View in der Action explizit neu gesetzt werden. 
 
 ![](source/figures/MultiTenantTS2.png)
 Abbildung 13: Multi-Tenant Architektur TeamSports2
 
+Nahezu der gesamte Code liegt mit der neuen Architektur nicht mehr in jeder einzelnen Instanz, sondern zentral auf dem Server. Die Instanz greift darauf zu und ruft im Controller die jeweilige Action auf. Je nachdem ob es sich um eine, für alle Instanzen gültige oder individuelle View handelt, die durch die Action aufgerufen werden soll, wird der Pfad für die View über die Action angepasst.
+Wird eine allgemeine View angesprochen dann kann auf den zentralen View Ordner, welcher wiederum im App Ordner liegt, zugegriffen werden. Handelt es sich um eine individuelle View der Instanz muss der Pfad zu der View in der Action explizit neu gesetzt werden. 
 Das Setzen des neuen View Pfades in der Action muss so nur bei den Actions geschehen, wo die View individueller Natur ist. Weitere Abfragen, um auf eine allgemeine View zu prüfen, sind im Controller nicht weiter notwendig. Die aus der Session stammende Domain der Instanz wird im Controller übergeben und als Parameter in dem Pfad, welcher zur View der Action führt, gesetzt. 
-
-\pagebreak
 
 ```
 $sessionDomain = 'hm-teamsports2.de';
