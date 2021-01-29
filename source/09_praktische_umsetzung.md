@@ -66,6 +66,7 @@ Abbildung 12: Ausschnitt Datenbankmodell mit Multi-Tenant TeamSports2
 Da der Datentyp bei den meisten Schlüsselattributen int(11) ist, wurde dies auch für die tenantId übernommen.
 An den Fremschlüsseln sowie den zugehörigen Beziehungen in den Tabellen müssen keine weiteren Änderungen vorgenommen werden, da diese so erhalten bleiben sollen und sich an den Beziehungen durch die Migration in Multi-Tenant nichts ändert.       
 CakePHP setzt standardmäßig in jeder Tabelle das Attribut id als Primärschlüssel. Daher muss in den jeweiligen Models explizit der neue zusammengesetzte Primärschlüssel aus tenantId und id angegeben werden. Dies kann mithilfe der sogenannten CakePHP Rules realisiert werden, welche es jedem Model ermöglichen von den CakePHP Konventionen abweichende Konfigurationen vorzunehmen. In diesem Fall wird der neue zusammengesetzte Primärschlüssel in einem Array an die ExistsIn Regel übergeben. [@Cookbook2021].         
+Eine weitere Möglichkeit um mit individuellen Primärschlüsseln in CakePHP zu arbeiten bietet das Migrations Plugin an. Hierbei werden von den CakePHP Konventionen abweichende Implementierungen durch Methoden dargestellt sowie ausgeführt und es muss keine SQL Syntax verwendet werden [@CakePHPMigrationsCookbook2020].   
 Für die bestehenden Instanzen müssen eindeutige tenantIds an die jeweiligen Tabellenattribute vergeben werden. Bei allen neu angelegten Seiten muss das Ausstellen einer tenantId in den Prozess, wodurch eine neue Test- oder Entwicklungsseite generiert wird, mit eingebunden werden.
 Des weiteren muss die Settings Tabelle um die tenantId erweitert werden. In der name Spalte, welche zugleich den Primärschlüssel der Settings Tabelle darstellt, ist die URL des Tenant im Eintrag base_url zu finden. Mithilfe folgender SQL Abfrage kann dann die passende tenantId zur jeweiligen Domain des Tenants identifiziert werden.
 
@@ -87,6 +88,8 @@ Wird eine allgemeine View angesprochen dann kann auf den zentralen View Ordner, 
 Abbildung 13: Multi-Tenant Architektur TeamSports2
 
 Das Setzen des neuen View Pfades in der Action muss so nur bei den Actions geschehen, wo die View individueller Natur ist. Weitere Abfragen, um auf eine allgemeine View zu prüfen, sind im Controller nicht weiter notwendig. Die aus der Session stammende Domain der Instanz wird im Controller übergeben und als Parameter in dem Pfad, welcher zur View der Action führt, gesetzt. 
+
+\pagebreak
 
 ```
 $sessionDomain = 'hm-teamsports2.de';

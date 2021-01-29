@@ -96,7 +96,6 @@ Auch hierfür bietet sich neben der aktuellen Produktionsumgebung ein weiterer T
 Die beiden Beispiele zeigen auf, dass Multi-Tenant Architekturen nicht nur Kosten bei Unternehmen und Kunden einsparen sowie die Systemeffizienz steigern können; sie unterstützen zudem eine effektive Entwicklerinfrastruktur.
 Nichtdestrotz ist die Entscheidung für die Anwendungsarchitektur zuletzt immer von den Anforderungen der jeweiligen Nutzer sowie Unternehmenen abhängig und darf nicht leichtfertig auf Basis von aktuellen Trends und Technologien getroffen werden.
 
-
 ## SQL 
 
 SQL ist eine deskriptive Abfragesprache und steht für *Structured Query Language* [@MeierKaufmann2016 7]. Diese wird für die Abfrage von relationalen Datenbanksystemen verwendet, welche in Tabellen organisiert sind. Somit ist es in der Praxis gebräuchlich, von einer SQL-Datenbank zu sprechen, wenn sich dahinter ein relationales Datenbanksystem verbirgt.
@@ -293,7 +292,7 @@ Ein weiterer Eintrag kann analog zum obigen Beispiel angelegt werden.
 ```
 db.teamDocument.insert(
     {
-        name: "Hochschule Augsburg,
+        name: "Hochschule Augsburg",
         league: "UniversityBowl"
     }
 )
