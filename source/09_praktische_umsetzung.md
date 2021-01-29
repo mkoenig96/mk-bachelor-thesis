@@ -58,7 +58,7 @@ gibt eine Fehlermeldung unter MySQL zurück, dass mehrere Primärschlüssel defi
 Mithilfe des neuen Attributes tenantId in der jeweiligen Tabelle kann schließlich die zugehörige Instanz eindeutig identifiziert werden. Die tenantId fungiert in der Tabelle mit dem bereits bestehenden Primärschlüssel als zusammengesetzter Primärschlüssel, da nur durch tenantId und beispielsweise die teamId die richtige Zeile in der Tabelle eindeutig bestimmt weden kann. Die Position der tenantId ist bewusst an erster Stelle gesetzt, da die Reihenfolge eine Auswirkungen auf die Indizierung hat und in der Praxis eher nach allen Tenants gesucht wird, die eine gewisse id haben. Nachdem allen Tabellen die neue Spalte hinzugefügt wurde, sieht das Datenbankmodell wie folgt aus:
 
 ![](source/figures/TS2_AusschnittDB-Modell_MultiTenant.png)
-Abbildung 12: Ausschnitt Datenbankmodell mit Multi-Tenant TeamSports2
+Abbildung 12: Ausschnitt Datenbankmodell für Multi-Tenant Architektur bei TeamSports2
 
 \pagebreak
 

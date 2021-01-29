@@ -11,7 +11,7 @@ In die Analyse wurden stets die nachfolgenden fünf Server mit einbezogen.
 | Produktiv 3    |           83,6 |             76,1 |            15,1 |        503,8 |         |
 | Produktiv 4    |           11,4 |             14,3 |             2,8 |        503,8 |          |
 | Test |          184,5 |             29,5 |             9,8 |        302,3 |         |
-Tabelle 2: Serverkapazitäten TeamSports2
+Tabelle 2: Aktuelle Serverkapazitäten bei TeamSports2
 
 Auf den Produktivservern liegen die Instanzen der Kunden unter einer eigenen Domain. Der Testserver beinhaltet dahingegen alle Testinstanzen, welche durch den TeamSports2 Generator erstellt wurden. Die Unterschiede in der Gesamtgröße der SSD Festplatten bei Produktiv eins und Testserver zu den anderen Servern ergibt sich aus den jeweils unterschiedlich gebuchten Serverpaketen beim Hostinganbieter.
 
