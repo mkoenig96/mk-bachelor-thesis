@@ -27,7 +27,7 @@ Abbildung 1: Gegenüberstellung Single- und Multi-Tenant Architektur
 
 Der Begriff „Tenant“ ist hierbei mit dem Nutzer gleichzusetzen. Während bei einer Single-Tenant Architektur jedem Nutzer eine eigene Instanz der Anwendung sowie Datenbank bereitgestellt wird, greifen bei einer Multi-Tenant Architektur alle Nutzer auf dieselbe Instanz und Datenbank zu. Dies ist allerdings eine sehr allgemeine Unterscheidung, welche in der Praxis oft verfeinert wird. Hierbei gibt es unterschiedliche Ansätze, die je nach Anforderungen und Kundenbedürfnis gewählt werden können.
 
-- _Multi-Tenant mit einer Datenbank pro Tenant:_ Alle Nutzer greifen zwar auf dieselbe Instanz zu, für jeden Tenant wird aber eine eigene Datenbank bereitgestellt[@MicrosoftDocs2019].
+- _Multi-Tenant mit einer Datenbank pro Tenant:_ Alle Nutzer greifen zwar auf dieselbe Instanz zu, für jeden Tenant wird aber eine eigene Datenbank bereitgestellt [@MicrosoftDocs2019].
 \pagebreak
 - _Multi-Tenant mit geteilter Datenbank:_ Auch hierbei greifen alle Nutzer auf eine Instanz zu, wobei mehrere Tenants auf einer Datenbank liegen. Zur Identifizierung der einzelnen Tenants in der Datenbank wird eine zusätzliche Spalte hinzugefügt [@MicrosoftDocs2019].
 
@@ -131,7 +131,7 @@ Die Struktur eines relationalen Datenbanksystems ist durch ein relationales Date
 
 - _Datenunabhängigkeit_: Die „[...] Daten und Anwendungsprogramme bleiben weitgehend voneinander getrennt“ [@MeierKaufmann2016 10], was durch die Entkoppelung des Datenbankmanagementsystems zur physischen Datenbank realisiert wird. Dadurch können, abhängig von der Anwendungsarchitektur, Änderungen an der Datenbank ohne Einfluss auf die Anwendung vorgenommen werden.
 - _Mehrbenutzerbetrieb_: Durch diesen ist gewährleistet, dass „[...] mehrere Benutzer gleichzeitig ein und dieselbe Datenbank abfragen oder bearbeiten“ [@MeierKaufmann2016 11] können. Dabei stellt das System sicher, dass alle durch die Benutzer vorgenommenen Aktionen korrekt verarbeitet werden.
-- _Konsistenzgewährung_: Das Datenbanksystem unterstützt das Erfüllen der Datenintegrität, womit „[...] die fehlerfreie und korrekte Speicherung der Daten“ [@MeierKaufmann2016 11]gewährleistet ist.
+- _Konsistenzgewährung_: Das Datenbanksystem unterstützt das Erfüllen der Datenintegrität, womit „[...] die fehlerfreie und korrekte Speicherung der Daten“ [@MeierKaufmann2016 11] gewährleistet ist.
 - _Datensicherheit und Datenschutz_: Mithilfe des Datenbanksystems werden „[...] Daten vor Zerstörung, vor Verlust und vor unbefugten Zugriff“ [@MeierKaufmann2016 11] geschützt. 
 
 [@MeierKaufmann2016 10-11].
@@ -220,6 +220,8 @@ Die Definition von Big Data beruht auf der Erfüllung der „[...] drei V's [...
 
 [@MeierKaufmann2016 13].
 
+\pagebreak
+
 Dabei werden NoSQL Datenbanken bestimmte Eigenschaften zugeordnet:
 
 **Eigenschaften**
@@ -254,7 +256,6 @@ Zudem können auch Listen und Sets erstellt werden, die mehrere Werte unter eine
 ```
 //List
 RPUSH teamId "name", "description"
-
 //Set
 SADD teamId "name" "description"
 ```
@@ -308,14 +309,12 @@ Cassandra arbeitet mit sogenannten Keyspaces, in welchen eine oder mehrere Spalt
 In jeder Spaltenfamilie gibt es wiederum Zeilen, die einen eindeutigen Schlüssel aufweisen. Jede Zeile enthält dabei Spalten, mit einem eindeutigen Wert.
 Dabei enthält die Spalte in einer Zeile der Spaltenfamilie zudem einen Zeitstempel, wodurch eine Versionierung ermöglicht wird.
 Eine Erweiterung der Spalten in einer Spaltefamilie ist die sogenannte SuperColumn. In dieser werden keine einzelnen Werte, sondern eine Sammlung von Werten gespeichert.
-Zudem ermöglicht Cassandra eine Replikation der Daten. Dabei werden Kopien auf unterschiedlichen Knoten gespeichert. 
-
+Zudem ermöglicht Cassandra eine Replikation der Daten. Dabei werden Kopien auf unterschiedlichen Knoten gespeichert.        
 Column Family Stores bieten somit die Möglichkeit sehr komplexe Datenmodelle zu erstellen, ohne dabei auf eine bestimmte Datenstruktur achten zu müssen. Durch die Anordnung in Spalten können Lese- und Schreibvorgänge schnell erfolgen.
 
 ### Graphen Datenbanken
 
-Graphen Datenbanken nutzen die Graphentheorie, um Daten abzubilden. Dabei stellt jeder Knoten eine Entität dar und steht mit einem anderen Knoten, verknüpft über Kanten, in einer Beziehung; sowohl Knoten als auch Kanten können Attribute besitzen. Des weiteren ist ein Hinzufügen oder Entfernen von Knoten und Kanten jederzeit möglich. [@Fasel2016 122-124].
-
+Graphen Datenbanken nutzen die Graphentheorie, um Daten abzubilden. Dabei stellt jeder Knoten eine Entität dar und steht mit einem anderen Knoten, verknüpft über Kanten, in einer Beziehung; sowohl Knoten als auch Kanten können Attribute besitzen. Des weiteren ist ein Hinzufügen oder Entfernen von Knoten und Kanten jederzeit möglich. [@Fasel2016 122-124].       
 Neo4j wird von Weltunternehmen wie Microsoft, IBM oder Adobe als Graphen Datenbanken genutzt. Dabei setzt Neo4j auf eine „[..] eigene deskriptive Graphen-Abfragesprache namens Cypher [...]“ [@Fasel2016 123].
 ```
 CREATE (t:team { name:'Hochschule München', sport:'football'})

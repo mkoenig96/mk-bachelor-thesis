@@ -76,7 +76,7 @@ Unabhängig davon, ob eine Migration in die Cloud durchgeführt wird, können mi
 Mit der aktuellen Architektur setzt sich bei allen Produktivservern der Hauptteil der Datenbankabfragen aus SELECT Abfragen zusammen. Die in den nachfolgenden Diagrammen festgestellten Werte für den Produktiv eins Server finden sich bei den Produktivservern zwei, drei und vier ebenso wieder. Alle Diagramme (Abbildung 14 und 15) und Zahlen (Tabelle 6) wurden aus dem MySQL Statistik Dashboard generiert.
 
 ![](source/figures/Queries-diagram_Live1.png)
-Abbildung 14: Queries gegen die Datenbank auf dem Produktiv 1 Server
+Abbildung 14: Queries gegen die Datenbank auf dem Produktivserver 1
 
 Einzig der Testserver weist einen vergleichsweise geringeren Prozentsatz bei den SELECT Abfragen auf. Die 21 Prozent an SET OPTION Abfragen lassen sich mit der Tatsache erklären, dass beim Generieren einer neuen Seite die Datenbank für die jeweilige Instanz neu erstellt wird und somit Optionen, wie das Passwort, gesetzt werden müssen [@OracleCorporation2021]. 
 

@@ -28,17 +28,21 @@ Sollte sich der Nutzer vor oder nach Ablauf der 90 Tage für den Kauf seiner Tes
 
 ## Deployment-Prozess und Infrastruktur
 
-Aktuell umfasst TeamSports2 über 160 Produktivinstanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubuntubetriebssystem verteilt, welche von einem externen Hostinganbieter bereitgestellt werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist. Aktuell ist TeamSports2 somit auf einer Singel-Tenant Architektur aufgebaut, wobei jede Instanz auf ihre eigene Anwendung sowie Datenbank zugreift. Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt.
+Aktuell umfasst TeamSports2 über 160 Produktivinstanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubuntubetriebssystem verteilt, welche von einem externen Hostinganbieter bereitgestellt werden. Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt. 
 
 ![](source/figures/TeamSports2_Deployment.png)
 Abbildung 6: Deployment-Prozess TeamSports2
 
-In mehreren GitHub-Repositories liegt der Code der Produktionsumgebung mit Entwicklungs- sowie Masterbranches. Zum Entwickeln von Code wird ein eigenständiger Entwicklungsserver bereitgestellt, worunter zur Produktionsumgebung äquivalente Entwicklungsseiten erstellt werden können. Dadurch muss nicht auf Produktivservern, welche die Produktivinstanzen betreffen würde, getestet werden. Soll neuer Code entwickelt werden, kann sich vom Entwicklungs- oder Masterbranch der aktuelle Code geholt und ein Featurebranch erstellt werden.
+\pagebreak
+
+Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist. Aktuell ist TeamSports2 somit auf einer Singel-Tenant Architektur aufgebaut, wobei jede Instanz auf ihre eigene Anwendung sowie Datenbank zugreift. In mehreren GitHub-Repositories liegt der Code der Produktionsumgebung mit Entwicklungs- sowie Masterbranches. Zum Entwickeln von Code wird ein eigenständiger Entwicklungsserver bereitgestellt, worunter zur Produktionsumgebung äquivalente Entwicklungsseiten erstellt werden können. Dadurch muss nicht auf Produktivservern, welche die Produktivinstanzen betreffen würde, getestet werden. Soll neuer Code entwickelt werden, kann sich vom Entwicklungs- oder Masterbranch der aktuelle Code geholt und ein Featurebranch erstellt werden.
 Mithilfe des Webservices DeployHQ wurde eine Build- und Deployment Pipeline aufgebaut. DeployHQ ist mit GitHub verbunden, wodurch auch alle mit dem Repository verbundenen Featurebranches auf die gewünschte Entwicklungsinstanz deployed werden können.
 Ist der Entwickler mit seinem Code fertig, wird ein PullRequest gestellt. Sobald dieser geprüft und der PullRequest genehmigt wurde, erfolgt ein Merge in den Entwicklungsbranch. Hier werden bei größeren Releases mehrere Features oder Anpassungen gesammelt, um diese dann gemeinsam in den Masterbranch zu mergen.
 
 Sobald der für den Release relevante Code vollständig im Masterbranch liegt, kann die Deployment-Pipeline angestoßen werden. Dabei wird vom Masterbranch der aktuelle Code synchronisiert und durch das Secure Shell (SSH) Protokoll an die Server übertragen. Jede Instanz hat in DeployHQ eine eigene Konfiguration, wodurch festgelegt werden kann, auf welchen Pfad auf dem jeweilgen Server deployed werden soll. Der gesamte Code des Masterbranches muss dabei auf jede Instanz einzeln gespielt werden. 
 Beim Deployen werden nur Dateien an die Kundeninstanzen übertragen, welche nicht durch eine Individualisierung, wie die Datei für das Favicon, auf der Instanz betroffen sind. Somit werden Views, Models und Controller deployed, wobei die beiden letztgenannten zu den Views separiert übertragen werden.
+
+\pagebreak
 
 ## Architektur 
 
@@ -52,8 +56,6 @@ TeamSports2 ist in PHP geschrieben und nutzt das CakePHP Framework, welches auf 
 
 Dadurch sind alle drei Ebenen unabhängig voneinander und logisch getrennt. Dies erleichtert die Wartung der Anwendung sowie die Implementierung neuer Funktionen. 
 Mit CakePHP sollen zum einen die Vorteile des MVC Prinzips genutzt und zum anderen nützliche Funktionen seitens des Frameworks bereitgestellt werden. Ein wichtiger Bestandteil dessen ist das „Convention over Configuration“ [@Ammelburger2008 5] Prinzip, welches in CakePHP umgesetzt wird. Dabei müssen keine speziellen Konfigurationen implementiert werden, um Verknüpfungen zwischen dem Model, der View und dem Controller herzustellen. Die Verbindungen zueinander werden von CakePHP automatisch über die jeweilige Benennung der Komponenten erkannt [@Ammelburger2008 5-6]. Nachfolgende Tabelle zeigt, worauf bei der Benennung der jeweiligen Komponenenten geachtet werden muss:
-
-\pagebreak
 
 | Komponente | Schreibweise | Numerus  | Beispiel        |
 |------------|--------------|----------|-----------------|
@@ -149,13 +151,15 @@ Im aktuellen Zustand ist das System sehr schwerfällig zu skalieren. Die Einrich
 Des weiteren sind die Ressourcen sehr statisch verteilt. Unabhängig der Nutzeranfragen bleiben diese immer konstant. Dabei haben Auswertungen die folgende Höhe der Seitenaufrufe über die Woche verteilt ergeben.
 
 ![](source/figures/TS2_SeitenaufrufeWoche.png)
-Abbildung 10: Seitenaufrufe in der Woche von TeamSports2
+Abbildung 10: Seitenaufrufe im Wochenverlauf von TeamSports2
 
 Die Schwankungen sind darin begründet, dass zu Beginn und Ende der Woche die Vorbereitungen für die jeweiligen Spieltage am Wochenende beginnen. Es werden Vorberichte eingepflegt, letzte Informationen zum kommenden Spieltag weitergegeben und die Fans informieren sich über die Spielzeiten ihrer Mannschaften. Zu Beginn der Woche werden dann die Spielberichte des vergangenen Spieltags auf die Webseiten gestellt, welche wiederum von den Fans gelesen werden. Am Wochenende findet dann der eigentlich Spieltag statt, wobei Ergebnisse und erste Spiel- oder Vorberichte auf den Seiten eingestellt werden. 
 Über das Jahr hinweg gesehen sind ebenso relativ eindeutige Schwankungen, gemessen an den Seitenaufrufen, festzustellen.
 
 ![](source/figures/TS2_SeitenaufrufeJahr.png)
-Abbildung 11: Seitenaufrufe im Jahr von TeamSports2
+Abbildung 11: Seitenaufrufe im Jahresverlauf von TeamSports2
+
+\pagebreak
 
 Aufgrund der relativ langen Winterpause von Fußballvereinen, welche 65 Prozent der Instanzen bei TeamSports2 ausmachen, findet auf den Seiten weniger Aktivität statt. Gleiches gilt für die Zeit zwischen Juni und Juli, wenn sich viele Vereine in der Sommerpause befinden. Zu Saisonbeginn im Herbst steigt dann wiederum das Nutzeraufkommen. 
 
