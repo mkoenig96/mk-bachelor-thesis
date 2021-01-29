@@ -4,12 +4,12 @@ TeamSports2 ist ein Content-Management-System für Sportvereine. Das System wurd
 
 ## Grundlegende Produktstruktur
 
-Der Verein erstellt sich über die Homepage teamsports2.de eine Testseite. Dabei gibt der Verein lediglich Kontaktdaten, die anfängliche Seitenfarbe sowie den gewünschten Seitennamen an. Daraufhin wird aus diesen Daten eine Testinstanz mit eigener zugehöriger Datenbank generiert. Die Seite enthält anfangs einige Testberichte sowie rudimentäre Inhalte, um dem Nutzer den Einstieg zu erleichtern. Ein beispielhaftes Frontend einer neu generierten Testseite ist in der nachfolgendenden Abbildung zu sehen.
+Der Verein erstellt sich über die Homepage teamsports2.de eine Testseite. Dabei gibt der Verein lediglich Kontaktdaten, die anfängliche Seitenfarbe sowie den gewünschten Seitennamen an. Daraufhin wird aus diesen Daten eine Testinstanz mit eigener zugehöriger Datenbank generiert. Ein beispielhaftes Frontend einer neu generierten Testseite ist in Abbildung vier zu sehen.
 
 ![](source/figures/TeamSports2_Frontend.png)
 Abbildung 4: Ansicht TeamSports2 Frontend
 
-Die Testseite befindet sich zu diesem Zeitpunkt unter einer Subdomain, beispielsweise hm.teamsports2.de. Über diese Subdomain sowie die während des Generierens erstellten Zugangsdaten kann der Nutzer die Seite nach seinen Wünschen bearbeiten. Mittels diese Zugangsdaten kann sich der Nutzer in das Backend seiner Instanz einloggen.
+Mit dem Erstellen der Seite werden anfangs einige Testberichte sowie rudimentäre Inhalte erstellt, um dem Nutzer den Einstieg zu erleichtern. Die Testseite befindet sich zu diesem Zeitpunkt unter einer Subdomain, beispielsweise hm.teamsports2.de. Über diese Subdomain sowie die während des Generierens erstellten Zugangsdaten kann der Nutzer die Seite nach seinen Wünschen bearbeiten. Mittels diese Zugangsdaten kann sich der Nutzer in das Backend seiner Instanz einloggen.
 
 ![](source/figures/TeamSports2_Backend.png)
 Abbildung 5: Ansicht TeamSports2 Backend
@@ -28,9 +28,7 @@ Sollte sich der Nutzer vor oder nach Ablauf der 90 Tage für den Kauf seiner Tes
 
 ## Deployment-Prozess und Infrastruktur
 
-Aktuell umfasst TeamSports2 über 160 Produktivinstanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubuntubetriebssystem verteilt, welche von einem externen Hostinganbieter bereitgestellt werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist. Aktuell ist TeamSports2 somit auf einer Singel-Tenant Architektur aufgebaut, wobei jede Instanz auf ihre eigene Anwendung sowie Datenbank zugreift.
-
-Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt.
+Aktuell umfasst TeamSports2 über 160 Produktivinstanzen unter einer jeweils eigenen Domain. Diese sind auf vier Apache-Server mit einem Ubuntubetriebssystem verteilt, welche von einem externen Hostinganbieter bereitgestellt werden. Die Daten jeder Instanz liegen auf jeweils einer eigenen MySQL-Datenbank, welche wiederum auf dem Server gespeichert ist. Aktuell ist TeamSports2 somit auf einer Singel-Tenant Architektur aufgebaut, wobei jede Instanz auf ihre eigene Anwendung sowie Datenbank zugreift. Anhand nachfolgender Abbildung wird der Entwicklungs- sowie Deploymentprozess dargestellt.
 
 ![](source/figures/TeamSports2_Deployment.png)
 Abbildung 6: Deployment-Prozess TeamSports2

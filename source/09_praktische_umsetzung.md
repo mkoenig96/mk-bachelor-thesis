@@ -80,7 +80,7 @@ WHERE name= 'base_url' AND value= 'domain'
 ## Neue Architektur
 
 Um den Tenant, welcher auf die Anwendung zugreifen möchte, eindeutig identifizieren zu können soll die Domain in Verbindung mit der tenantId genutzt werden. Beim ersten Aufruf der Seite wird die Domain der aktuellen Session gespeichert und ein Request an die Settings Tabelle gesendet. In dem Request ist dann die URL der Seite enhalten und es wird in der Settings Tabelle nach der passenden URL gesucht. Ist diese gefunden, kann die tenantId wieder zurück an die Session geschickt werden. Während der gesamten Session bleibt die tenantId gespeichert um nicht bei jedem Neuaufruf einer View der Seite eine Datenbankabfrage senden zu müssen. 
-Über die von CakePHP bereitgestellte Session-Component können die Einstellungen für jede Session sowohl allgemein, als auch in jedem Controller extra gesetzt werden. Für jede Session wird von CakePHP eine Session-ID vergeben, worunter dann für die Gültigkeit der Session auch die tenantId zu finden ist. 
+Über die von CakePHP bereitgestellte Session-Component können die Einstellungen für jede Session sowohl allgemein, als auch in jedem Controller extra gesetzt werden. Für jede Session wird von CakePHP eine Session-ID vergeben, worunter dann für die Gültigkeit der Session auch die tenantId zu finden ist [@Ammelburger2008 173-176]. 
 Die aus der Session stammende URL soll zudem auch für die Zuordnung der richtigen View zum Controller dienen. 
 
 ![](source/figures/MultiTenantTS2.png)
